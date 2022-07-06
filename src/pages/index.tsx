@@ -1,10 +1,11 @@
-import { useRouter } from 'next/router';
+import React from 'react';
 
+import Button from '@/components/common/button';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <Main
@@ -15,26 +16,47 @@ const Index = () => {
         />
       }
     >
-      <a href="https://github.com/ixartz/Next-js-Boilerplate">
-        <img
-          src={`${router.basePath}/assets/images/nextjs-starter-banner.png`}
-          alt="Nextjs starter banner"
-        />
-      </a>
-      <h1 className="text-2xl font-bold">
-        Boilerplate code for your Nextjs project with Tailwind CSS
-      </h1>
+      <h1 className="text-2xl font-bold">BUTTON</h1>
       <p>
         <span role="img" aria-label="rocket">
           🚀
         </span>{' '}
-        Next.js Boilerplate is a starter code for your Next js project by
-        putting developer experience first .{' '}
+        full
+        <Button size={'full'} category={'primary'} disabled={false}>
+          텍스트
+        </Button>
+        <Button size={'full'} category={'secondary'} disabled={false}>
+          텍스트
+        </Button>
+        <Button size={'full'} category={'primary'} disabled>
+          텍스트
+        </Button>
         <span role="img" aria-label="zap">
           ⚡️
         </span>{' '}
-        Made with Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged,
-        VSCode, Netlify, PostCSS, Tailwind CSS.
+        medium
+        <Button size={'medium'} category={'primary'} disabled={false}>
+          텍스트
+        </Button>
+        <Button size={'medium'} category={'secondary'} disabled={false}>
+          텍스트
+        </Button>
+        <Button size={'medium'} category={'primary'} disabled>
+          텍스트
+        </Button>
+        <span role="img" aria-label="zap">
+          ⚡️
+        </span>{' '}
+        small
+        <Button size={'small'} category={'primary'} disabled={false}>
+          텍스트
+        </Button>
+        <Button size={'small'} category={'secondary'} disabled={false}>
+          텍스트
+        </Button>
+        <Button size={'small'} category={'primary'} disabled>
+          텍스트
+        </Button>
       </p>
       <h2 className="text-lg font-semibold">Next js Boilerplate Features</h2>
       <p>Developer experience first:</p>

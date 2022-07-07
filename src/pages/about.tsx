@@ -20,9 +20,11 @@ const StyledButton = styled.button`
 `;
 
 const About = () => {
-  const [data, setData] = useState<Array<string>>([]);
-  const [subwayNum, setSubwayNum] = useState<number>(0);
-
+  // TODO: any 쓰면 안됨~~ 변경 필요~~
+  const [data, setData] = useState<Array<any>>([
+    { 위도: '37.5666805', 경도: '126.9784147' },
+  ]);
+  const [subwayNum, setSubwayNum] = useState<number>(1);
   const url = [
     process.env.NEXT_PUBLIC_LINE1_API,
     process.env.NEXT_PUBLIC_LINE2_API,
@@ -39,6 +41,7 @@ const About = () => {
     try {
       const response = await axios.get(url[num] || '');
       setData(response.data.data);
+      console.log(data);
       setSubwayNum(num + 1);
     } catch (e) {
       console.log(e);
@@ -58,12 +61,14 @@ const About = () => {
           </StyledButton>
         ))}
       </div>
-      <Map
-        latitude={37.724846}
-        longitude={127.046895}
-        positions={data}
-        index={subwayNum}
-      />
+      <div>
+        <Map
+          latitude={data[0] && data[0]['위도']}
+          longitude={data[0] && data[0]['경도']}
+          positions={data}
+          index={subwayNum}
+        />
+      </div>
       {data &&
         data.map((d, index) => (
           <div key={index}>

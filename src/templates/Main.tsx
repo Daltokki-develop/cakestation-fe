@@ -25,14 +25,14 @@ const Main = (props: IMainProps) => (
             <li className="mr-6">
               <Link href="/">
                 <a className="border-none text-gray-700 hover:text-gray-900">
-                  Home
+                  Disign System
                 </a>
               </Link>
             </li>
             <li className="mr-6">
               <Link href="/about/">
                 <a className="border-none text-gray-700 hover:text-gray-900">
-                  About
+                  Map
                 </a>
               </Link>
             </li>
@@ -55,7 +55,7 @@ const Main = (props: IMainProps) => (
         <span role="img" aria-label="Love">
           ♥
         </span>{' '}
-        by <a href="https://creativedesignsguru.com">CreativeDesignsGuru</a>
+        by <a href="https://github.com/Daltokki-develop">Daltokki</a>
         {/*
          * PLEASE READ THIS SECTION
          * We'll really appreciate if you could have a link to our website

@@ -25,7 +25,9 @@ const StyledSelect = styled.select`
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  cursor: pointer;
 `;
+
 const StyledArrowBottom = styled.div`
   position: absolute;
   top: 60%;

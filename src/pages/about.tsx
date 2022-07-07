@@ -21,6 +21,7 @@ const StyledButton = styled.button`
 
 const About = () => {
   const [data, setData] = useState<Array<string>>([]);
+  const [subwayNum, setSubwayNum] = useState<number>(0);
 
   const url = [
     process.env.NEXT_PUBLIC_LINE1_API,
@@ -38,10 +39,12 @@ const About = () => {
     try {
       const response = await axios.get(url[num] || '');
       setData(response.data.data);
+      setSubwayNum(num + 1);
     } catch (e) {
       console.log(e);
     }
   };
+
   return (
     <Main meta={<Meta title="Lorem ipsum" description="Lorem ipsum" />}>
       <div>
@@ -55,6 +58,12 @@ const About = () => {
           </StyledButton>
         ))}
       </div>
+      <Map
+        latitude={37.724846}
+        longitude={127.046895}
+        positions={data}
+        index={subwayNum}
+      />
       {data &&
         data.map((d, index) => (
           <div key={index}>
@@ -68,7 +77,6 @@ const About = () => {
             <hr />
           </div>
         ))}
-      <Map latitude={37.724846} longitude={127.046895} />
     </Main>
   );
 };

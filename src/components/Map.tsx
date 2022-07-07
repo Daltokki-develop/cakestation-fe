@@ -8,6 +8,8 @@ const MapContainer = styled.div`
 interface MapProps {
   latitude: number;
   longitude: number;
+  positions: any;
+  index: number;
 }
 
 declare global {
@@ -17,7 +19,7 @@ declare global {
   }
 }
 
-function Map({ latitude, longitude }: MapProps) {
+function Map({ latitude, longitude, positions, index }: MapProps) {
   useEffect(() => {
     const mapScript = document.createElement('script');
 
@@ -35,10 +37,9 @@ function Map({ latitude, longitude }: MapProps) {
         const map = new window.kakao.maps.Map(container, options);
 
         // 커스텀 마커 표시
-        const imageSrc =
-          'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
-        const imageSize = new window.kakao.maps.Size(64, 69);
-        const imageOption = { offset: new window.kakao.maps.Point(27, 69) };
+        const imageSrc = `/assets/images/subway/line${index}.svg`;
+        const imageSize = new window.kakao.maps.Size(32, 32);
+        const imageOption = { offset: new window.kakao.maps.Point(16, 32) };
 
         const markerImage = new window.kakao.maps.MarkerImage(
           imageSrc,
@@ -46,26 +47,34 @@ function Map({ latitude, longitude }: MapProps) {
           imageOption
         );
 
-        const markerPosition = new window.kakao.maps.LatLng(
-          latitude,
-          longitude
-        );
-        const marker = new window.kakao.maps.Marker({
-          position: markerPosition,
-          image: markerImage,
-        });
-        marker.setMap(map);
-        console.log('window.kakao.maps.load');
-      });
-      console.log('onLoadKakaoMap');
-    };
+        for (let i = 0; i < positions.length; i += 1) {
+          const marker = new window.kakao.maps.Marker({
+            map,
+            position: new window.kakao.maps.LatLng(
+              positions[i]['위도'],
+              positions[i]['경도']
+            ),
+            title: positions[i]['역명'],
+            image: markerImage,
+          });
+          marker.setMap(map);
+        }
 
-    // TODO: 배포 시 onLoadKakaoMap이 불려오지 않음
+        // const markerPosition = new window.kakao.maps.LatLng(
+        //   latitude,
+        //   longitude
+        // );
+        // const marker = new window.kakao.maps.Marker({
+        //   position: markerPosition,
+        //   image: markerImage,
+        // });
+        // marker.setMap(map);
+      });
+    };
     mapScript.addEventListener('load', onLoadKakaoMap);
-    console.log('mapScript.addEventListener("load", onLoadKakaoMap)');
 
     return () => mapScript.removeEventListener('load', onLoadKakaoMap);
-  }, [latitude, longitude]);
+  }, [latitude, longitude, positions]);
 
   return <MapContainer id="map" />;
 }

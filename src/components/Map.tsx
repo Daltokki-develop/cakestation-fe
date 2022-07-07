@@ -8,6 +8,7 @@ const MapContainer = styled.div`
 interface MapProps {
   latitude: number;
   longitude: number;
+  // TODO: any 쓰. 지. 마.
   positions: any;
   index: number;
 }
@@ -59,16 +60,6 @@ function Map({ latitude, longitude, positions, index }: MapProps) {
           });
           marker.setMap(map);
         }
-
-        // const markerPosition = new window.kakao.maps.LatLng(
-        //   latitude,
-        //   longitude
-        // );
-        // const marker = new window.kakao.maps.Marker({
-        //   position: markerPosition,
-        //   image: markerImage,
-        // });
-        // marker.setMap(map);
       });
     };
     mapScript.addEventListener('load', onLoadKakaoMap);

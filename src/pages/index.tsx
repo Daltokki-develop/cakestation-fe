@@ -11,13 +11,13 @@ const Index = () => {
     <Main
       meta={
         <Meta
-          title="Next.js Boilerplate Presentation"
-          description="Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
+          title="Cakestation FE Presentation"
+          description="Cakestation FE Process"
         />
       }
     >
       <h1 className="text-2xl font-bold">BUTTON</h1>
-      <p>
+      <div>
         <span role="img" aria-label="rocket">
           🚀
         </span>{' '}
@@ -57,7 +57,7 @@ const Index = () => {
         <Button size={'small'} category={'primary'} disabled>
           텍스트
         </Button>
-      </p>
+      </div>
       <h2 className="text-lg font-semibold">Next js Boilerplate Features</h2>
       <p>Developer experience first:</p>
       <ul>

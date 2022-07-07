@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Button from '@/components/common/button';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
@@ -11,17 +9,17 @@ const Index = () => {
     <Main
       meta={
         <Meta
-          title="Cakestation FE Presentation"
-          description="Cakestation FE Process"
+          title="Cakestation FE"
+          description="Cakestation FE 진행 상황 공유"
         />
       }
     >
-      <h1 className="text-2xl font-bold">BUTTON</h1>
-      <div>
+      <h1 className="text-2xl font-bold">Cakestation Design System</h1>
+      <p>
         <span role="img" aria-label="rocket">
           🚀
         </span>{' '}
-        full
+        BUTTON{' '}
         <Button size={'full'} category={'primary'} disabled={false}>
           텍스트
         </Button>
@@ -31,10 +29,6 @@ const Index = () => {
         <Button size={'full'} category={'primary'} disabled>
           텍스트
         </Button>
-        <span role="img" aria-label="zap">
-          ⚡️
-        </span>{' '}
-        medium
         <Button size={'medium'} category={'primary'} disabled={false}>
           텍스트
         </Button>
@@ -44,10 +38,6 @@ const Index = () => {
         <Button size={'medium'} category={'primary'} disabled>
           텍스트
         </Button>
-        <span role="img" aria-label="zap">
-          ⚡️
-        </span>{' '}
-        small
         <Button size={'small'} category={'primary'} disabled={false}>
           텍스트
         </Button>
@@ -57,7 +47,14 @@ const Index = () => {
         <Button size={'small'} category={'primary'} disabled>
           텍스트
         </Button>
-      </div>
+      </p>
+      <p>
+        <span role="img" aria-label="zap">
+          ⚡️
+        </span>{' '}
+        INPUT{' '}
+      </p>
+
       <h2 className="text-lg font-semibold">Next js Boilerplate Features</h2>
       <p>Developer experience first:</p>
       <ul>

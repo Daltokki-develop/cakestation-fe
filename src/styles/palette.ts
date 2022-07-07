@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   cakeLemon_100: '#FEFEEF',
   cakeLemon_200: '#FEFCDF',

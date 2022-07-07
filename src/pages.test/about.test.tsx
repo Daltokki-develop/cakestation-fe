@@ -10,9 +10,9 @@ describe('About page', () => {
     it('should have two paragraphs of `Lorem ipsum`', () => {
       render(<About />);
 
-      const paragraph = screen.getAllByText(/Lorem ipsum/);
+      const paragraph = screen.getAllByText(/호선/);
 
-      expect(paragraph).toHaveLength(2);
+      expect(paragraph).toHaveLength(9);
     });
   });
 });

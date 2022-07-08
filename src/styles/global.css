@@ -19,3 +19,7 @@ a:hover {
 .content ul {
   @apply my-6;
 }
+
+body {
+  font-family: 'Pretendard-Medium'
+}

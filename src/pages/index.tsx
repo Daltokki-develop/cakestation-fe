@@ -67,7 +67,11 @@ const Index = () => {
           INPUT
         </p>
         <div>
-          <Input placeholder={'내용을 입력하세요.'} onChange={undefined} />
+          <Input
+            placeholder={'내용을 입력하세요.'}
+            onChange={() => {}}
+            value={''}
+          />
         </div>
       </div>
       <div>

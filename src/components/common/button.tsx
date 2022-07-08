@@ -7,6 +7,7 @@ interface ButtonProps {
   category: string;
   disabled?: boolean;
   sizeStyle: any;
+  onClick?: any;
 }
 
 const SIZES = {
@@ -71,10 +72,12 @@ function Button({
   category,
   disabled,
   children,
+  onClick,
 }: {
   size: string;
   category: string;
   disabled: boolean;
+  onClick?: () => void;
   children: any;
 }) {
   const sizeStyle = SIZES[size as keyof typeof SIZES];
@@ -85,6 +88,7 @@ function Button({
       category={category}
       disabled={disabled}
       sizeStyle={sizeStyle}
+      onClick={onClick}
     >
       {children}
     </StyledButton>

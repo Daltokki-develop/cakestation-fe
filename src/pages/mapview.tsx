@@ -19,7 +19,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const About = () => {
+const MapView = () => {
   // TODO: any 쓰면 안됨~~ 변경 필요~~
   const [data, setData] = useState<Array<any>>([
     { 위도: '37.5666805', 경도: '126.9784147' },
@@ -49,7 +49,7 @@ const About = () => {
   };
 
   return (
-    <Main meta={<Meta title="Lorem ipsum" description="Lorem ipsum" />}>
+    <Main meta={<Meta title="Cakestation Map" description="지도 맛보기" />}>
       <div>
         {Array.from(Array(9), (_, index) => (
           <StyledButton
@@ -86,4 +86,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default MapView;

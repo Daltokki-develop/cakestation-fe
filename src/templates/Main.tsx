@@ -25,24 +25,23 @@ const Main = (props: IMainProps) => (
             <li className="mr-6">
               <Link href="/">
                 <a className="border-none text-gray-700 hover:text-gray-900">
-                  Disign System
+                  Design System
                 </a>
               </Link>
             </li>
             <li className="mr-6">
-              <Link href="/about/">
+              <Link href="/mapview/">
                 <a className="border-none text-gray-700 hover:text-gray-900">
                   Map
                 </a>
               </Link>
             </li>
             <li className="mr-6">
-              <a
-                className="border-none text-gray-700 hover:text-gray-900"
-                href="https://github.com/ixartz/Next-js-Boilerplate"
-              >
-                GitHub
-              </a>
+              <Link href="/reviews/">
+                <a className="border-none text-gray-700 hover:text-gray-900">
+                  Review
+                </a>
+              </Link>
             </li>
           </ul>
         </div>

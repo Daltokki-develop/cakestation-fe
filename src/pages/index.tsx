@@ -2,6 +2,7 @@ import Button from '@/components/common/button';
 import Divider from '@/components/common/divider';
 import Input from '@/components/common/input/input';
 import InputToggle from '@/components/common/input/inputToggle';
+import Tag from '@/components/common/tag';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
@@ -98,6 +99,46 @@ const Index = () => {
           <Divider size={'lg'} />
           <Divider size={'md'} />
           <Divider size={'sm'} />
+        </div>
+      </div>
+      <div>
+        <p>
+          <span role="img" aria-label="zap">
+            🎈
+          </span>{' '}
+          Tag
+        </p>
+        <div>
+          <Tag size={'large'} icon={false}>
+            텍스트
+          </Tag>
+          <Tag size={'medium'} icon={false}>
+            텍스트
+          </Tag>
+          <Tag size={'small'} icon={false}>
+            텍스트
+          </Tag>
+          <Tag
+            size={'large'}
+            icon={true}
+            src={'/assets/images/icons/rate_filled.svg'}
+          >
+            텍스트
+          </Tag>
+          <Tag
+            size={'medium'}
+            icon={true}
+            src={'/assets/images/icons/rate_filled.svg'}
+          >
+            텍스트
+          </Tag>
+          <Tag
+            size={'small'}
+            icon={true}
+            src={'/assets/images/icons/rate_filled.svg'}
+          >
+            텍스트
+          </Tag>
         </div>
       </div>
     </Main>

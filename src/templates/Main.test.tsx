@@ -7,9 +7,9 @@ describe('Main template', () => {
     it('should have 3 menu items', () => {
       render(<Main meta={null}>{null}</Main>);
 
-      const menuItemList = screen.getAllByRole('listitem');
+      const menuItemList = screen.getAllByRole('img');
 
-      expect(menuItemList).toHaveLength(3);
+      expect(menuItemList).toHaveLength(2);
     });
 
     it('should have a link to support creativedesignsguru.com', () => {

@@ -72,11 +72,7 @@ const DesignSystem = () => {
           INPUT
         </p>
         <div>
-          <Input
-            placeholder={'내용을 입력하세요.'}
-            onChange={() => {}}
-            value={''}
-          />
+          <Input placeholder={'내용을 입력하세요.'} onChange={() => {}} />
         </div>
       </div>
       <div>

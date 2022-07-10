@@ -36,7 +36,7 @@ function Input({
   placeholder,
   onChange,
 }: {
-  value: any;
+  value?: any;
   placeholder: string;
   onChange: any;
 }) {

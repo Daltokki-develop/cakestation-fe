@@ -15,35 +15,29 @@ interface ImageProps {
 
 const SIZES = {
   large: css`
-    width: 54px;
     height: 32px;
-    font-size: 15px;
+    font-size: 16px;
   `,
   medium: css`
-    width: 48px;
     height: 30px;
-    font-size: 13px;
+    font-size: 14px;
   `,
   small: css`
-    width: 43px;
     height: 26px;
-    font-size: 11px;
+    font-size: 12px;
   `,
 };
 
 const ICONSIZES = {
   large: css`
-    width: 78px;
     height: 32px;
     font-size: 16px;
   `,
   medium: css`
-    width: 70px;
     height: 30px;
     font-size: 14px;
   `,
   small: css`
-    width: 61px;
     height: 26px;
     font-size: 12px;
   `,
@@ -59,8 +53,8 @@ const IMAGESIZES = {
     height: 18px;
   `,
   small: css`
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   `,
 };
 
@@ -69,6 +63,7 @@ const StyledTag = styled.div<TagProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: fit-content;
   padding: 6px;
 
   background-color: ${palette.white};
@@ -77,10 +72,12 @@ const StyledTag = styled.div<TagProps>`
 
   color: ${palette.black};
   letter-spacing: -0.21px;
+  font-family: 'Pretendard-Regular';
 `;
 
 const StyledImage = styled.img<ImageProps>`
   ${(props) => props.imageStyle};
+  margin-right: 4px;
 `;
 
 function Tag({

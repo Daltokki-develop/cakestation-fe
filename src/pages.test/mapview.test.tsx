@@ -12,7 +12,7 @@ describe('MapView page', () => {
 
       const paragraph = screen.getAllByText(/호선/);
 
-      expect(paragraph).toHaveLength(9);
+      expect(paragraph).toHaveLength(11);
     });
   });
 });

@@ -19,6 +19,29 @@ const StyledButton = styled.button`
   }
 `;
 
+const SubwayName = [
+  '1호선',
+  '2호선',
+  '3호선',
+  '4호선',
+  '5호선',
+  '6호선',
+  '7호선',
+  '8호선',
+  '9호선',
+  '공항철도',
+  '우이신설선',
+  '경춘선',
+  '경강선',
+  '경의중앙선',
+  '용인경전철',
+  '신분당',
+  '인천1호선',
+  '인천2호선',
+  '수인분당선',
+  '의정부경전철',
+];
+
 const MapView = () => {
   // TODO: any 쓰면 안됨~~ 변경 필요~~
   const [data, setData] = useState<Array<any>>([
@@ -35,13 +58,24 @@ const MapView = () => {
     process.env.NEXT_PUBLIC_LINE7_API,
     process.env.NEXT_PUBLIC_LINE8_API,
     process.env.NEXT_PUBLIC_LINE9_API,
+    process.env.NEXT_PUBLIC_LINE10_API, // 공항철도
+    process.env.NEXT_PUBLIC_LINE11_API, // 우이신설
+    process.env.NEXT_PUBLIC_LINE12_API, // 경춘선
+    process.env.NEXT_PUBLIC_LINE13_API, // 경강선
+    process.env.NEXT_PUBLIC_LINE14_API, // 경의중앙
+    process.env.NEXT_PUBLIC_LINE15_API, // 용인경전철
+    process.env.NEXT_PUBLIC_LINE16_API, // 신분당
+    process.env.NEXT_PUBLIC_LINE17_API, // 인천1호선
+    process.env.NEXT_PUBLIC_LINE18_API, // 인천2호선
+    process.env.NEXT_PUBLIC_LINE19_API, // 수인분당선
+    process.env.NEXT_PUBLIC_LINE20_API, // 의정부경전철
   ];
 
   const onClick = async (num: number) => {
     try {
       const response = await axios.get(url[num] || '');
       setData(response.data.data);
-      console.log(data);
+      console.log(num, data);
       setSubwayNum(num + 1);
     } catch (e) {
       console.log(e);
@@ -51,13 +85,14 @@ const MapView = () => {
   return (
     <Main meta={<Meta title="Cakestation Map" description="지도 맛보기" />}>
       <div>
-        {Array.from(Array(9), (_, index) => (
+        {Array.from(Array(20), (_, index) => (
           <StyledButton
             key={index}
             type="button"
             onClick={() => onClick(index)}
           >
-            {index + 1}호선
+            {/* {index + 1}호선 */}
+            {SubwayName[index]}
           </StyledButton>
         ))}
       </div>

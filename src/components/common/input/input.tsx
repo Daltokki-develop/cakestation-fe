@@ -9,9 +9,11 @@ const StyledInput = styled.input`
   border: 1px solid ${palette.black};
   border-radius: 8px;
   padding: 10px;
+  font-family: 'Pretendard-Medium';
+  font-size: 16px;
+
   ::placeholder {
     font-weight: 500;
-    font-size: 16px;
     letter-spacing: -0.01em;
     color: ${palette.grey_400};
   }

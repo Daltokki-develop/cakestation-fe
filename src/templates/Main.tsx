@@ -78,7 +78,8 @@ const ContentWrapper = styled.div`
   min-height: 100vh;
   position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-content: center;
 `;
 
 const Main = (props: IMainProps) => (

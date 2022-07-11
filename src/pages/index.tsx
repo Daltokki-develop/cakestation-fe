@@ -6,6 +6,7 @@ import SearchBar from '@/components/common/searchbar';
 import Map from '@/components/Map';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
+import Navigation from '@/layouts/Navigation';
 import { Main } from '@/templates/Main';
 
 const Absolute = styled.div`
@@ -50,6 +51,8 @@ const Index = () => {
           index={1}
         />
       </Absolute>
+      <Navigation type={'default'} />
+      {/* <Navigation type={'item'} /> */}
     </Main>
   );
 };

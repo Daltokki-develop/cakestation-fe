@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import palette from '@/styles/palette';
-import { AppConfig } from '@/utils/AppConfig';
 
 type IMainProps = {
   meta: ReactNode;
@@ -76,7 +75,11 @@ const MainSection = styled(BasicSection)`
 `;
 
 const ContentWrapper = styled.div`
+  width: 100%;
   min-height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
 `;
 
 const Main = (props: IMainProps) => (
@@ -88,23 +91,7 @@ const Main = (props: IMainProps) => (
         <img src="/assets/images/test-custom-section.png" alt="Cakestation" />
       </CustomSection>
       <MainSection>
-        <ContentWrapper>
-          {props.children}
-          <div className="border-t border-gray-300 py-8 text-center text-sm">
-            © Copyright {new Date().getFullYear()} {AppConfig.title}. Powered
-            with{' '}
-            <span role="img" aria-label="Love">
-              ♥
-            </span>{' '}
-            by <a href="https://github.com/Daltokki-develop">Daltokki</a>
-            {/*
-             * PLEASE READ THIS SECTION
-             * We'll really appreciate if you could have a link to our website
-             * The link doesn't need to appear on every pages, one link on one page is enough.
-             * Thank you for your support it'll mean a lot for us.
-             */}
-          </div>
-        </ContentWrapper>
+        <ContentWrapper>{props.children}</ContentWrapper>
       </MainSection>
     </MainContainer>
   </MainScreen>

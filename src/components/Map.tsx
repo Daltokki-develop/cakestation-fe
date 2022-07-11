@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const MapContainer = styled.div`
-  aspect-ratio: 320 / 220;
+  /* aspect-ratio: 4 / 3; */
+  width: 100%;
+  height: 100vh;
 `;
 
 interface MapProps {

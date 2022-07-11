@@ -14,7 +14,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 * add coverage for vscode-jest and configure jest autoRun ([ad8a030](https://github.com/ixartz/Next-js-Boilerplate/commit/ad8a03019010577bfb8e8ed850e8d45ca274dbe9))
 * add Jest and React testing library ([e182b87](https://github.com/ixartz/Next-js-Boilerplate/commit/e182b87db5943abbe706568e77285e1eb6bddf5e))
-* add TypeScript support for Tailwind CSS configuration ([41f1918](https://github.com/ixartz/Next-js-Boilerplate/commit/41f19189655abe3941485363e057812a5fcd6c02))
 * add vscode jest extension ([49ab935](https://github.com/ixartz/Next-js-Boilerplate/commit/49ab935a03f5a9d1074a155331107737fd7dad13))
 
 

@@ -17,6 +17,10 @@ const MainScreen = styled.div`
   margin-left: auto;
   margin-right: auto;
 
+  /* body 기본 css */
+  font-family: 'Pretendard-Medium';
+  color: ${palette.grey_700};
+
   @media (max-width: 900px) {
     overflow: inherit;
   }

@@ -10,40 +10,40 @@ type IHeaderProps = {
 
 const STYLES = {
   'logo+icon': css`
-    padding-top: 40px;
+    padding: 40px 20px 0 20px;
     display: flex;
+    justify-content: space-between;
   `,
   text: css`
     padding-top: 55px;
+    justify-content: center;
   `,
   'icon+text': css`
-    width: 100%;
-    padding-top: 55px;
+    padding: 55px 8px 0 8px;
     display: flex;
     justify-content: space-between;
   `,
   icon: css`
-    padding-top: 55px;
+    padding: 55px 8px 0 8px;
   `,
   bar: css`
     padding-top: 48px;
+    justify-content: center;
   `,
 };
 
 const StyledHeader = styled.div`
-  position: fixed;
+  position: sticky;
   max-width: 100%;
+  width: 100%;
   height: 96px;
   background-color: transparent;
   z-index: 100;
-  display: flex;
-  justify-content: center;
 `;
 
 const HeaderContent = styled.div<IHeaderProps>`
   position: relative;
   max-width: 100%;
-  width: 100%;
   height: fit-content;
   ${(props) => props.styleType};
   display: flex;
@@ -61,7 +61,6 @@ const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 45px;
 `;
 
 const Icon = styled.img`
@@ -72,6 +71,7 @@ const Icon = styled.img`
 
 const Empty = styled.div`
   width: 40px;
+  height: 40px;
 `;
 
 const Header = ({

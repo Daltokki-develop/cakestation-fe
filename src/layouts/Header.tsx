@@ -10,40 +10,41 @@ type IHeaderProps = {
 
 const STYLES = {
   'logo+icon': css`
-    justify-content: center;
-    padding: 40px 28px 0 95px;
+    padding-top: 40px;
     display: flex;
-    justify-content: space-between;
   `,
   text: css`
-    justify-content: center;
     padding-top: 55px;
   `,
   'icon+text': css`
-    justify-content: center;
-    padding: 55px 20px 0 20px;
+    width: 100%;
+    padding-top: 55px;
     display: flex;
     justify-content: space-between;
   `,
   icon: css`
-    padding: 55px 20px 0 20px;
+    padding-top: 55px;
   `,
   bar: css`
-    justify-content: center;
     padding-top: 48px;
   `,
 };
 
 const StyledHeader = styled.div`
-  position: sticky;
-  top: 0;
-  width: 100%;
+  position: fixed;
+  max-width: 100%;
   height: 96px;
-  background-color: ${palette.white};
+  background-color: transparent;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
 `;
 
 const HeaderContent = styled.div<IHeaderProps>`
   position: relative;
+  max-width: 100%;
+  width: 100%;
+  height: fit-content;
   ${(props) => props.styleType};
   display: flex;
   font-weight: 500;
@@ -60,16 +61,17 @@ const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 45px;
 `;
 
 const Icon = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
 `;
 
 const Empty = styled.div`
-  width: 24px;
+  width: 40px;
 `;
 
 const Header = ({
@@ -89,6 +91,7 @@ const Header = ({
         <HeaderContent styleType={styleType}>
           {style === 'logo+icon' && (
             <>
+              <Empty />
               <LogoContainer>{children}</LogoContainer>
               <Icon src={`/assets/images/icons/${icon}.svg`} />
             </>

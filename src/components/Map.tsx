@@ -22,7 +22,7 @@ declare global {
   }
 }
 
-function Map({ latitude, longitude, positions, index }: MapProps) {
+function Map({ latitude, longitude, positions }: MapProps) {
   useEffect(() => {
     const mapScript = document.createElement('script');
 
@@ -40,8 +40,8 @@ function Map({ latitude, longitude, positions, index }: MapProps) {
         const map = new window.kakao.maps.Map(container, options);
 
         // 커스텀 마커 표시
-        const imageSrc = `/assets/images/subway/line${index}.svg`;
-        const imageSize = new window.kakao.maps.Size(32, 32);
+        const imageSrc = '/assets/images/icons/LocationPicker.svg';
+        const imageSize = new window.kakao.maps.Size(40, 40);
         const imageOption = { offset: new window.kakao.maps.Point(16, 32) };
 
         const markerImage = new window.kakao.maps.MarkerImage(

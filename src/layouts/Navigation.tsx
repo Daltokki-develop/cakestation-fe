@@ -11,8 +11,8 @@ interface TypeProps {
 const StyledNav = styled.div`
   position: fixed;
   bottom: 0;
-  max-width: 100%;
-  width: 28rem;
+  max-width: 28rem;
+  width: 100%;
   height: 83px;
   background-color: ${palette.white};
   z-index: 100;

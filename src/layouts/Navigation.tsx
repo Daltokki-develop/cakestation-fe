@@ -9,10 +9,10 @@ interface TypeProps {
 }
 
 const StyledNav = styled.div`
-  position: sticky;
-  top: 100vh;
+  position: fixed;
+  bottom: 0;
   max-width: 100%;
-  width: 100%;
+  width: 28rem;
   height: 83px;
   background-color: ${palette.white};
   z-index: 100;

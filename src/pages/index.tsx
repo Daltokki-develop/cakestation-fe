@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -7,6 +6,7 @@ import Map from '@/components/Map';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
+import subways from '@/lib/전체지하철역.json';
 import { Main } from '@/templates/Main';
 
 const Absolute = styled.div`
@@ -27,10 +27,10 @@ const Index = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_LINE1_API || ''
-        );
-        setData(response.data.data);
+        // const response = await axios.get(
+        //   process.env.NEXT_PUBLIC_LINE1_API || ''
+        // );
+        setData(subways);
       } catch (e) {
         console.log(e);
       }

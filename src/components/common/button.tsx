@@ -12,19 +12,16 @@ interface ButtonProps {
 
 const SIZES = {
   full: css`
-    width: 375px;
     height: 60px;
     font-size: 16px;
     border-radius: 0;
   `,
   medium: css`
-    width: 343px;
     height: 52px;
     font-size: 14px;
     border-radius: 32px;
   `,
   small: css`
-    width: 343px;
     height: 40px;
     font-size: 12px;
     border-radius: 32px;
@@ -36,6 +33,7 @@ const StyledButton = styled.div<ButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   background-color: ${(props) =>
     props.category === 'primary'
       ? palette.cakeLemon_400

@@ -141,15 +141,29 @@ const DesignSystem = () => {
             </Tag>
           </div>
         </div>
+        <div>
+          <p>
+            <span role="img" aria-label="zap">
+              📑
+            </span>{' '}
+            Typography
+          </p>
+        </div>
         <Typography category={'H1'}>H1</Typography>
         <Typography category={'H2'}>H2</Typography>
         <Typography category={'H3'}>H3</Typography>
         <Typography category={'H4'}>H4</Typography>
         <Typography category={'H5'}>H5</Typography>
-        <Typography category={'H6'}>H6</Typography>
-        <Typography category={'H7'} color={'cakeLavender_500'}>
-          H7
-        </Typography>
+        <Typography category={'Bd1'}>Bd1</Typography>
+        <Typography category={'Bd2'}>Bd2</Typography>
+        <Typography category={'Bd3'}>Bd3</Typography>
+        <Typography category={'Bd4'}>Bd4</Typography>
+        <Typography category={'Bd5'}>Bd5</Typography>
+        <Typography category={'Bd6'}>Bd6</Typography>
+        <Typography category={'Bd7'}>Bd7</Typography>
+        <Typography category={'Bd8'}>Bd8</Typography>
+        <Typography category={'Bd9'}>Bd9</Typography>
+        <Typography category={'Bd10'}>Bd10</Typography>
       </div>
     </Main>
   );

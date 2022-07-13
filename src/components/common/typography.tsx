@@ -29,35 +29,55 @@ const CATEGORYS = {
     font-family: 'Pretendard-Bold';
     font-size: 18px;
   `,
-  H6: css`
+  Bd1: css`
     font-family: 'Pretendard-Bold';
-    font-size: 18px;
+    font-size: 16px;
   `,
-  H7: css`
+  Bd2: css`
+    font-family: 'Pretendard-Medium';
+    font-size: 16px;
+  `,
+  Bd3: css`
     font-family: 'Pretendard-Regular';
     font-size: 16px;
   `,
-  S1: css`
-    font-family: 'Pretendard-Bold';
+  Bd4: css`
+    font-family: 'Pretendard-SemiBold';
     font-size: 16px;
   `,
-  S2: css`
-    font-family: 'Pretendard-Semibold';
-    font-size: 16px;
+  Bd5: css`
+    font-family: 'Pretendard-SemiBold';
+    font-size: 14px;
   `,
-  S3: css`
+  Bd6: css`
     font-family: 'Pretendard-Medium';
-    font-size: 16px;
+    font-size: 14px;
   `,
-  S4: css`
+  Bd7: css`
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+  `,
+  Bd8: css`
     font-family: 'Pretendard-Medium';
-    font-size: 16px;
+    font-size: 12px;
+  `,
+  Bd9: css`
+    font-family: 'Pretendard-Regular';
+    font-size: 12px;
+  `,
+  Bd10: css`
+    font-family: 'Pretendard-Regular';
+    font-size: 10px;
   `,
 };
 
 const StyledText = styled.text<TextProps>`
   ${(props) => props.categoryStyle};
-  color: ${(props) => props.color};
+  ${(props) => {
+    return css`
+      color: ${palette[props.color]};
+    `;
+  }};
 `;
 
 function Typography({

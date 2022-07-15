@@ -47,27 +47,27 @@ const CATEGORYS = {
   `,
   Bd5: css`
     font-family: 'Pretendard-SemiBold';
-    font-size: .875rem;
+    font-size: 0.875rem;
   `,
   Bd6: css`
     font-family: 'Pretendard-Medium';
-    font-size: .875rem;
+    font-size: 0.875rem;
   `,
   Bd7: css`
     font-family: 'Pretendard-Regular';
-    font-size: .875rem;
+    font-size: 0.875rem;
   `,
   Bd8: css`
     font-family: 'Pretendard-Medium';
-    font-size: .75rem;
+    font-size: 0.75rem;
   `,
   Bd9: css`
     font-family: 'Pretendard-Regular';
-    font-size: .75rem;
+    font-size: 0.75rem;
   `,
   Bd10: css`
     font-family: 'Pretendard-Regular';
-    font-size: .625rem;
+    font-size: 0.625rem;
   `,
 };
 

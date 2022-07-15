@@ -18,12 +18,12 @@ const SIZES = {
   `,
   medium: css`
     height: 3.25rem;
-    font-size: .875rem;
+    font-size: 0.875rem;
     border-radius: 2rem;
   `,
   small: css`
     height: 2.5rem;
-    font-size: .75rem;
+    font-size: 0.75rem;
     border-radius: 2rem;
   `,
 };

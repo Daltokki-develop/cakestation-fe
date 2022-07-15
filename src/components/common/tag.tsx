@@ -20,11 +20,11 @@ const SIZES = {
   `,
   medium: css`
     height: 1.875rem;
-    font-size: .875rem;
+    font-size: 0.875rem;
   `,
   small: css`
     height: 1.625rem;
-    font-size: .75rem;
+    font-size: 0.75rem;
   `,
 };
 
@@ -35,11 +35,11 @@ const ICONSIZES = {
   `,
   medium: css`
     height: 1.875rem;
-    font-size: .875rem;
+    font-size: 0.875rem;
   `,
   small: css`
     height: 1.625rem;
-    font-size: .75rem;
+    font-size: 0.75rem;
   `,
 };
 
@@ -53,8 +53,8 @@ const IMAGESIZES = {
     height: 1.125rem;
   `,
   small: css`
-    width: .875rem;
-    height: .875rem;
+    width: 0.875rem;
+    height: 0.875rem;
   `,
 };
 
@@ -64,11 +64,11 @@ const StyledTag = styled.div<TagProps>`
   justify-content: center;
   align-items: center;
   width: fit-content;
-  padding: .375rem;
+  padding: 0.375rem;
 
   background-color: ${palette.white};
-  border: .0625rem solid ${palette.black};
-  border-radius: .5rem;
+  border: 0.0625rem solid ${palette.black};
+  border-radius: 0.5rem;
 
   color: ${palette.black};
   letter-spacing: -0.0131rem;
@@ -77,7 +77,7 @@ const StyledTag = styled.div<TagProps>`
 
 const StyledImage = styled.img<ImageProps>`
   ${(props) => props.imageStyle};
-  margin-right: .25rem;
+  margin-right: 0.25rem;
 `;
 
 function Tag({

@@ -5,11 +5,11 @@ import palette from '../../../styles/palette';
 const SelectContainer = styled.div`
   position: relative;
   display: inline-block;
-  width: 343px;
-  height: 48px;
+  width: 21.4375rem;
+  height: 3rem;
   background-color: ${palette.grey_100};
-  border: 1px solid ${palette.black};
-  border-radius: 8px;
+  border: .0625rem solid ${palette.black};
+  border-radius: .5rem;
 `;
 
 const StyledSelect = styled.select`
@@ -17,9 +17,9 @@ const StyledSelect = styled.select`
   height: 100%;
   background-color: ${palette.grey_100};
   border: none;
-  border-radius: 8px;
+  border-radius: .5rem;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1rem;
   text-align: center;
   letter-spacing: -0.01em;
   appearance: none;
@@ -36,7 +36,7 @@ const StyledArrowBottom = styled.div`
   height: 0;
   pointer-events: none;
   border-style: solid;
-  border-width: 8px 5px 0 5px;
+  border-width: .5rem .3125rem 0 .3125rem;
   border-color: #787878 transparent transparent transparent;
 `;
 

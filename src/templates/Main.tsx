@@ -20,7 +20,7 @@ const MainScreen = styled.div`
   font-family: 'Pretendard-Medium';
   color: ${palette.grey_700};
 
-  @media (max-width: 900px) {
+  @media (max-width: 56.25rem) {
     overflow: inherit;
   }
 `;
@@ -31,7 +31,7 @@ const MainContainer = styled.div`
   display: flex;
   position: relative;
 
-  @media (max-width: 900px) {
+  @media (max-width: 56.25rem) {
     background-color: ${palette.white};
   }
 `;
@@ -46,7 +46,7 @@ const CustomSection = styled(BasicSection)`
   top: 0;
   position: sticky;
 
-  @media (max-width: 900px) {
+  @media (max-width: 56.25rem) {
     display: none;
   }
 
@@ -61,14 +61,14 @@ const CustomSection = styled(BasicSection)`
 const MainSection = styled(BasicSection)`
   background-color: ${palette.white};
   width: 100%;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1.25rem 1.5625rem -0.3125rem rgba(0, 0, 0, 0.1),
+    0 0.625rem 0.625rem -0.3125rem rgba(0, 0, 0, 0.04);
   overflow-y: scroll;
   max-height: 100vh;
   top: 0;
   position: sticky;
 
-  @media (max-width: 900px) {
+  @media (max-width: 56.25rem) {
     box-shadow: none;
     overflow-y: inherit;
   }

@@ -13,10 +13,10 @@ const StyledNav = styled.div`
   bottom: 0;
   max-width: 28rem;
   width: 100%;
-  height: 83px;
+  height: 5.1875rem;
   background-color: ${palette.white};
   z-index: 100;
-  box-shadow: 0px -0.5px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0rem -0.0313rem 0rem rgba(0, 0, 0, 0.3);
 `;
 
 // TODO : align-items -> center 맞춰줘야 함
@@ -28,17 +28,18 @@ const NavigatorContent = styled.div<TypeProps>`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding-top: ${(props) => (props.type === 'default' ? '7px' : '21px')};
+  padding-top: ${(props) =>
+    props.type === 'default' ? '.4375rem' : '1.3125rem'};
 `;
 
 const StyledIcon = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   cursor: pointer;
 `;
 
 const ButtonDiv = styled.div`
-  width: 179px;
+  width: 11.1875rem;
 `;
 
 function Navigation({ type }: { type: string }) {

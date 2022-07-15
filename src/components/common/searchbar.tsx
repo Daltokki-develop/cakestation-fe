@@ -3,28 +3,28 @@ import styled from 'styled-components';
 import palette from '@/styles/palette';
 
 const StyledSearchBar = styled.div`
-  width: 343px;
-  height: 48px;
+  width: 21.4375rem;
+  height: 3rem;
   background: ${palette.white};
-  border: 2px solid ${palette.black};
-  border-radius: 8px;
+  border: .125rem solid ${palette.black};
+  border-radius: .5rem;
   display: flex;
   align-items: center;
-  padding: 4px 6px;
+  padding: .25rem .375rem;
 
   img {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   input {
-    margin-left: 4px;
+    margin-left: .25rem;
     width: 100%;
     height: 100%;
     background-color: transparent;
     border: none;
     font-family: 'Pretendard-Regular';
-    font-size: 16px;
+    font-size: 1rem;
 
     :focus-visible {
       outline: none;

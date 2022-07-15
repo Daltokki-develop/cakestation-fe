@@ -11,63 +11,63 @@ interface TextProps {
 const CATEGORYS = {
   H1: css`
     font-family: 'Pretendard-Medium';
-    font-size: 24px;
+    font-size: 1.5rem;
   `,
   H2: css`
     font-family: 'Pretendard-SemiBold';
-    font-size: 20px;
+    font-size: 1.25rem;
   `,
   H3: css`
     font-family: 'Pretendard-SemiBold';
-    font-size: 18px;
+    font-size: 1.125rem;
   `,
   H4: css`
     font-family: 'Pretendard-Medium';
-    font-size: 18px;
+    font-size: 1.125rem;
   `,
   H5: css`
     font-family: 'Pretendard-Bold';
-    font-size: 18px;
+    font-size: 1.125rem;
   `,
   Bd1: css`
     font-family: 'Pretendard-Bold';
-    font-size: 16px;
+    font-size: 1rem;
   `,
   Bd2: css`
     font-family: 'Pretendard-Medium';
-    font-size: 16px;
+    font-size: 1rem;
   `,
   Bd3: css`
     font-family: 'Pretendard-Regular';
-    font-size: 16px;
+    font-size: 1rem;
   `,
   Bd4: css`
     font-family: 'Pretendard-SemiBold';
-    font-size: 16px;
+    font-size: 1rem;
   `,
   Bd5: css`
     font-family: 'Pretendard-SemiBold';
-    font-size: 14px;
+    font-size: .875rem;
   `,
   Bd6: css`
     font-family: 'Pretendard-Medium';
-    font-size: 14px;
+    font-size: .875rem;
   `,
   Bd7: css`
     font-family: 'Pretendard-Regular';
-    font-size: 14px;
+    font-size: .875rem;
   `,
   Bd8: css`
     font-family: 'Pretendard-Medium';
-    font-size: 12px;
+    font-size: .75rem;
   `,
   Bd9: css`
     font-family: 'Pretendard-Regular';
-    font-size: 12px;
+    font-size: .75rem;
   `,
   Bd10: css`
     font-family: 'Pretendard-Regular';
-    font-size: 10px;
+    font-size: .625rem;
   `,
 };
 

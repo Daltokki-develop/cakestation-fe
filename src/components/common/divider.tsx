@@ -9,13 +9,13 @@ interface DividerProps {
 
 const SIZES = {
   sm: css`
-    height: 2px;
+    height: .125rem;
   `,
   md: css`
-    height: 4px;
+    height: .25rem;
   `,
   lg: css`
-    height: 6px;
+    height: .375rem;
   `,
 };
 

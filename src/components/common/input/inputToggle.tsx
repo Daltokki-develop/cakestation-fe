@@ -22,6 +22,8 @@ const StyledSelect = styled.select`
   font-size: 1rem;
   text-align: center;
   text-align-last: center;
+  -ms-text-align-last: center;
+  -moz-text-align-last: center;
   letter-spacing: -0.01em;
   appearance: none;
   -webkit-appearance: none;

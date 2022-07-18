@@ -6,11 +6,11 @@ const StyledSearchBar = styled.div`
   width: 21.4375rem;
   height: 3rem;
   background: ${palette.white};
-  border: .125rem solid ${palette.black};
-  border-radius: .5rem;
+  border: 0.125rem solid ${palette.black};
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  padding: .25rem .375rem;
+  padding: 0.25rem 0.375rem;
 
   img {
     width: 2.5rem;
@@ -18,7 +18,7 @@ const StyledSearchBar = styled.div`
   }
 
   input {
-    margin-left: .25rem;
+    margin-left: 0.25rem;
     width: 100%;
     height: 100%;
     background-color: transparent;

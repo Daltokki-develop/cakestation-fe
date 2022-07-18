@@ -4,6 +4,7 @@ import Button from '@/components/common/button';
 import Divider from '@/components/common/divider';
 import Input from '@/components/common/input/input';
 import InputToggle from '@/components/common/input/inputToggle';
+import ItemCard from '@/components/common/itemcard';
 import Tag from '@/components/common/tag';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
@@ -165,6 +166,18 @@ const DesignSystem = () => {
         <Typography category={'Bd9'}>Bd9</Typography>
         <Typography category={'Bd10'}>Bd10</Typography>
       </div>
+      <ItemCard
+        line
+        title={'달토끼 케이크'}
+        rate={'4.5'}
+        count={10}
+        distance={'역에서 123m'}
+        pictures={[
+          'test-cakestore.png',
+          'test-cakestore.png',
+          'test-cakestore.png',
+        ]}
+      />
     </Main>
   );
 };

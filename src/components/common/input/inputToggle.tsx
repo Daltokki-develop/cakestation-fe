@@ -49,18 +49,12 @@ const StyledArrowTop = styled(StyledArrowBottom)`
   transform: rotate(-180deg);
 `;
 
-const Test = styled.div`
-  background-color: #000000;
-`;
-
 function InputToggle({ options }: { options: Array<string> }) {
   return (
     <SelectContainer>
       <StyledSelect>
         {options.map((option) => (
-          <option key={option}>
-            <Test>{option}</Test>
-          </option>
+          <option key={option}>{option}</option>
         ))}
       </StyledSelect>
       <StyledArrowTop />

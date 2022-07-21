@@ -90,8 +90,8 @@ const EmptyPicture = styled.div`
 const ItemCard = (props: IItemCardProps) => {
   const AddEmptyPicture = () => {
     const pictureArray = [];
-    for (let i = 0; i < 4 - props.pictures.length; i += 1)
-      pictureArray.push(<EmptyPicture />);
+    for (let index = 0; index < 4 - props.pictures.length; index += 1)
+      pictureArray.push(<EmptyPicture key={index} />);
     return pictureArray;
   };
 
@@ -129,10 +129,10 @@ const ItemCard = (props: IItemCardProps) => {
         </div>
       </ItemCardHeader>
       <Pictures>
-        {props.pictures.map((picture) => {
+        {props.pictures.map((picture, index) => {
           return (
             <Picture
-              key={'picture'}
+              key={index}
               src={`/assets/images/${picture}`}
               alt="picture"
             />

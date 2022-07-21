@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import palette from '@/styles/palette';
 
 const StyledSearchBar = styled.div`
-  width: 21.4375rem;
+  width: 85%;
   height: 3rem;
   background: ${palette.white};
   border: 0.125rem solid ${palette.black};

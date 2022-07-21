@@ -5,6 +5,7 @@ import Divider from '@/components/common/divider';
 import Input from '@/components/common/input/input';
 import InputToggle from '@/components/common/input/inputToggle';
 import ItemCard from '@/components/common/itemcard';
+import Modal from '@/components/common/modal';
 import Tag from '@/components/common/tag';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
@@ -12,7 +13,20 @@ import { Main } from '@/templates/Main';
 
 const DesignSystem = () => {
   // const router = useRouter();
+  // let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
 
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
   return (
     <Main
       meta={
@@ -29,14 +43,29 @@ const DesignSystem = () => {
             <span role="img" aria-label="rocket">
               🚀
             </span>{' '}
-            BUTTON
+            BUTTON & Modal
           </p>
           <div>
-            <Button size={'full'} category={'primary'} disabled={false}>
-              텍스트
+            <Button
+              size={'full'}
+              category={'primary'}
+              disabled={false}
+              onClick={openModal}
+            >
+              Default / Type1 / One Button
             </Button>
+            <Modal
+              isOpen={modalIsOpen}
+              onAfterOpen={afterOpenModal}
+              onRequestClose={closeModal}
+              type={1}
+              title={'Title'}
+              text={'Default / Type1 / One Button'}
+              notice={'notice'}
+              buttons={['확인']}
+            />
             <Button size={'full'} category={'secondary'} disabled={false}>
-              텍스트
+              Default / Type1 / Two Buttons
             </Button>
             <Button size={'full'} category={'primary'} disabled>
               텍스트

@@ -23,6 +23,7 @@ const ModalContent = styled.div`
   justify-content: center;
   align-items: center;
   padding: 24px;
+  font-family: 'Pretendard-Regular';
 `;
 
 const ModalTitle = styled.span`

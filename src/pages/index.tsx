@@ -63,23 +63,23 @@ const Index = () => {
         const map = new window.kakao.maps.Map(container, options);
 
         // 커스텀 마커 표시
-        // const imageSrc = '/assets/images/icons/LocationPicker.svg';
-        // const imageSize = new window.kakao.maps.Size(40, 40);
-        // const imageOption = { offset: new window.kakao.maps.Point(16, 32) };
+        const imageSrc = '/assets/images/icons/spot2.svg';
+        const imageSize = new window.kakao.maps.Size(40, 40);
+        const imageOption = { offset: new window.kakao.maps.Point(16, 32) };
 
         // 현재 위치도 커스텀 마커가 따로 있나?
-        // const markerImage = new window.kakao.maps.MarkerImage(
-        //   imageSrc,
-        //   imageSize,
-        //   imageOption
-        // );
+        const markerImage = new window.kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        );
 
         function displayMarker(locPosition: number, message: string) {
           // 마커를 생성
           const marker = new window.kakao.maps.Marker({
             map,
             position: locPosition,
-            // image: markerImage,
+            image: markerImage,
           });
 
           const iwContent = message; // 인포윈도우에 표시할 내용

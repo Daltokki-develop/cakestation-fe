@@ -8,7 +8,7 @@ const StyledInput = styled.input`
   background-color: ${palette.grey_100};
   border: 0.0625rem solid ${palette.black};
   border-radius: 0.5rem;
-  padding: 0.625rem;
+  padding: 0 0.625rem;
   font-family: 'Pretendard-Medium';
   font-size: 1rem;
 

@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 const SIZES = {
-  full: css`
+  large: css`
     height: 3.75rem;
     font-size: 1rem;
     border-radius: 0;

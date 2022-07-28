@@ -64,7 +64,7 @@ const StyledTag = styled.div<TagProps>`
   justify-content: center;
   align-items: center;
   width: fit-content;
-  padding: 0.375rem;
+  padding: 0 0.375rem;
 
   background-color: ${palette.white};
   border: 0.0625rem solid ${palette.black};

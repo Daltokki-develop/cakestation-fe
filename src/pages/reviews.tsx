@@ -81,7 +81,7 @@ const Reviews = () => {
               initialData={modalData}
             />
           </div>
-          <Divider size={'full'} />
+          <Divider size={'large'} />
           <div>
             {reviews.map((item: any) => (
               <div className="flex" key={item.id}>

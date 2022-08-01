@@ -10,6 +10,12 @@ import Navigation from '@/layouts/Navigation';
 import subways from '@/lib/전체지하철역.json';
 import { Main } from '@/templates/Main';
 
+const MapContainer = styled.div`
+  /* aspect-ratio: 4 / 3; */
+  width: 100%;
+  height: 100vh;
+`;
+
 const Absolute = styled.div`
   position: absolute;
   top: 0;
@@ -21,10 +27,10 @@ const Absolute = styled.div`
 
 const Index = () => {
   // TODO: any 쓰면 안됨~~ 변경 필요~~
+
   const [data, setData] = useState<Array<any>>([
     { 위도: '37.5666805', 경도: '126.9784147' },
   ]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,6 +51,7 @@ const Index = () => {
         <SearchBar placeholder="가게와 가까운 지하철 역 검색" />
       </Header>
       <Absolute>
+        <MapContainer id="map" />
         <Map
           latitude={data[0] && data[0]['위도']}
           longitude={data[0] && data[0]['경도']}

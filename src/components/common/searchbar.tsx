@@ -3,16 +3,17 @@ import styled from 'styled-components';
 import palette from '@/styles/palette';
 
 const StyledSearchBar = styled.div`
-  width: 21.4375rem;
-  height: 3rem;
+  width: 100%;
+  /* height: 3rem; */
   background: ${palette.white};
   border: 0.125rem solid ${palette.black};
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  padding: 0.25rem 0.375rem;
+  padding: 0.25rem 0;
 
   img {
+    margin-left: 0.375rem;
     width: 2.5rem;
     height: 2.5rem;
   }
@@ -32,11 +33,23 @@ const StyledSearchBar = styled.div`
   }
 `;
 
-function SearchBar({ placeholder }: { placeholder: string }) {
+function SearchBar({
+  placeholder,
+  onChange,
+  onKeyPress,
+}: {
+  placeholder: string;
+  onChange: any;
+  onKeyPress?: any;
+}) {
   return (
     <StyledSearchBar>
       <img src="/assets/images/icons/search.svg" alt="search" />
-      <input placeholder={placeholder} />
+      <input
+        placeholder={placeholder}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+      />
     </StyledSearchBar>
   );
 }

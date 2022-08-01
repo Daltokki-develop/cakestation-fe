@@ -96,7 +96,7 @@ const Header = ({
               <Icon src={`/assets/images/icons/${icon}.svg`} />
             </>
           )}
-          {(style === 'text' || style === 'bar') && <>{children}</>}
+          {style === 'text' && <>{children}</>}
           {style === 'icon+text' && (
             <>
               <Icon src={`/assets/images/icons/${icon}.svg`} />
@@ -107,6 +107,7 @@ const Header = ({
           {style === 'icon' && (
             <Icon src={`/assets/images/icons/${icon}.svg`} />
           )}
+          {style === 'bar' && <div className="w-85">{children}</div>}
         </HeaderContent>
       </StyledHeader>
     </>

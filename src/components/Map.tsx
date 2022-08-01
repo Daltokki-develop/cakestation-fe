@@ -40,7 +40,7 @@ function Map({ latitude, longitude, positions }: MapProps) {
         const map = new window.kakao.maps.Map(container, options);
 
         // 커스텀 마커 표시
-        const imageSrc = '/assets/images/icons/LocationPicker.svg';
+        const imageSrc = '/assets/images/icons/pin.svg';
         const imageSize = new window.kakao.maps.Size(40, 40);
         const imageOption = { offset: new window.kakao.maps.Point(16, 32) };
 

@@ -15,46 +15,46 @@ interface ImageProps {
 
 const SIZES = {
   large: css`
-    height: 32px;
-    font-size: 16px;
+    height: 2rem;
+    font-size: 1rem;
   `,
   medium: css`
-    height: 30px;
-    font-size: 14px;
+    height: 1.875rem;
+    font-size: 0.875rem;
   `,
   small: css`
-    height: 26px;
-    font-size: 12px;
+    height: 1.625rem;
+    font-size: 0.75rem;
   `,
 };
 
 const ICONSIZES = {
   large: css`
-    height: 32px;
-    font-size: 16px;
+    height: 2rem;
+    font-size: 1rem;
   `,
   medium: css`
-    height: 30px;
-    font-size: 14px;
+    height: 1.875rem;
+    font-size: 0.875rem;
   `,
   small: css`
-    height: 26px;
-    font-size: 12px;
+    height: 1.625rem;
+    font-size: 0.75rem;
   `,
 };
 
 const IMAGESIZES = {
   large: css`
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
   `,
   medium: css`
-    width: 18px;
-    height: 18px;
+    width: 1.125rem;
+    height: 1.125rem;
   `,
   small: css`
-    width: 14px;
-    height: 14px;
+    width: 0.875rem;
+    height: 0.875rem;
   `,
 };
 
@@ -64,20 +64,20 @@ const StyledTag = styled.div<TagProps>`
   justify-content: center;
   align-items: center;
   width: fit-content;
-  padding: 6px;
+  padding: 0 0.375rem;
 
   background-color: ${palette.white};
-  border: 1px solid ${palette.black};
-  border-radius: 8px;
+  border: 0.0625rem solid ${palette.black};
+  border-radius: 0.5rem;
 
   color: ${palette.black};
-  letter-spacing: -0.21px;
+  letter-spacing: -0.0131rem;
   font-family: 'Pretendard-Regular';
 `;
 
 const StyledImage = styled.img<ImageProps>`
   ${(props) => props.imageStyle};
-  margin-right: 4px;
+  margin-right: 0.25rem;
 `;
 
 function Tag({

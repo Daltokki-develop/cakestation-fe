@@ -2,3 +2,21 @@
   margin: 0;
   padding: 0;
 }
+
+.ReactModal__Overlay--after-open {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.ReactModal__Content--after-open {
+    width: 328px !important;
+    height: fit-content !important;
+
+    border-radius: 8px !important;
+    border: none !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}

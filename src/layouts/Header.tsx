@@ -10,24 +10,24 @@ type IHeaderProps = {
 
 const STYLES = {
   'logo+icon': css`
-    padding: 40px 20px 0 20px;
+    padding: 2.5rem 1.25rem 0 1.25rem;
     display: flex;
     justify-content: space-between;
   `,
   text: css`
-    padding-top: 55px;
+    padding-top: 3.4375rem;
     justify-content: center;
   `,
   'icon+text': css`
-    padding: 55px 8px 0 8px;
+    padding: 3.4375rem 0.5rem 0 0.5rem;
     display: flex;
     justify-content: space-between;
   `,
   icon: css`
-    padding: 55px 8px 0 8px;
+    padding: 3.4375rem 0.5rem 0 0.5rem;
   `,
   bar: css`
-    padding-top: 48px;
+    padding-top: 3rem;
     justify-content: center;
   `,
 };
@@ -36,7 +36,7 @@ const StyledHeader = styled.div`
   position: sticky;
   max-width: 100%;
   width: 100%;
-  height: 96px;
+  height: 6rem;
   background-color: transparent;
   z-index: 100;
 `;
@@ -48,30 +48,30 @@ const HeaderContent = styled.div<IHeaderProps>`
   ${(props) => props.styleType};
   display: flex;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.125rem;
   text-align: center;
   align-items: center;
 `;
 
 const LogoContainer = styled.div`
-  width: 165px;
-  height: 40px;
+  width: 10.3125rem;
+  height: 2.5rem;
   background: ${palette.cakeLemon_400};
-  border-radius: 16px;
+  border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const Icon = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   object-fit: cover;
 `;
 
 const Empty = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
 `;
 
 const Header = ({
@@ -96,7 +96,7 @@ const Header = ({
               <Icon src={`/assets/images/icons/${icon}.svg`} />
             </>
           )}
-          {(style === 'text' || style === 'bar') && <>{children}</>}
+          {style === 'text' && <>{children}</>}
           {style === 'icon+text' && (
             <>
               <Icon src={`/assets/images/icons/${icon}.svg`} />
@@ -107,6 +107,7 @@ const Header = ({
           {style === 'icon' && (
             <Icon src={`/assets/images/icons/${icon}.svg`} />
           )}
+          {style === 'bar' && <div className="w-85">{children}</div>}
         </HeaderContent>
       </StyledHeader>
     </>

@@ -11,20 +11,20 @@ interface ButtonProps {
 }
 
 const SIZES = {
-  full: css`
-    height: 60px;
-    font-size: 16px;
+  large: css`
+    height: 3.75rem;
+    font-size: 1rem;
     border-radius: 0;
   `,
   medium: css`
-    height: 52px;
-    font-size: 14px;
-    border-radius: 32px;
+    height: 3.25rem;
+    font-size: 0.875rem;
+    border-radius: 2rem;
   `,
   small: css`
-    height: 40px;
-    font-size: 12px;
-    border-radius: 32px;
+    height: 2.5rem;
+    font-size: 0.75rem;
+    border-radius: 2rem;
   `,
 };
 
@@ -39,7 +39,7 @@ const StyledButton = styled.div<ButtonProps>`
       ? palette.cakeLemon_400
       : palette.cakeLavender_500};
   border: ${(props) =>
-    props.disabled ? 'none' : `2px solid ${palette.grey_800}`};
+    props.disabled ? 'none' : `.125rem solid ${palette.grey_800}`};
   color: ${palette.black};
   font-weight: 500;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};

@@ -2,3 +2,58 @@
   margin: 0;
   padding: 0;
 }
+
+a {
+  text-decoration: none;
+}
+
+.ReactModal__Overlay--after-open {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.ReactModal__Content--after-open {
+  width: 328px !important;
+  height: fit-content !important;
+
+  border-radius: 8px !important;
+  border: none !important;
+
+  padding: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-85 {
+  width: 85%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.mb-10 {
+  margin-bottom: 0.625rem;
+}
+
+.mb-18 {
+  margin-bottom: 1.125rem;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.b-108 {
+  bottom: 6.75rem;
+}
+
+.mt-20 {
+  margin-top: 1.25rem;
+}

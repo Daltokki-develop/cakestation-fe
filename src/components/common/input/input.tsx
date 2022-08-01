@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import palette from '../../../styles/palette';
 
 const StyledInput = styled.input`
-  width: 343px;
-  height: 48px;
+  width: 21.4375rem;
+  height: 3rem;
   background-color: ${palette.grey_100};
-  border: 1px solid ${palette.black};
-  border-radius: 8px;
-  padding: 10px;
+  border: 0.0625rem solid ${palette.black};
+  border-radius: 0.5rem;
+  padding: 0 0.625rem;
   font-family: 'Pretendard-Medium';
-  font-size: 16px;
+  font-size: 1rem;
 
   ::placeholder {
     font-weight: 500;
@@ -19,14 +19,14 @@ const StyledInput = styled.input`
   }
   :required {
     background-color: ${palette.red_100};
-    border: 2px solid ${palette.red_500};
+    border: 0.125rem solid ${palette.red_500};
     ::placeholder {
       color: ${palette.grey_500};
     }
   }
   &:focus {
     background-color: ${palette.cakeLemon_100};
-    border: 2px solid ${palette.black};
+    border: 0.125rem solid ${palette.black};
     ::placeholder {
       color: transparent;
     }

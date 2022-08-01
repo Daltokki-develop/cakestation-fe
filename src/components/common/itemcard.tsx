@@ -11,8 +11,9 @@ interface IItemCardProps {
   icon?: string;
   rate: string;
   count: number;
-  distance: string;
+  distance?: string;
   pictures: string[];
+  heart?: boolean;
 }
 
 interface IStyledItemCardProps {
@@ -31,6 +32,12 @@ const StyledItemCard = styled.div<IStyledItemCardProps>`
 
   background-color: ${palette.white};
   overflow: hidden;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${palette.grey_100};
+  }
 `;
 
 const ItemCardHeader = styled.div`
@@ -104,6 +111,7 @@ const ItemCard = (props: IItemCardProps) => {
           </Typography>
           <ItemCardDesc>
             <RateImage src="/assets/images/icons/rate_filled.svg" alt="rate" />
+
             <RateText>
               <Typography category={'Bd7'} color={'grey_800'}>
                 {props.rate}
@@ -114,19 +122,23 @@ const ItemCard = (props: IItemCardProps) => {
                 ({props.count})
               </Typography>
             </CountText>
-            <span>
-              <Typography category={'Bd6'} color={'blue_500'}>
-                {props.distance}
-              </Typography>
-            </span>
+            {props.distance && (
+              <span>
+                <Typography category={'Bd6'} color={'blue_500'}>
+                  {props.distance}
+                </Typography>
+              </span>
+            )}
           </ItemCardDesc>
         </ItemCardTitle>
-        <div>
-          <HeartImage
-            src="/assets/images/icons/heart_color-filled.svg"
-            alt="heart"
-          />
-        </div>
+        {props.heart && (
+          <div>
+            <HeartImage
+              src="/assets/images/icons/heart_color-filled.svg"
+              alt="heart"
+            />
+          </div>
+        )}
       </ItemCardHeader>
       <Pictures>
         {props.pictures.map((picture, index) => {

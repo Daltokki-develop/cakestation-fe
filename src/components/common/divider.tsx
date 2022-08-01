@@ -8,14 +8,14 @@ interface DividerProps {
 }
 
 const SIZES = {
-  sm: css`
-    height: 2px;
+  small: css`
+    height: 0.125rem;
   `,
-  md: css`
-    height: 4px;
+  medium: css`
+    height: 0.25rem;
   `,
-  lg: css`
-    height: 6px;
+  large: css`
+    height: 0.375rem;
   `,
 };
 
@@ -23,6 +23,7 @@ const StyledDivider = styled.hr<DividerProps>`
   ${(props) => props.sizeStyle};
   background-color: ${palette.grey_200};
   width: 100%;
+  border: none;
 `;
 
 function Divider({ size }: { size: string }) {

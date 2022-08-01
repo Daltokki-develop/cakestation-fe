@@ -14,10 +14,10 @@ const Wrapper = styled(motion.div)`
   z-index: 100;
   max-width: 28rem;
   width: 100%;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
   background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0rem 0rem 0.625rem rgba(0, 0, 0, 0.6);
   transition: transform 250ms ease-out;
 `;
 

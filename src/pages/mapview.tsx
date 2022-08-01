@@ -42,7 +42,10 @@ const Mapview = () => {
   return (
     <Main meta={<Meta title="Cakestation Map" description="지도 맛보기" />}>
       <Header style={'bar'}>
-        <SearchBar placeholder="가게와 가까운 지하철 역 검색" />
+        <SearchBar
+          placeholder="가게와 가까운 지하철 역 검색"
+          onChange={() => {}}
+        />
       </Header>
       <Absolute>
         <Map

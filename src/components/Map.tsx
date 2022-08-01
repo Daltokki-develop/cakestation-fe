@@ -39,7 +39,8 @@ function Map({ latitude, longitude, positions }: MapProps) {
         };
         const map = new window.kakao.maps.Map(container, options);
 
-        const imageSize = new window.kakao.maps.Size(40, 40);
+        const PlacePinSize = new window.kakao.maps.Size(35, 35);
+        const NowPinSize = new window.kakao.maps.Size(45, 45);
         const imageOption = { offset: new window.kakao.maps.Point(16, 32) };
 
         // cake 가게 위치 마커 표시하기
@@ -48,7 +49,7 @@ function Map({ latitude, longitude, positions }: MapProps) {
 
           const markerImage2 = new window.kakao.maps.MarkerImage(
             imageSrc2,
-            imageSize,
+            PlacePinSize,
             imageOption
           );
 
@@ -74,7 +75,7 @@ function Map({ latitude, longitude, positions }: MapProps) {
 
           const markerImage = new window.kakao.maps.MarkerImage(
             imageSrc,
-            imageSize,
+            NowPinSize,
             imageOption
           );
 

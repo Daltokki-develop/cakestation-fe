@@ -63,7 +63,7 @@ const MainSection = styled(BasicSection)`
   width: 100%;
   box-shadow: 0 1.25rem 1.5625rem -0.3125rem rgba(0, 0, 0, 0.1),
     0 0.625rem 0.625rem -0.3125rem rgba(0, 0, 0, 0.04);
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 100vh;
   top: 0;
   position: sticky;

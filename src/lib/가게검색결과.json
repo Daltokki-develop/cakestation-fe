@@ -1,0 +1,32 @@
+[
+  {
+    "title": "달토끼 케이크",
+    "rate": "4.5",
+    "count": 10,
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  },
+  {
+    "title": "달토끼 케이크",
+    "rate": "4.5",
+    "count": 10,
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  },
+  {
+    "title": "달토끼 케이크",
+    "rate": "4.5",
+    "count": 10,
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  }
+]

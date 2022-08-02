@@ -11,49 +11,8 @@ import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
 const Styles = styled.div`
-  .w-100 {
-    width: 100%;
-  }
-
-  .w-85 {
-    width: 85%;
-  }
-
-  .column {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mb-10 {
-    margin-bottom: 0.625rem;
-  }
-
-  .mb-18 {
-    margin-bottom: 1.125rem;
-  }
-
-  .fixed {
-    position: fixed;
-  }
-
-  .b-108 {
-    bottom: 6.75rem;
-  }
-
-  .b-0 {
-    bottom: 0;
-  }
-
   .max-w {
     max-width: 28rem;
-  }
-
-  .mt-20 {
-    margin-top: 1.25rem;
-  }
-
-  .mt-30 {
-    margin-top: 30px;
   }
 `;
 
@@ -81,7 +40,7 @@ const AddPictures = () => {
             </div>
           </div>
           <div className="fixed b-0 w-100 max-w">
-            <Link href={`/reviews/write/${id}/pictures/`}>
+            <Link href={`/reviews/write/${id}/order/`}>
               <a>
                 <Button
                   size={'large'}

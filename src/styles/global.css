@@ -50,10 +50,18 @@ a {
   position: fixed;
 }
 
+.b-0 {
+  bottom: 0;
+}
+
 .b-108 {
   bottom: 6.75rem;
 }
 
 .mt-20 {
   margin-top: 1.25rem;
+}
+
+.mt-30 {
+  margin-top: 30px;
 }

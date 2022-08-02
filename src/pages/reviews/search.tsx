@@ -13,41 +13,8 @@ import results from '@/lib/가게검색결과.json';
 import { Main } from '@/templates/Main';
 
 const Styles = styled.div`
-  .w-100 {
-    width: 100%;
-  }
-
-  .w-85 {
-    width: 85%;
-  }
-
-  .column {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mb-10 {
-    margin-bottom: 0.625rem;
-  }
-
-  .mb-18 {
-    margin-bottom: 1.125rem;
-  }
-
-  .fixed {
-    position: fixed;
-  }
-
-  .b-108 {
-    bottom: 6.75rem;
-  }
-
   .max-w {
     max-width: 22.9071rem;
-  }
-
-  .mt-20 {
-    margin-top: 1.25rem;
   }
 `;
 

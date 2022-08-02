@@ -15,6 +15,7 @@ const AddPictures = () => {
 
   const [thumb, setThumb] = useState<string[]>([]);
   const [progress, setProgress] = useState<number>(0);
+
   const onChange = useCallback(
     async (formData: FormData) => {
       const config = {
@@ -30,10 +31,6 @@ const AddPictures = () => {
     [thumb]
   );
 
-  const GoNext = () => {
-    console.log(`가게 ID : ${id}\n`);
-  };
-
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
       <Review
@@ -41,7 +38,9 @@ const AddPictures = () => {
         title={'리뷰 사진'}
         subtitle={'케이크 디자인이 잘 보이는 사진을 선택해 주세요.'}
         nextText={'다음'}
-        nextFunc={GoNext}
+        nextFunc={() => {
+          console.log(`가게 ID : ${id}\n`);
+        }}
         nextLink={`/reviews/write/${id}/order/`}
       >
         <div className="text-end mb-60">
@@ -50,27 +49,20 @@ const AddPictures = () => {
           </Typography>
         </div>
         <UploadButton
-          label="Upload Single File"
-          // allowMultipleFiles 가 false 일경우, 하나씩만 올릴 수 있다.
           allowMultipleFiles={true}
           uploadFileName="file"
           onChange={onChange}
         />
         {progress !== 100 && <ProgressBar width={`${progress}%`} />}
         <ul>
-          {thumb &&
-            thumb.map((item: string, i: number) => {
-              console.log('item', item);
-              return (
-                <li key={i}>
-                  <img
-                    src={`/uploads/${item}`}
-                    width="300"
-                    alt="업로드이미지"
-                  />
-                </li>
-              );
-            })}
+          {thumb.map((item: string, i: number) => {
+            console.log('item', item);
+            return (
+              <li key={i}>
+                <img src={`/uploads/${item}`} width="300" alt="업로드이미지" />
+              </li>
+            );
+          })}
         </ul>
       </Review>
     </Main>

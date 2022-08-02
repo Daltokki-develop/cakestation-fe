@@ -6,7 +6,6 @@ import palette from '@/styles/palette';
 export interface IProps {
   acceptedFileTypes?: string;
   allowMultipleFiles?: boolean;
-  label: string;
   onChange: (formData: FormData) => void;
   uploadFileName: string;
 }

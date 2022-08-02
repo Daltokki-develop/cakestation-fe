@@ -13,6 +13,10 @@ import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
 
 const StyledRate = styled(Rate)`
+  width: 100%;
+  margin-bottom: 73px;
+  display: flex;
+  justify-content: center;
   font-size: 40px;
 
   .rc-rate-star-half .rc-rate-star-first,
@@ -62,9 +66,7 @@ const Satisfaction = () => {
         nextLink={`/`}
       >
         <div className="w-85">
-          <div className="w-100 mb-73 row contents-center">
-            <StyledRate allowHalf />
-          </div>
+          <StyledRate allowHalf />
           <div className="w-100 mb-24 text-center">
             <Typography category={'Bd2'}>
               좋았던 점을 체크해주세요 (중복가능)
@@ -72,23 +74,20 @@ const Satisfaction = () => {
           </div>
           <div className="mb-83">
             <div className="row contents-center mb-6">
-              <ReviewTag clicked>
-                <Typography category={'Bd7'}>직원이 친절해요</Typography>
-              </ReviewTag>
-              <ReviewTag>
-                <Typography category={'Bd7'}>역과 가까워요</Typography>
-              </ReviewTag>
-              <ReviewTag>
-                <Typography category={'Bd7'}>가격이 저렴해요</Typography>
-              </ReviewTag>
+              {['직원이 친절해요', '역과 가까워요', '가격이 저렴해요'].map(
+                (tag, index) => (
+                  <ReviewTag key={index}>
+                    <Typography category={'Bd7'}>{tag}</Typography>
+                  </ReviewTag>
+                )
+              )}
             </div>
             <div className="row contents-center">
-              <ReviewTag>
-                <Typography category={'Bd7'}>예약이 편해요</Typography>
-              </ReviewTag>
-              <ReviewTag>
-                <Typography category={'Bd7'}>케이크가 맛있어요</Typography>
-              </ReviewTag>
+              {['예약이 편해요', '케이크가 맛있어요'].map((tag, index) => (
+                <ReviewTag key={index}>
+                  <Typography category={'Bd7'}>{tag}</Typography>
+                </ReviewTag>
+              ))}
             </div>
           </div>
           <div className="w-100 mb-24 text-center">

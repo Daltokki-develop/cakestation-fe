@@ -11,6 +11,58 @@ export interface IProps {
   uploadFileName: string;
 }
 
+const StyledUploadButton = styled.div`
+  width: 292px;
+  height: 292px;
+  background-color: ${palette.grey_100};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease-in-out;
+
+  .innerbox {
+    width: 170px;
+    height: 160px;
+    background-color: ${palette.grey_300};
+
+    position: relative;
+
+    transition: all 0.2s ease-in-out;
+  }
+
+  .innerbox::before {
+    content: '';
+    position: absolute;
+    top: 63px;
+    left: 83.73px;
+    width: 4.55px;
+    height: 36px;
+    background-color: ${palette.white};
+  }
+
+  .innerbox::after {
+    content: '';
+    position: absolute;
+    top: 78.733px;
+    left: 68px;
+    width: 36px;
+    height: 4.55px;
+    background-color: ${palette.white};
+  }
+
+  &:hover {
+    background-color: ${palette.grey_200};
+
+    .innerbox {
+      background-color: ${palette.grey_400};
+    }
+  }
+`;
+
 export const UploadButton: React.FC<IProps> = (props) => {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const formRef = React.useRef<HTMLFormElement | null>(null);
@@ -34,58 +86,6 @@ export const UploadButton: React.FC<IProps> = (props) => {
 
     formRef.current?.reset();
   };
-
-  const StyledUploadButton = styled.div`
-    width: 292px;
-    height: 292px;
-    background-color: ${palette.grey_100};
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    cursor: pointer;
-
-    transition: all 0.2s ease-in-out;
-
-    .innerbox {
-      width: 170px;
-      height: 160px;
-      background-color: ${palette.grey_300};
-
-      position: relative;
-
-      transition: all 0.2s ease-in-out;
-    }
-
-    .innerbox::before {
-      content: '';
-      position: absolute;
-      top: 63px;
-      left: 83.73px;
-      width: 4.55px;
-      height: 36px;
-      background-color: ${palette.white};
-    }
-
-    .innerbox::after {
-      content: '';
-      position: absolute;
-      top: 78.733px;
-      left: 68px;
-      width: 36px;
-      height: 4.55px;
-      background-color: ${palette.white};
-    }
-
-    &:hover {
-      background-color: ${palette.grey_200};
-
-      .innerbox {
-        background-color: ${palette.grey_400};
-      }
-    }
-  `;
 
   return (
     <form ref={formRef}>

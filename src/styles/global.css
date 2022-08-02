@@ -127,7 +127,10 @@ a {
   text-align: center;
 }
 
-
 .text-end {
   text-align: end;
+}
+
+.max-w-28 {
+  max-width: 28rem;
 }

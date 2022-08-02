@@ -1,22 +1,13 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Button from '@/components/common/button';
-import Section from '@/components/common/section';
 import Typography from '@/components/common/typography';
 import MapforReview from '@/components/MapforReview';
-import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
+import { Review } from '@/layouts/Review';
 import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
-
-const Styles = styled.div`
-  .max-w {
-    max-width: 28rem;
-  }
-`;
 
 interface IDistanceButtonProps {
   clicked?: boolean;
@@ -63,57 +54,37 @@ const Distance = () => {
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
-      <Header style={'text'}>리뷰 쓰기</Header>
-      <Styles>
-        <Section>
-          <div className="w-85 column">
-            <div className="mb-10">
-              <Typography category={'H1'}>역과의 도보거리</Typography>
-            </div>
-            <div className="mb-18">
-              <Typography category={'Bd2'}>
-                해당 가게와 역 간의 도보거리를 입력해주세요.
-              </Typography>
-            </div>
-          </div>
-          <div className="w-100">
-            <MapforReview
-              latitude={37.5666805}
-              longitude={126.9784147}
-              positions={{ 위도: '37.5666805', 경도: '126.9784147' }}
-              index={1}
-            />
-          </div>
-          <div className="mt-30">
-            <DistanceButton clicked onClick={HandleDistance}>
-              <Typography category={'Bd3'}>5분</Typography>
-            </DistanceButton>
-            <DistanceButton onClick={HandleDistance}>
-              <Typography category={'Bd3'}>10분</Typography>
-            </DistanceButton>
-            <DistanceButton onClick={HandleDistance}>
-              <Typography category={'Bd3'}>15분</Typography>
-            </DistanceButton>
-            <DistanceButton onClick={HandleDistance}>
-              <Typography category={'Bd3'}>15분 이상</Typography>
-            </DistanceButton>
-          </div>
-          <div className="fixed b-0 w-100 max-w">
-            <Link href={`/reviews/write/${id}/addpictures/`}>
-              <a>
-                <Button
-                  size={'large'}
-                  category={'primary'}
-                  disabled={false}
-                  onClick={GoNext}
-                >
-                  다음
-                </Button>
-              </a>
-            </Link>
-          </div>
-        </Section>
-      </Styles>
+      <Review
+        progress={'20%'}
+        title={'역과의 도보거리'}
+        subtitle={'해당 가게와 역 간의 도보거리를 입력해주세요.'}
+        nextText={'다음'}
+        nextFunc={GoNext}
+        nextLink={`/reviews/write/${id}/addpictures/`}
+      >
+        <div className="w-100">
+          <MapforReview
+            latitude={37.5666805}
+            longitude={126.9784147}
+            positions={{ 위도: '37.5666805', 경도: '126.9784147' }}
+            index={1}
+          />
+        </div>
+        <div className="mt-30">
+          <DistanceButton clicked onClick={HandleDistance}>
+            <Typography category={'Bd3'}>5분</Typography>
+          </DistanceButton>
+          <DistanceButton onClick={HandleDistance}>
+            <Typography category={'Bd3'}>10분</Typography>
+          </DistanceButton>
+          <DistanceButton onClick={HandleDistance}>
+            <Typography category={'Bd3'}>15분</Typography>
+          </DistanceButton>
+          <DistanceButton onClick={HandleDistance}>
+            <Typography category={'Bd3'}>15분 이상</Typography>
+          </DistanceButton>
+        </div>
+      </Review>
     </Main>
   );
 };

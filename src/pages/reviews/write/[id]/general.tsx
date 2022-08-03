@@ -9,6 +9,7 @@ import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
+import tags from '@/lib/총평태그.json';
 import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
 
@@ -34,6 +35,8 @@ const ReviewTag = styled.div<IReviewTagProps>`
     props.clicked ? `${palette.cakeLemon_400}` : `${palette.grey_100}`};
   border: 1px solid ${palette.black};
   padding: 10px 12px;
+  margin: 3px;
+  white-space: nowrap;
   border-radius: 16px;
 
   display: flex;
@@ -47,13 +50,9 @@ const ReviewTag = styled.div<IReviewTagProps>`
   }
 `;
 
-const Satisfaction = () => {
+const General = () => {
   const router = useRouter();
   const { id } = router.query;
-
-  const GoNext = () => {
-    console.log(`가게 ID : ${id}\n`);
-  };
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -62,28 +61,21 @@ const Satisfaction = () => {
         title={'마지막 총평'}
         subtitle={'이 가게는 전반적으로 어땠나요?'}
         nextText={'등록하기'}
-        nextFunc={GoNext}
+        nextFunc={() => {
+          console.log(`가게 ID : ${id}\n`);
+        }}
         nextLink={`/`}
       >
         <div className="w-85">
           <StyledRate allowHalf />
-          <div className="w-100 mb-24 text-center">
+          <div className="w-100 mb-21 text-center">
             <Typography category={'Bd2'}>
               좋았던 점을 체크해주세요 (중복가능)
             </Typography>
           </div>
-          <div className="mb-83">
-            <div className="row contents-center mb-6">
-              {['직원이 친절해요', '역과 가까워요', '가격이 저렴해요'].map(
-                (tag, index) => (
-                  <ReviewTag key={index}>
-                    <Typography category={'Bd7'}>{tag}</Typography>
-                  </ReviewTag>
-                )
-              )}
-            </div>
-            <div className="row contents-center">
-              {['예약이 편해요', '케이크가 맛있어요'].map((tag, index) => (
+          <div className="mb-80">
+            <div className="row contents-center mb-6 flex-wrap">
+              {tags.map((tag, index) => (
                 <ReviewTag key={index}>
                   <Typography category={'Bd7'}>{tag}</Typography>
                 </ReviewTag>
@@ -100,4 +92,4 @@ const Satisfaction = () => {
   );
 };
 
-export default Satisfaction;
+export default General;

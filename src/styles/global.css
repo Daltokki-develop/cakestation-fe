@@ -47,6 +47,10 @@ a {
   flex-direction: row;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .fixed {
   position: fixed;
 }
@@ -91,6 +95,10 @@ a {
   margin-bottom: 20px;
 }
 
+.mb-21 {
+  margin-bottom: 21px;
+}
+
 .mb-24 {
   margin-bottom: 24px;
 }
@@ -117,6 +125,10 @@ a {
 
 .mb-75 {
   margin-bottom: 75px;
+}
+
+.mb-80 {
+  margin-bottom: 80px;
 }
 
 .mb-83 {

@@ -5,7 +5,7 @@ import palette from '../../../styles/palette';
 const SelectContainer = styled.div`
   position: relative;
   display: inline-block;
-  width: 21.4375rem;
+  width: 100%;
   height: 3rem;
   background-color: ${palette.grey_100};
   border: 0.0625rem solid ${palette.black};

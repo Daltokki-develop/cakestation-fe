@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import palette from '../../../styles/palette';
 
 const StyledInput = styled.input`
-  width: 21.4375rem;
+  width: 100%;
   height: 3rem;
   background-color: ${palette.grey_100};
   border: 0.0625rem solid ${palette.black};
   border-radius: 0.5rem;
-  padding: 0 0.625rem;
   font-family: 'Pretendard-Medium';
   font-size: 1rem;
 

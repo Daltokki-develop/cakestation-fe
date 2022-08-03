@@ -73,14 +73,12 @@ const General = () => {
               좋았던 점을 체크해주세요 (중복가능)
             </Typography>
           </div>
-          <div className="mb-80">
-            <div className="row contents-center mb-6 flex-wrap">
-              {tags.map((tag, index) => (
-                <ReviewTag key={index}>
-                  <Typography category={'Bd7'}>{tag}</Typography>
-                </ReviewTag>
-              ))}
-            </div>
+          <div className="row contents-center mb-80 flex-wrap">
+            {tags.map((tag, index) => (
+              <ReviewTag key={index}>
+                <Typography category={'Bd7'}>{tag}</Typography>
+              </ReviewTag>
+            ))}
           </div>
           <div className="w-100 mb-24 text-center">
             <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>

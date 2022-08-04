@@ -1,8 +1,21 @@
 [
   {
-    "title": "달토끼 케이크",
+    "id": 0,
+    "title": "달토끼 케이크 잠실점",
+    "rate": "4.1",
+    "count": 31,
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "달토끼 케이크 신촌점",
     "rate": "4.5",
-    "count": 10,
+    "count": 28,
     "pictures": [
       "test-cakestore.png",
       "test-cakestore.png",
@@ -10,19 +23,10 @@
     ]
   },
   {
-    "title": "달토끼 케이크",
-    "rate": "4.5",
-    "count": 10,
-    "pictures": [
-      "test-cakestore.png",
-      "test-cakestore.png",
-      "test-cakestore.png"
-    ]
-  },
-  {
-    "title": "달토끼 케이크",
-    "rate": "4.5",
-    "count": 10,
+    "id": 2,
+    "title": "달토끼 케이크 강남점",
+    "rate": "3.8",
+    "count": 47,
     "pictures": [
       "test-cakestore.png",
       "test-cakestore.png",

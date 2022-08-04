@@ -33,6 +33,10 @@ a {
   width: 85%;
 }
 
+.flex {
+  display: flex;
+}
+
 .contents-center {
   justify-content: center;
 }
@@ -145,4 +149,29 @@ a {
 
 .max-w-28 {
   max-width: 28rem;
+}
+
+/* swiper */
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper-pagination {
+    position: relative !important;
+}
+
+.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: 0px !important;
+  margin-top: 40px;
+}
+
+.swiper-pagination-bullet {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #111111 !important;
 }

@@ -75,6 +75,10 @@ a {
   margin-top: 30px;
 }
 
+.mt-75 {
+  margin-top: 75px;
+}
+
 .mb-6 {
   margin-bottom: 6px;
 }
@@ -159,19 +163,36 @@ a {
 }
 
 .swiper-pagination {
-    position: relative !important;
+  position: relative !important;
 }
 
-.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
   bottom: 0px !important;
   margin-top: 40px;
 }
 
 .swiper-pagination-bullet {
-    width: 6px !important;
-    height: 6px !important;
+  width: 6px !important;
+  height: 6px !important;
 }
 
 .swiper-pagination-bullet-active {
   background-color: #111111 !important;
+}
+
+/* Ruquired */
+.required {
+  position: relative;
+}
+
+.required::before {
+  position: absolute;
+  left: -8px;
+  top: -6px;
+  content: "*";
+  color: #ff7283;
+  font-size: 16px;
 }

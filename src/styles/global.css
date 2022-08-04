@@ -67,6 +67,10 @@ a {
   bottom: 6.75rem;
 }
 
+.pt-6 {
+  padding-top: 40px;
+}
+
 .mt-20 {
   margin-top: 1.25rem;
 }

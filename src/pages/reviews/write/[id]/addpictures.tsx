@@ -58,7 +58,7 @@ const AddPictures = () => {
         <div className="w-85">
           <div className="w-100 text-end mb-60">
             <Typography category={'Bd2'} color={'cakeLemon_800'}>
-              (1/10)
+              ({thumb.length}/10)
             </Typography>
           </div>
           <Swiper pagination={true} modules={[Pagination]} className="mySwiper">

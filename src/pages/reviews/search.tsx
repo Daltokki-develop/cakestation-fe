@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -12,13 +13,7 @@ import Navigation from '@/layouts/Navigation';
 import results from '@/lib/가게검색결과.json';
 import { Main } from '@/templates/Main';
 
-const Styles = styled.div`
-  .max-w {
-    max-width: 22.9071rem;
-  }
-`;
-
-const MT16 = styled.div`
+const MT16 = styled.a`
   & + & {
     margin-top: 1rem;
   }
@@ -43,26 +38,29 @@ const ReviewsSearch = () => {
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
       <Header style={'text'}>리뷰 쓰기</Header>
-      <Styles>
-        <Section padding={'11rem'}>
-          <div className="w-85">
-            <div className="column">
-              <div className="mb-10">
-                <Typography category={'H1'}>케이크 가게 찾기</Typography>
-              </div>
-              <div className="mb-18">
-                <Typography category={'Bd2'}>케이크 가게 찾기</Typography>
-              </div>
+      <Section padding={'11rem'}>
+        <div className="w-85">
+          <div className="column">
+            <div className="mb-10">
+              <Typography category={'H1'}>케이크 가게 찾기</Typography>
             </div>
-            <SearchBar
-              placeholder={'가게 이름 검색'}
-              onChange={(e: any) => setKeyword(e.target.value)}
-              onKeyPress={FetchResultListwithKey}
-            />
-            <div className="column mt-20">
-              {resultList && resultList[0]
-                ? resultList.map((result, index) => (
-                    <MT16 key={index}>
+            <div className="mb-18">
+              <Typography category={'Bd2'}>케이크 가게 찾기</Typography>
+            </div>
+          </div>
+          <SearchBar
+            placeholder={'가게 이름 검색'}
+            onChange={(e: any) => setKeyword(e.target.value)}
+            onKeyPress={FetchResultListwithKey}
+          />
+          <div className="column mt-20 text-center">
+            {resultList && resultList[0]
+              ? resultList.map((result, index) => (
+                  <Link
+                    key={index}
+                    href={`/reviews/write/${result.id}/distance`}
+                  >
+                    <MT16>
                       <ItemCard
                         line
                         title={result.title}
@@ -71,15 +69,30 @@ const ReviewsSearch = () => {
                         pictures={result.pictures}
                       />
                     </MT16>
-                  ))
-                : firstSearch && (
-                    <Typography category={'Bd7'} color={'grey_500'}>
+                  </Link>
+                ))
+              : firstSearch && (
+                  <>
+                    <img
+                      src="/assets/images/icons/no_result.svg"
+                      alt="NO RESULT"
+                    />
+                    <Typography category={'Bd7'} color={'grey_400'}>
                       검색 결과가 없습니다.
                     </Typography>
-                  )}
-            </div>
-            {keyword && (
-              <div className="w-100 fixed b-108 max-w">
+                  </>
+                )}
+            {firstSearch && (
+              <div className="pt-6">
+                <Typography category={'Bd7'} color={'grey_400'}>
+                  <u>찾으시는 가게가 없으신가요?</u>
+                </Typography>
+              </div>
+            )}
+          </div>
+          {keyword && (
+            <div className="w-100 fixed b-108 max-w-28">
+              <div className="w-85">
                 <Button
                   size={'medium'}
                   category={'primary'}
@@ -89,10 +102,10 @@ const ReviewsSearch = () => {
                   찾기
                 </Button>
               </div>
-            )}
-          </div>
-        </Section>
-      </Styles>
+            </div>
+          )}
+        </div>
+      </Section>
       <Navigation type={'default'} />
     </Main>
   );

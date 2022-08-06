@@ -1,101 +1,70 @@
-import Link from 'next/link';
+import axios from 'axios';
 import { useRouter } from 'next/router';
-import React from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useState } from 'react';
 
-import Button from '@/components/common/button';
-import Section from '@/components/common/section';
+import ProgressBar from '@/components/common/progressbar';
 import Typography from '@/components/common/typography';
-import { Header } from '@/layouts/Header';
+import { UploadButton } from '@/components/uploadbutton';
 import { Meta } from '@/layouts/Meta';
+import { Review } from '@/layouts/Review';
 import { Main } from '@/templates/Main';
-
-const Styles = styled.div`
-  .w-100 {
-    width: 100%;
-  }
-
-  .w-85 {
-    width: 85%;
-  }
-
-  .column {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mb-10 {
-    margin-bottom: 0.625rem;
-  }
-
-  .mb-18 {
-    margin-bottom: 1.125rem;
-  }
-
-  .fixed {
-    position: fixed;
-  }
-
-  .b-108 {
-    bottom: 6.75rem;
-  }
-
-  .b-0 {
-    bottom: 0;
-  }
-
-  .max-w {
-    max-width: 28rem;
-  }
-
-  .mt-20 {
-    margin-top: 1.25rem;
-  }
-
-  .mt-30 {
-    margin-top: 30px;
-  }
-`;
 
 const AddPictures = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const GoNext = () => {
-    console.log(`가게 ID : ${id}\n`);
-  };
+  const [thumb, setThumb] = useState<string[]>([]);
+  const [progress, setProgress] = useState<number>(0);
+
+  const onChange = useCallback(
+    async (formData: FormData) => {
+      const config = {
+        headers: { 'content-type': 'multipart/form-data' },
+        onUploadProgress: (event: { loaded: number; total: number }) => {
+          setProgress(Math.round((event.loaded * 100) / event.total));
+        },
+      };
+      axios.post<any>('/api/imageupload', formData, config).then((res) => {
+        setThumb([...thumb, ...res.data]);
+      });
+    },
+    [thumb]
+  );
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
-      <Header style={'text'}>리뷰 쓰기</Header>
-      <Styles>
-        <Section>
-          <div className="w-85 column">
-            <div className="mb-10">
-              <Typography category={'H1'}>리뷰 사진</Typography>
-            </div>
-            <div className="mb-18">
-              <Typography category={'Bd2'}>
-                케이크 디자인이 잘 보이는 사진을 선택해 주세요.
-              </Typography>
-            </div>
-          </div>
-          <div className="fixed b-0 w-100 max-w">
-            <Link href={`/reviews/write/${id}/pictures/`}>
-              <a>
-                <Button
-                  size={'large'}
-                  category={'primary'}
-                  disabled={false}
-                  onClick={GoNext}
-                >
-                  다음
-                </Button>
-              </a>
-            </Link>
-          </div>
-        </Section>
-      </Styles>
+      <Review
+        progress={'40%'}
+        title={'리뷰 사진'}
+        subtitle={'케이크 디자인이 잘 보이는 사진을 선택해 주세요.'}
+        nextText={'다음'}
+        nextFunc={() => {
+          console.log(`가게 ID : ${id}\n`);
+        }}
+        nextLink={`/reviews/write/${id}/order/`}
+      >
+        <div className="text-end mb-60">
+          <Typography category={'Bd2'} color={'cakeLemon_800'}>
+            (1/10)
+          </Typography>
+        </div>
+        <UploadButton
+          allowMultipleFiles={true}
+          uploadFileName="file"
+          onChange={onChange}
+        />
+        {progress !== 100 && <ProgressBar width={`${progress}%`} />}
+        <ul>
+          {thumb.map((item: string, i: number) => {
+            console.log('item', item);
+            return (
+              <li key={i}>
+                <img src={`/uploads/${item}`} width="300" alt="업로드이미지" />
+              </li>
+            );
+          })}
+        </ul>
+      </Review>
     </Main>
   );
 };

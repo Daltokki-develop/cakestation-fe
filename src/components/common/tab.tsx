@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import palette from '@/styles/palette';
 
+import Divider from './divider';
 import Typography from './typography';
 
 const StyledUl = styled.ul`
@@ -77,6 +78,7 @@ function Tab({
           </StyledLi>
         ))}
       </StyledUl>
+      <Divider size={'small'} />
       <div>{contents[activeId]}</div>
     </div>
   );

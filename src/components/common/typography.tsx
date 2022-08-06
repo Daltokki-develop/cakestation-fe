@@ -71,7 +71,7 @@ const CATEGORYS = {
   `,
 };
 
-const StyledText = styled.text<TextProps>`
+const StyledText = styled.span<TextProps>`
   ${(props) => props.categoryStyle};
   ${(props) => {
     return css`

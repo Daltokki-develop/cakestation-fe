@@ -2,11 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Divider from '@/components/common/divider';
+import Tab from '@/components/common/tab';
 import Tag from '@/components/common/tag';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
+
+const menuList = {
+  0: <Typography> 내용 1</Typography>,
+  1: <Typography> 내용 2</Typography>,
+  2: <Typography> 내용 3</Typography>,
+  3: <Typography> 내용 4</Typography>,
+};
 
 const Styles = styled.div`
   .row {
@@ -32,6 +40,10 @@ const Styles = styled.div`
     flex-direction: column;
     height: 4.6875rem;
     justify-content: space-between;
+  }
+
+  .tab {
+    margin-top: 0.4375rem;
   }
 `;
 
@@ -97,11 +109,17 @@ const Details = () => (
           </div>
         </div>
         <div className="tags">
-          <Tag size={'small'}>영업중</Tag>
+          <Tag size={'small'} color={'green_500'}>
+            영업중
+          </Tag>
           <div style={{ width: '0.375rem' }}></div>
-          <Tag size={'small'}>역에서 132m</Tag>
+          <Tag size={'small'} color={'blue_500'}>
+            역에서 132m
+          </Tag>
           <div style={{ width: '0.375rem' }}></div>
-          <Tag size={'small'}>도보 10분</Tag>
+          <Tag size={'small'} color={'blue_500'}>
+            도보 10분
+          </Tag>
         </div>
         <div className="info">
           <Typography category={'Bd6'}>
@@ -112,6 +130,14 @@ const Details = () => (
         </div>
       </Container>
       <Divider size={'large'} />
+      <div className="tab">
+        <Tab
+          titles={['전체', '메뉴', '사진', '리뷰']}
+          counts={[0, 0, 23, 23]}
+          icons={['', '', '', '']}
+          contents={menuList}
+        />
+      </div>
     </Styles>
   </Main>
 );

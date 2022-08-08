@@ -56,7 +56,7 @@ function Navigation({ type }: { type: string }) {
             <Link href="/">
               <StyledIcon src="/assets/images/icons/write.svg" />
             </Link>
-            <Link href="/">
+            <Link href="/likes">
               <StyledIcon src="/assets/images/icons/heart_empty.svg" />
             </Link>
             <Link href="/">

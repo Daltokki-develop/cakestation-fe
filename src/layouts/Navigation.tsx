@@ -16,9 +16,9 @@ const StyledNav = styled.div`
   height: 5.1875rem;
   background-color: ${palette.white};
   z-index: 100;
-  -moz-box-shadow: 0rem -0.0313rem 0rem rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0rem -0.0313rem 0rem rgba(0, 0, 0, 0.3);
-  box-shadow: 0rem -0.0313rem 0rem rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 0.0625rem rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 0.0625rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0.0625rem rgba(0, 0, 0, 0.3);
 `;
 
 // TODO : align-items -> center 맞춰줘야 함
@@ -56,7 +56,7 @@ function Navigation({ type }: { type: string }) {
             <Link href="/">
               <StyledIcon src="/assets/images/icons/write.svg" />
             </Link>
-            <Link href="/">
+            <Link href="/likes">
               <StyledIcon src="/assets/images/icons/heart_empty.svg" />
             </Link>
             <Link href="/">

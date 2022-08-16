@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import RadioButton from '@/components/common/radiobutton';
-import Typography from '@/components/common/typography';
 import MapforReview from '@/components/MapforReview';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
@@ -10,11 +9,11 @@ import { Main } from '@/templates/Main';
 
 const Distance = () => {
   const router = useRouter();
-  const [distance, setDistance] = useState<String>('5분');
+  const [distance, setDistance] = useState<string>('5분');
   const { id } = router.query;
 
   const HandleDistance = (e: any) => {
-    setDistance(e.target.innerText);
+    setDistance(e.target.value);
   };
 
   return (
@@ -39,9 +38,12 @@ const Distance = () => {
         </div>
         <div className="mt-30">
           {['5분', '10분', '15분', '15분 이상'].map((time, index) => (
-            <RadioButton key={index} clicked onClick={HandleDistance}>
-              <Typography category={'Bd3'}>{time}</Typography>
-            </RadioButton>
+            <RadioButton
+              key={index}
+              value={time}
+              clicked={distance === time}
+              onChange={HandleDistance}
+            />
           ))}
         </div>
       </Review>

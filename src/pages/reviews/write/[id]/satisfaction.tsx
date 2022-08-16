@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import RadioButton from '@/components/common/radiobutton';
-import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
 import satisfactionArr from '@/lib/만족도.json';
@@ -23,12 +22,12 @@ const Satisfaction = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [satisfaction, setSatisfaction] = useState<String>(
+  const [satisfaction, setSatisfaction] = useState<string>(
     satisfactionArr[0] || ''
   );
 
   const HandleSatisfaction = (e: any) => {
-    setSatisfaction(e.target.innerText);
+    setSatisfaction(e.target.value);
   };
 
   return (
@@ -48,9 +47,12 @@ const Satisfaction = () => {
         </div>
         <div>
           {satisfactionArr.map((satisfactionElement, index) => (
-            <RadioButton key={index} clicked onClick={HandleSatisfaction}>
-              <Typography category={'Bd3'}>{satisfactionElement}</Typography>
-            </RadioButton>
+            <RadioButton
+              key={index}
+              value={satisfactionElement}
+              clicked={satisfactionElement === satisfaction}
+              onChange={HandleSatisfaction}
+            />
           ))}
         </div>
       </Review>

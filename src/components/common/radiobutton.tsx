@@ -2,11 +2,27 @@ import styled from 'styled-components';
 
 import palette from '@/styles/palette';
 
+import Typography from './typography';
+
 interface IDistanceButtonProps {
+  value?: string;
   clicked?: boolean;
+  onChange?: any;
 }
 
-const RadioButton = styled.div<IDistanceButtonProps>`
+const StyledLabel = styled.label`
+  display: flex;
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+`;
+
+const HiddenRadio = styled.input<IDistanceButtonProps>`
+  visibility: hidden;
+`;
+
+const StyledRadioButton = styled.div<IDistanceButtonProps>`
   /* Auto layout */
 
   display: flex;
@@ -14,7 +30,7 @@ const RadioButton = styled.div<IDistanceButtonProps>`
   justify-content: center;
   align-items: center;
 
-  width: 224px;
+  width: 14rem;
   height: 35px;
 
   /* Black */
@@ -26,10 +42,22 @@ const RadioButton = styled.div<IDistanceButtonProps>`
   border-radius: 16px;
 
   cursor: pointer;
-
-  & + & {
-    margin-top: 10px;
-  }
 `;
+
+const RadioButton = (props: IDistanceButtonProps) => {
+  return (
+    <StyledLabel>
+      <HiddenRadio
+        type="radio"
+        value={props.value}
+        checked={props.clicked}
+        onChange={props.onChange}
+      />
+      <StyledRadioButton clicked={props.clicked}>
+        <Typography category={'Bd3'}>{props.value}</Typography>
+      </StyledRadioButton>
+    </StyledLabel>
+  );
+};
 
 export default RadioButton;

@@ -2,6 +2,12 @@ import styled from 'styled-components';
 
 import palette from '../../../styles/palette';
 
+interface IInputToggleProps {
+  value?: string;
+  options: Array<string>;
+  onChange?: any;
+}
+
 const SelectContainer = styled.div`
   position: relative;
   display: inline-block;
@@ -49,11 +55,11 @@ const StyledArrowTop = styled(StyledArrowBottom)`
   transform: rotate(-180deg);
 `;
 
-function InputToggle({ options }: { options: Array<string> }) {
+const InputToggle = (props: IInputToggleProps) => {
   return (
     <SelectContainer>
-      <StyledSelect>
-        {options.map((option) => (
+      <StyledSelect value={props.value} onChange={props.onChange}>
+        {props.options.map((option) => (
           <option key={option}>{option}</option>
         ))}
       </StyledSelect>
@@ -61,6 +67,6 @@ function InputToggle({ options }: { options: Array<string> }) {
       <StyledArrowBottom />
     </SelectContainer>
   );
-}
+};
 
 export default InputToggle;

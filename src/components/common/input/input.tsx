@@ -10,6 +10,7 @@ const StyledInput = styled.input`
   border-radius: 0.5rem;
   font-family: 'Pretendard-Medium';
   font-size: 1rem;
+  text-indent: 1rem;
 
   ::placeholder {
     font-weight: 500;

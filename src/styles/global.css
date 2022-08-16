@@ -71,6 +71,10 @@ a {
   padding-top: 40px;
 }
 
+.mt-8 {
+  margin-top: 8px;
+}
+
 .mt-20 {
   margin-top: 1.25rem;
 }

@@ -45,7 +45,9 @@ const ReviewsSearch = () => {
               <Typography category={'H1'}>케이크 가게 찾기</Typography>
             </div>
             <div className="mb-18">
-              <Typography category={'Bd2'}>케이크 가게 찾기</Typography>
+              <Typography category={'Bd2'}>
+                리뷰하고 싶은 가게를 선택해주세요.
+              </Typography>
             </div>
           </div>
           <SearchBar

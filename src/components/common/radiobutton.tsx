@@ -4,7 +4,7 @@ import palette from '@/styles/palette';
 
 import Typography from './typography';
 
-interface IDistanceButtonProps {
+interface IRadioButtonProps {
   value?: string;
   clicked?: boolean;
   onChange?: any;
@@ -18,11 +18,11 @@ const StyledLabel = styled.label`
   }
 `;
 
-const HiddenRadio = styled.input<IDistanceButtonProps>`
+const HiddenRadio = styled.input<IRadioButtonProps>`
   visibility: hidden;
 `;
 
-const StyledRadioButton = styled.div<IDistanceButtonProps>`
+const StyledRadioButton = styled.div<IRadioButtonProps>`
   /* Auto layout */
 
   display: flex;
@@ -44,7 +44,7 @@ const StyledRadioButton = styled.div<IDistanceButtonProps>`
   cursor: pointer;
 `;
 
-const RadioButton = (props: IDistanceButtonProps) => {
+const RadioButton = (props: IRadioButtonProps) => {
   return (
     <StyledLabel>
       <HiddenRadio

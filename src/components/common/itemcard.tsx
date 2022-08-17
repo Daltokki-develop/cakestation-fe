@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import palette from '@/styles/palette';
 
+import HeartButton from './heartButton';
 import Typography from './typography';
 
 interface IItemCardProps {
@@ -75,11 +76,6 @@ const CountText = styled.span`
   margin-right: 0.8125rem;
 `;
 
-const HeartImage = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-`;
-
 const Pictures = styled.div`
   width: 100%;
   display: flex;
@@ -95,6 +91,12 @@ const EmptyPicture = styled.div`
 `;
 
 const ItemCard = (props: IItemCardProps) => {
+  const [like, setLike] = useState(false);
+
+  const toggleLike = () => {
+    setLike(!like);
+  };
+
   const AddEmptyPicture = () => {
     const pictureArray = [];
     for (let index = 0; index < 4 - props.pictures.length; index += 1)
@@ -133,10 +135,7 @@ const ItemCard = (props: IItemCardProps) => {
         </ItemCardTitle>
         {props.heart && (
           <div>
-            <HeartImage
-              src="/assets/images/icons/heart_color-filled.svg"
-              alt="heart"
-            />
+            <HeartButton like={like} onClick={toggleLike} />
           </div>
         )}
       </ItemCardHeader>

@@ -5,7 +5,7 @@ import Rate from 'rc-rate';
 import React from 'react';
 import styled from 'styled-components';
 
-import Input from '@/components/common/input/input';
+import TextArea from '@/components/common/input/textArea';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
@@ -83,7 +83,7 @@ const General = () => {
           <div className="w-100 mb-24 text-center">
             <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>
           </div>
-          <Input placeholder={''} onChange={() => {}} />
+          <TextArea placeholder={''} onChange={() => {}} />
         </div>
       </Review>
     </Main>

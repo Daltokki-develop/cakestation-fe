@@ -6,16 +6,11 @@ import RadioButton from '@/components/common/radiobutton';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
 import satisfactionArr from '@/lib/만족도.json';
-import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
 
-const TestImage = styled.div`
-  width: 320px;
-  height: 14rem;
-
-  /* Blue_200 */
-
-  background-color: ${palette.blue_200};
+const DesignImplementationImage = styled.img`
+  width: 240px;
+  height: 240px;
 `;
 
 const Satisfaction = () => {
@@ -43,7 +38,10 @@ const Satisfaction = () => {
         nextLink={`/reviews/write/${id}/general/`}
       >
         <div className="mb-27">
-          <TestImage />
+          <DesignImplementationImage
+            src="/assets/images/design-implementation.svg"
+            alt="Design Implementation"
+          />
         </div>
         <div>
           {satisfactionArr.map((satisfactionElement, index) => (

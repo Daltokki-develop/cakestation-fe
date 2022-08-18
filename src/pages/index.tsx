@@ -10,11 +10,11 @@ import Navigation from '@/layouts/Navigation';
 import subways from '@/lib/전체지하철역.json';
 import { Main } from '@/templates/Main';
 
-const MapContainer = styled.div`
-  /* aspect-ratio: 4 / 3; */
-  width: 100%;
-  height: 100vh;
-`;
+// const MapContainer = styled.div`
+//   /* aspect-ratio: 4 / 3; */
+//   width: 100%;
+//   height: 100vh;
+// `;
 
 const Absolute = styled.div`
   position: absolute;
@@ -54,7 +54,7 @@ const Index = () => {
         />
       </Header>
       <Absolute>
-        <MapContainer id="map" />
+        {/* <MapContainer id="map" /> */}
         <Map
           latitude={data[0] && data[0]['위도']}
           longitude={data[0] && data[0]['경도']}

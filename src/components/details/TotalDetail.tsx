@@ -89,7 +89,7 @@ const TotalDetail = ({ address, more }: { address: string; more: string }) => {
             케이크 사이즈
           </Typography>
         </StyledSubTitle>
-        <img src={'/assets/images/test-cakesize.png'} />
+        <img src={'/assets/images/test-cakesize.png'} alt={'메뉴사진'} />
         <Divider size={'large'} />
       </>
     </>

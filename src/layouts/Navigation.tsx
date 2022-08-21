@@ -1,7 +1,9 @@
 import Link from 'next/link';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/common/button';
+import HeartButton from '@/components/common/heartButton';
 import palette from '@/styles/palette';
 
 interface TypeProps {
@@ -16,9 +18,9 @@ const StyledNav = styled.div`
   height: 5.1875rem;
   background-color: ${palette.white};
   z-index: 100;
-  -moz-box-shadow: 0rem -0.0313rem 0rem rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0rem -0.0313rem 0rem rgba(0, 0, 0, 0.3);
-  box-shadow: 0rem -0.0313rem 0rem rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 0.0625rem rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 0.0625rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0.0625rem rgba(0, 0, 0, 0.3);
 `;
 
 // TODO : align-items -> center 맞춰줘야 함
@@ -45,6 +47,12 @@ const ButtonDiv = styled.div`
 `;
 
 function Navigation({ type }: { type: string }) {
+  const [like, setLike] = useState(false);
+
+  const toggleLike = () => {
+    setLike(!like);
+  };
+
   return (
     <StyledNav>
       <NavigatorContent type={type}>
@@ -56,7 +64,7 @@ function Navigation({ type }: { type: string }) {
             <Link href="/">
               <StyledIcon src="/assets/images/icons/write.svg" />
             </Link>
-            <Link href="/">
+            <Link href="/likes">
               <StyledIcon src="/assets/images/icons/heart_empty.svg" />
             </Link>
             <Link href="/">
@@ -67,7 +75,11 @@ function Navigation({ type }: { type: string }) {
         {type === 'item' && (
           <>
             <Link href="/">
-              <StyledIcon src="/assets/images/icons/heart_color-filled.svg" />
+              <div
+                style={{ width: '2.5rem', height: '2.5rem', cursor: 'pointer' }}
+              >
+                <HeartButton like={like} onClick={toggleLike} />
+              </div>
             </Link>
             <Link href="/">
               <StyledIcon src="/assets/images/icons/share.svg" />

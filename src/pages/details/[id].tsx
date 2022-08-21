@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Divider from '@/components/common/divider';
+import HeartButton from '@/components/common/heartButton';
 import Tab from '@/components/common/tab';
 import Tag from '@/components/common/tag';
 import Typography from '@/components/common/typography';
@@ -97,6 +99,12 @@ const Detail = () => {
     3: <Typography> 내용 4</Typography>,
   };
 
+  const [like, setLike] = useState(false);
+
+  const toggleLike = () => {
+    setLike(!like);
+  };
+
   return (
     <Main
       meta={
@@ -123,7 +131,15 @@ const Detail = () => {
             <div className="icons">
               <IconImage src={'/assets/images/icons/call_default.svg'} />
               <IconImage src={'/assets/images/icons/share.svg'} />
-              <IconImage src={'/assets/images/icons/heart_empty.svg'} />
+              <div
+                style={{
+                  width: '1.625rem',
+                  height: '1.625rem',
+                  cursor: 'pointer',
+                }}
+              >
+                <HeartButton like={like} onClick={toggleLike} />
+              </div>
             </div>
           </div>
           <div className="tags">

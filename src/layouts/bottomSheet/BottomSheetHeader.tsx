@@ -8,6 +8,7 @@ const Wrapper = styled.div`
 
   padding-top: 1rem;
   padding-bottom: 0.25rem;
+  cursor: move;
 `;
 
 const Handle = styled.div`

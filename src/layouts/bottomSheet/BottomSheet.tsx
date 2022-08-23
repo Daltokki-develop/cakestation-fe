@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useBottomSheetTest } from '@/hooks/useBottomSheetTest';
+import { useBottomSheet } from '@/hooks/useBottomSheet';
 import useWindowSize from '@/hooks/useWindowSize';
 
 import BottomSheetHeader from './BottomSheetHeader';
@@ -23,8 +23,7 @@ const Wrapper = styled(motion.div)`
 
 function BottomSheet() {
   const windowSize = useWindowSize();
-  // const { sheet } = useBottomSheet();
-  const { sheet } = useBottomSheetTest();
+  const { sheet } = useBottomSheet();
 
   useEffect(() => {
     // console.log(windowSize);

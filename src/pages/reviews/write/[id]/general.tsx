@@ -20,10 +20,9 @@ const StyledRate = styled(Rate)`
   justify-content: center;
   font-size: 40px;
 
-  /* .rc-rate-star-half .rc-rate-star-first,
-  .rc-rate-star-full .rc-rate-star-second {
-    color: #363636 !important;
-  } */
+  .rc-rate-star-zero {
+    opacity: 0.2;
+  }
 `;
 
 const General = () => {

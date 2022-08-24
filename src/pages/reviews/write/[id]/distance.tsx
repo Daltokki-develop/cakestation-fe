@@ -5,15 +5,28 @@ import RadioButton from '@/components/common/radiobutton';
 import MapforReview from '@/components/MapforReview';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
+import { useReviewStore } from '@/store';
 import { Main } from '@/templates/Main';
 
 const Distance = () => {
   const router = useRouter();
+  const reviews = useReviewStore((state: any) => state.reviews);
+  const updateDistance = useReviewStore((state: any) => state.updateDistance);
   const [distance, setDistance] = useState<string>('5분');
   const { id } = router.query;
 
   const HandleDistance = (e: any) => {
     setDistance(e.target.value);
+  };
+
+  const ConsoleDistance = () => {
+    console.log(`가게 ID : ${id}\n선택된 소요 시간 : ${distance}`);
+    updateDistance({
+      nearByStation: '와우~',
+      walkingDistance: distance,
+    });
+
+    console.log(reviews);
   };
 
   return (
@@ -23,9 +36,7 @@ const Distance = () => {
         title={'역과의 도보거리'}
         subtitle={'해당 가게와 역 간의 도보거리를 입력해주세요.'}
         nextText={'다음'}
-        nextFunc={() => {
-          console.log(`가게 ID : ${id}\n선택된 소요 시간 : ${distance}`);
-        }}
+        nextFunc={ConsoleDistance}
         nextLink={`/reviews/write/${id}/addpictures/`}
       >
         <div className="w-100">

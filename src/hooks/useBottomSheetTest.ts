@@ -94,15 +94,15 @@ export function useBottomSheetTest() {
       console.log(currentSheetY);
       if (currentSheetY !== MIN_TOP) {
         if (touchMove.movingDirection === 'down') {
-          // sheet.current?.style.setProperty('transform', 'translateY(0)');
+          sheet.current?.style.setProperty('transform', 'translateY(0)');
           console.log('내려감');
         }
 
         if (touchMove.movingDirection === 'up') {
-          // sheet.current?.style.setProperty(
-          //   'transform',
-          //   `translateY(${MIN_Y - MAX_Y}px)`
-          //   );
+          sheet.current?.style.setProperty(
+            'transform',
+            `translateY(${MIN_Y - MAX_Y}px)`
+          );
           console.log('올라감');
         }
       }
@@ -122,11 +122,13 @@ export function useBottomSheetTest() {
 
     sheet.current?.addEventListener('dragstart', handleDragStart);
     sheet.current?.addEventListener('drag', handleDrag);
+    // sheet.current?.addEventListener('dragover', handleDrag);
     sheet.current?.addEventListener('dragend', handleDragEnd);
 
     return () => {
       sheet.current?.removeEventListener('dragstart', handleDragStart);
-      sheet.current?.removeEventListener('drag', handleDrag);
+      // sheet.current?.removeEventListener('drag', handleDrag);
+      sheet.current?.removeEventListener('dragover', handleDrag);
       sheet.current?.removeEventListener('dragend', handleDragEnd);
     };
   }, [windowSize]);

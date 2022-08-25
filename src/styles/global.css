@@ -75,6 +75,10 @@ a {
   padding-top: 40px;
 }
 
+.mt-6 {
+  margin-top: 6px;
+}
+
 .mt-8 {
   margin-top: 8px;
 }
@@ -89,6 +93,10 @@ a {
 
 .mt-75 {
   margin-top: 75px;
+}
+
+.mt-79 {
+  margin-top: 79px;
 }
 
 .mb-6 {

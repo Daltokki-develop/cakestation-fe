@@ -10,7 +10,7 @@ import Typography from '@/components/common/typography';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
-import results from '@/lib/가게검색결과.json';
+import results from '@/lib/등록가게검색결과.json';
 import { Main } from '@/templates/Main';
 
 const MT16 = styled.a`
@@ -89,11 +89,13 @@ const ReviewsSearch = () => {
                   </div>
                 )}
             {firstSearch && (
-              <div className="pt-6">
-                <Typography category={'Bd7'} color={'grey_400'}>
-                  <u>찾으시는 가게가 없으신가요?</u>
-                </Typography>
-              </div>
+              <Link href={'/reviews/register/'}>
+                <a className="mt-6">
+                  <Typography category={'Bd7'} color={'grey_400'}>
+                    <u>찾으시는 가게가 없으신가요?</u>
+                  </Typography>
+                </a>
+              </Link>
             )}
           </div>
           {keyword && (

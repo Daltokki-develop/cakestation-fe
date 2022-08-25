@@ -74,15 +74,19 @@ const ReviewsSearch = () => {
                   </Link>
                 ))
               : firstSearch && (
-                  <>
+                  <div className="column items-center">
                     <img
                       src="/assets/images/icons/no_result.svg"
                       alt="NO RESULT"
+                      width={200}
+                      className="mt-20 mb-33"
                     />
                     <Typography category={'Bd7'} color={'grey_400'}>
+                      앗!
+                      <br />
                       검색 결과가 없습니다.
                     </Typography>
-                  </>
+                  </div>
                 )}
             {firstSearch && (
               <div className="pt-6">

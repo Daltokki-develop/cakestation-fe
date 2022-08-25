@@ -121,8 +121,8 @@ export function useBottomSheetTest() {
     };
 
     sheet.current?.addEventListener('dragstart', handleDragStart);
-    sheet.current?.addEventListener('drag', handleDrag);
-    // sheet.current?.addEventListener('dragover', handleDrag);
+    // sheet.current?.addEventListener('drag', handleDrag);
+    sheet.current?.addEventListener('dragover', handleDrag);
     sheet.current?.addEventListener('dragend', handleDragEnd);
 
     return () => {

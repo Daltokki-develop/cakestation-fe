@@ -63,6 +63,28 @@ const SearchButton = (FetchResultList: (() => void) | undefined) => {
   );
 };
 
+const ResultList = (
+  resultList: any[],
+  HandleCompleted: (() => void) | undefined,
+  firstSearch: boolean
+) => {
+  return (
+    <div className="column mt-20 text-center">
+      {resultList?.length > 0
+        ? resultList.map((result, index) => (
+            <SimpleCard
+              key={index}
+              line
+              title={result.title}
+              location={result.location}
+              onClick={HandleCompleted}
+            />
+          ))
+        : firstSearch && FirstSearch()}
+    </div>
+  );
+};
+
 const RegisterShop = () => {
   const [keyword, setKeyword] = useState<string>('');
   const [resultList, setResultList] = useState<Array<any>>([]);
@@ -100,19 +122,7 @@ const RegisterShop = () => {
             onChange={(e: any) => setKeyword(e.target.value)}
             onKeyPress={FetchResultListwithKey}
           />
-          <div className="column mt-20 text-center">
-            {resultList?.length > 0
-              ? resultList.map((result, index) => (
-                  <SimpleCard
-                    key={index}
-                    line
-                    title={result.title}
-                    location={result.location}
-                    onClick={HandleCompleted}
-                  />
-                ))
-              : firstSearch && FirstSearch()}
-          </div>
+          {ResultList(resultList, HandleCompleted, firstSearch)}
           {keyword && SearchButton(FetchResultList)}
         </div>
       </Section>

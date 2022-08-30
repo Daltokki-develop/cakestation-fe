@@ -1,20 +1,21 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import Button from '@/components/common/button';
+import ItemCard from '@/components/common/itemcard';
 import SearchBar from '@/components/common/searchbar';
 import Section from '@/components/common/section';
-import SimpleCard from '@/components/common/simplecard';
 import Typography from '@/components/common/typography';
 import Completed from '@/components/completed';
 import { Header } from '@/layouts/Header';
 import Navigation from '@/layouts/Navigation';
-import results from '@/lib/미등록가게검색결과.json';
+import results from '@/lib/가게검색결과.json';
 
 interface IStoreSearchProps {
   title: string;
   sub: string;
-  children?: any;
+  isSimple?: boolean;
 }
 
 const StoreSearchHeader = (props: IStoreSearchProps) => {
@@ -48,6 +49,18 @@ const FirstSearch = () => {
   );
 };
 
+const NoResult = () => {
+  return (
+    <Link href={'/reviews/register/'}>
+      <a className="mt-20">
+        <Typography category={'Bd7'} color={'grey_400'}>
+          <u>찾으시는 가게가 없으신가요?</u>
+        </Typography>
+      </a>
+    </Link>
+  );
+};
+
 const SearchButton = (FetchResultList: (() => void) | undefined) => {
   return (
     <div className="w-100 fixed b-108 max-w-28">
@@ -61,28 +74,6 @@ const SearchButton = (FetchResultList: (() => void) | undefined) => {
           찾기
         </Button>
       </div>
-    </div>
-  );
-};
-
-const ResultList = (
-  resultList: any[],
-  HandleCompleted: (() => void) | undefined,
-  firstSearch: boolean
-) => {
-  return (
-    <div className="column mt-20 text-center">
-      {resultList?.length > 0
-        ? resultList.map((result, index) => (
-            <SimpleCard
-              key={index}
-              line
-              title={result.title}
-              location={result.location}
-              onClick={HandleCompleted}
-            />
-          ))
-        : firstSearch && FirstSearch()}
     </div>
   );
 };
@@ -110,6 +101,59 @@ const HandleCompleted = (setCompleted: (arg0: boolean) => void) => {
   console.log(timer);
 };
 
+const ResultList = (
+  resultList:
+    | {
+        title: string;
+        rate: string | undefined;
+        count: number | undefined;
+        distance: string | undefined;
+        pictures: string[] | undefined;
+        location: string | undefined;
+      }[],
+  props: IStoreSearchProps,
+  setCompleted: (arg0: boolean) => void,
+  firstSearch: boolean
+) => {
+  return (
+    <div className="column mt-20 text-center">
+      {resultList?.length > 0 ? (
+        <>
+          {resultList.map(
+            (
+              result: {
+                title: string;
+                rate: string | undefined;
+                count: number | undefined;
+                distance: string | undefined;
+                pictures: string[] | undefined;
+                location: string | undefined;
+              },
+              index: React.Key | null | undefined
+            ) => (
+              <ItemCard
+                key={index}
+                line={!props.isSimple}
+                title={result.title}
+                rate={result.rate}
+                count={result.count}
+                distance={result.distance}
+                pictures={result.pictures}
+                isSimple={props.isSimple}
+                location={result.location}
+                onClick={() => HandleCompleted(setCompleted)}
+              />
+            )
+          )}
+          {firstSearch && !props.isSimple && NoResult()}
+        </>
+      ) : (
+        firstSearch && FirstSearch()
+      )}
+    </div>
+  );
+};
+
 const StoreSearch = (props: IStoreSearchProps) => {
   const [keyword, setKeyword] = useState<string>('');
   const [resultList, setResultList] = useState<Array<any>>([]);
@@ -132,11 +176,7 @@ const StoreSearch = (props: IStoreSearchProps) => {
             onChange={(e: any) => setKeyword(e.target.value)}
             onKeyPress={FetchResultListwithKey}
           />
-          {ResultList(
-            resultList,
-            () => HandleCompleted(setCompleted),
-            firstSearch
-          )}
+          {ResultList(resultList, props, setCompleted, firstSearch)}
           {keyword &&
             SearchButton(() =>
               FetchResultList(

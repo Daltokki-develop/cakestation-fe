@@ -60,7 +60,7 @@ const ItemCardHeader = styled.div`
   margin-bottom: 0.9375rem;
 `;
 
-const ItemCardTitle = styled.div`
+const StyledItemCardTitle = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -85,12 +85,42 @@ const CountText = styled.span`
   margin-right: 0.8125rem;
 `;
 
+const ItemCardTitle = (props: IItemCardProps) => {
+  return (
+    <StyledItemCardTitle>
+      <Typography category={'Bd1'} color={'grey_800'}>
+        {props.title}
+      </Typography>
+      <ItemCardDesc>
+        <RateImage src="/assets/images/icons/rate_filled.svg" alt="rate" />
+        <RateText>
+          <Typography category={'Bd7'} color={'grey_800'}>
+            {props.rate}
+          </Typography>
+        </RateText>
+        <CountText>
+          <Typography category={'Bd7'} color={'grey_400'}>
+            ({props.count})
+          </Typography>
+        </CountText>
+        {props.distance && (
+          <span>
+            <Typography category={'Bd6'} color={'blue_500'}>
+              {props.distance}
+            </Typography>
+          </span>
+        )}
+      </ItemCardDesc>
+    </StyledItemCardTitle>
+  );
+};
+
 const HeartImage = styled.img`
   width: 2.5rem;
   height: 2.5rem;
 `;
 
-const Pictures = styled.div`
+const StyledPictures = styled.div`
   width: 100%;
   display: flex;
 `;
@@ -112,6 +142,36 @@ const AddEmptyPicture = (props: IItemCardProps) => {
   return pictureArray;
 };
 
+const Pictures = (props: IItemCardProps) => {
+  return (
+    <StyledPictures>
+      {props.pictures?.map((picture, index) => {
+        return (
+          <Picture
+            key={index}
+            src={`/assets/images/${picture}`}
+            alt="picture"
+          />
+        );
+      })}
+      {AddEmptyPicture(props)}
+    </StyledPictures>
+  );
+};
+
+const SimpleCard = (props: IItemCardProps) => {
+  return (
+    <>
+      <Typography category={'Bd1'} color={'grey_800'}>
+        {props.title}
+      </Typography>
+      <Typography category={'Bd7'} color={'grey_800'}>
+        {props.location}
+      </Typography>
+    </>
+  );
+};
+
 const ItemCard = (props: IItemCardProps) => {
   return (
     <StyledItemCard
@@ -120,46 +180,11 @@ const ItemCard = (props: IItemCardProps) => {
       onClick={props.onClick}
     >
       {props.isSimple ? (
-        <>
-          <Typography category={'Bd1'} color={'grey_800'}>
-            {props.title}
-          </Typography>
-          <Typography category={'Bd7'} color={'grey_800'}>
-            {props.location}
-          </Typography>
-        </>
+        SimpleCard(props)
       ) : (
         <>
           <ItemCardHeader>
-            <ItemCardTitle>
-              <Typography category={'Bd1'} color={'grey_800'}>
-                {props.title}
-              </Typography>
-              <ItemCardDesc>
-                <RateImage
-                  src="/assets/images/icons/rate_filled.svg"
-                  alt="rate"
-                />
-
-                <RateText>
-                  <Typography category={'Bd7'} color={'grey_800'}>
-                    {props.rate}
-                  </Typography>
-                </RateText>
-                <CountText>
-                  <Typography category={'Bd7'} color={'grey_400'}>
-                    ({props.count})
-                  </Typography>
-                </CountText>
-                {props.distance && (
-                  <span>
-                    <Typography category={'Bd6'} color={'blue_500'}>
-                      {props.distance}
-                    </Typography>
-                  </span>
-                )}
-              </ItemCardDesc>
-            </ItemCardTitle>
+            {ItemCardTitle(props)}
             {props.heart && (
               <div>
                 <HeartImage
@@ -169,18 +194,7 @@ const ItemCard = (props: IItemCardProps) => {
               </div>
             )}
           </ItemCardHeader>
-          <Pictures>
-            {props.pictures?.map((picture, index) => {
-              return (
-                <Picture
-                  key={index}
-                  src={`/assets/images/${picture}`}
-                  alt="picture"
-                />
-              );
-            })}
-            {AddEmptyPicture(props)}
-          </Pictures>
+          {Pictures(props)}
         </>
       )}
     </StyledItemCard>

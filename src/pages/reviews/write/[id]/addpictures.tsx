@@ -21,6 +21,50 @@ const StyledImage = styled.img`
   object-fit: cover;
 `;
 
+const SwiperArea = (
+  thumb: string[],
+  progress: number,
+  onChange: { (formData: FormData): Promise<void>; (formData: FormData): void }
+) => {
+  return (
+    <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+      {thumb.map((item: string, index: number) => {
+        console.log('item', item);
+        return (
+          <SwiperSlide key={index}>
+            {progress !== 100 && <ProgressBar width={`${progress}%`} />}
+            <StyledImage src={`/uploads/${item}`} alt="업로드이미지" />
+          </SwiperSlide>
+        );
+      })}
+      <SwiperSlide>
+        <UploadButton
+          allowMultipleFiles={true}
+          uploadFileName="file"
+          onChange={onChange}
+        />
+      </SwiperSlide>
+    </Swiper>
+  );
+};
+
+const UploadPictures = (
+  thumb: string[],
+  progress: number,
+  onChange: { (formData: FormData): Promise<void>; (formData: FormData): void }
+) => {
+  return (
+    <div className="w-85">
+      <div className="w-100 text-end mb-60">
+        <Typography category={'Bd2'} color={'cakeLemon_800'}>
+          ({thumb.length}/10)
+        </Typography>
+      </div>
+      {SwiperArea(thumb, progress, onChange)}
+    </div>
+  );
+};
+
 const AddPictures = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -46,7 +90,7 @@ const AddPictures = () => {
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
       <Review
-        progress={'40%'}
+        progress={'25%'}
         title={'리뷰 사진'}
         subtitle={'케이크 디자인이 잘 보이는 사진을 선택해 주세요.'}
         nextText={'다음'}
@@ -55,31 +99,7 @@ const AddPictures = () => {
         }}
         nextLink={`/reviews/write/${id}/order/`}
       >
-        <div className="w-85">
-          <div className="w-100 text-end mb-60">
-            <Typography category={'Bd2'} color={'cakeLemon_800'}>
-              ({thumb.length}/10)
-            </Typography>
-          </div>
-          <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-            {thumb.map((item: string, index: number) => {
-              console.log('item', item);
-              return (
-                <SwiperSlide key={index}>
-                  {progress !== 100 && <ProgressBar width={`${progress}%`} />}
-                  <StyledImage src={`/uploads/${item}`} alt="업로드이미지" />
-                </SwiperSlide>
-              );
-            })}
-            <SwiperSlide>
-              <UploadButton
-                allowMultipleFiles={true}
-                uploadFileName="file"
-                onChange={onChange}
-              />
-            </SwiperSlide>
-          </Swiper>
-        </div>
+        {UploadPictures(thumb, progress, onChange)}
       </Review>
     </Main>
   );

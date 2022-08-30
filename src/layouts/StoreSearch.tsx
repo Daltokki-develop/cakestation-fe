@@ -99,13 +99,13 @@ const HandleCompleted = (
 ) => {
   setCompleted(true);
   const timer = setTimeout(() => {
-    router.push('/');
+    router.push('/reviews/write/1234/addpictures/');
   }, 2000);
   console.log(timer);
 };
 
 const GoReviewWrite = (router: NextRouter) => {
-  router.push('/reviews/write/1234/addpictures');
+  router.push('/reviews/write/1234/addpictures/');
 };
 
 const ResultList = (

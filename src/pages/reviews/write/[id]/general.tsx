@@ -25,7 +25,20 @@ const StyledRate = styled(Rate)`
   }
 `;
 
-const GeneralHeader = () => {
+const HandleCheckList = (
+  checked: boolean,
+  item: any,
+  checkedList: any[],
+  setCheckedList: (arg0: any[]) => void
+) => {
+  if (checked) {
+    setCheckedList([...checkedList, item]);
+  } else if (!checked) {
+    setCheckedList(checkedList.filter((el) => el !== item));
+  }
+};
+
+const GeneralUpper = () => {
   return (
     <>
       <StyledRate
@@ -39,6 +52,35 @@ const GeneralHeader = () => {
         </Typography>
       </div>
     </>
+  );
+};
+
+const GeneralMiddle = (
+  checkedList: any[],
+  setCheckedList: {
+    (value: React.SetStateAction<string[]>): void;
+    (arg0: any[]): void;
+  }
+) => {
+  return (
+    <div className="row contents-center mb-80 flex-wrap">
+      {tags.map((tag, index) => (
+        <CheckBox
+          key={index}
+          value={tag}
+          onChange={() =>
+            HandleCheckList(
+              !!checkedList.includes(tag),
+              tag,
+              checkedList,
+              setCheckedList
+            )
+          }
+          checked={!!checkedList.includes(tag)}
+          checkedItems={checkedList}
+        />
+      ))}
+    </div>
   );
 };
 
@@ -59,14 +101,6 @@ const General = () => {
 
   const [checkedList, setCheckedList] = useState<Array<string>>([]);
 
-  const HandleCheckList = (checked: boolean, item: any) => {
-    if (checked) {
-      setCheckedList([...checkedList, item]);
-    } else if (!checked) {
-      setCheckedList(checkedList.filter((el) => el !== item));
-    }
-  };
-
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
       <Review
@@ -79,19 +113,9 @@ const General = () => {
         }}
         nextLink={`/`}
       >
-        {GeneralHeader()}
+        {GeneralUpper()}
         <div className="w-85">
-          <div className="row contents-center mb-80 flex-wrap">
-            {tags.map((tag, index) => (
-              <CheckBox
-                key={index}
-                value={tag}
-                onChange={HandleCheckList}
-                checked={!!checkedList.includes(tag)}
-                checkedItems={checkedList}
-              />
-            ))}
-          </div>
+          {GeneralMiddle(checkedList, setCheckedList)}
           {GeneralLower()}
         </div>
       </Review>

@@ -102,15 +102,7 @@ const HandleCompleted = (setCompleted: (arg0: boolean) => void) => {
 };
 
 const ResultList = (
-  resultList:
-    | {
-        title: string;
-        rate: string | undefined;
-        count: number | undefined;
-        distance: string | undefined;
-        pictures: string[] | undefined;
-        location: string | undefined;
-      }[],
+  resultList: any[],
   props: IStoreSearchProps,
   setCompleted: (arg0: boolean) => void,
   firstSearch: boolean
@@ -119,32 +111,20 @@ const ResultList = (
     <div className="column mt-20 text-center">
       {resultList?.length > 0 ? (
         <>
-          {resultList.map(
-            (
-              result: {
-                title: string;
-                rate: string | undefined;
-                count: number | undefined;
-                distance: string | undefined;
-                pictures: string[] | undefined;
-                location: string | undefined;
-              },
-              index: React.Key | null | undefined
-            ) => (
-              <ItemCard
-                key={index}
-                line={!props.isSimple}
-                title={result.title}
-                rate={result.rate}
-                count={result.count}
-                distance={result.distance}
-                pictures={result.pictures}
-                isSimple={props.isSimple}
-                location={result.location}
-                onClick={() => HandleCompleted(setCompleted)}
-              />
-            )
-          )}
+          {resultList.map((result: any, index: React.Key) => (
+            <ItemCard
+              key={index}
+              line={!props.isSimple}
+              title={result.title}
+              rate={result.rate}
+              count={result.count}
+              distance={result.distance}
+              pictures={result.pictures}
+              isSimple={props.isSimple}
+              location={result.location}
+              onClick={() => HandleCompleted(setCompleted)}
+            />
+          ))}
           {firstSearch && !props.isSimple && NoResult()}
         </>
       ) : (

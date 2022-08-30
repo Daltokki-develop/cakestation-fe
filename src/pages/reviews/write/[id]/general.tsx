@@ -25,6 +25,34 @@ const StyledRate = styled(Rate)`
   }
 `;
 
+const GeneralHeader = () => {
+  return (
+    <>
+      <StyledRate
+        character={
+          <img src="/assets/images/icons/rate_filled.svg" alt="rate" />
+        }
+      />
+      <div className="w-100 mb-21 text-center">
+        <Typography category={'Bd2'}>
+          좋았던 점을 체크해주세요 (중복가능)
+        </Typography>
+      </div>
+    </>
+  );
+};
+
+const GeneralLower = () => {
+  return (
+    <>
+      <div className="w-100 mb-24 text-center">
+        <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>
+      </div>
+      <TextArea placeholder={''} onChange={() => {}} />
+    </>
+  );
+};
+
 const General = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -51,17 +79,8 @@ const General = () => {
         }}
         nextLink={`/`}
       >
+        {GeneralHeader()}
         <div className="w-85">
-          <StyledRate
-            character={
-              <img src="/assets/images/icons/rate_filled.svg" alt="rate" />
-            }
-          />
-          <div className="w-100 mb-21 text-center">
-            <Typography category={'Bd2'}>
-              좋았던 점을 체크해주세요 (중복가능)
-            </Typography>
-          </div>
           <div className="row contents-center mb-80 flex-wrap">
             {tags.map((tag, index) => (
               <CheckBox
@@ -73,10 +92,7 @@ const General = () => {
               />
             ))}
           </div>
-          <div className="w-100 mb-24 text-center">
-            <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>
-          </div>
-          <TextArea placeholder={''} onChange={() => {}} />
+          {GeneralLower()}
         </div>
       </Review>
     </Main>

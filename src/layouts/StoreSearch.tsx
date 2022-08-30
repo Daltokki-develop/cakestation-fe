@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { NextRouter } from 'next/router';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
@@ -92,13 +93,19 @@ const FetchResultList = (
   setFirstSearch(true);
 };
 
-const HandleCompleted = (setCompleted: (arg0: boolean) => void) => {
-  const router = useRouter();
+const HandleCompleted = (
+  router: NextRouter,
+  setCompleted: (arg0: boolean) => void
+) => {
   setCompleted(true);
   const timer = setTimeout(() => {
     router.push('/');
   }, 2000);
   console.log(timer);
+};
+
+const GoReviewWrite = (router: NextRouter) => {
+  router.push('/reviews/write/1234/addpictures');
 };
 
 const ResultList = (
@@ -107,6 +114,7 @@ const ResultList = (
   setCompleted: (arg0: boolean) => void,
   firstSearch: boolean
 ) => {
+  const router = useRouter();
   return (
     <div className="column mt-20 text-center">
       {resultList?.length > 0 ? (
@@ -122,7 +130,11 @@ const ResultList = (
               pictures={result.pictures}
               isSimple={props.isSimple}
               location={result.location}
-              onClick={() => HandleCompleted(setCompleted)}
+              onClick={
+                props.isSimple
+                  ? () => HandleCompleted(router, setCompleted)
+                  : () => GoReviewWrite(router)
+              }
             />
           ))}
           {firstSearch && !props.isSimple && NoResult()}

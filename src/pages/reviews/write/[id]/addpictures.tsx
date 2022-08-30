@@ -21,11 +21,7 @@ const StyledImage = styled.img`
   object-fit: cover;
 `;
 
-const SwiperArea = (
-  thumb: string[],
-  progress: number,
-  onChange: { (formData: FormData): Promise<void>; (formData: FormData): void }
-) => {
+const SwiperArea = (thumb: string[], progress: number, onChange: any) => {
   return (
     <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
       {thumb.map((item: string, index: number) => {
@@ -48,11 +44,7 @@ const SwiperArea = (
   );
 };
 
-const UploadPictures = (
-  thumb: string[],
-  progress: number,
-  onChange: { (formData: FormData): Promise<void>; (formData: FormData): void }
-) => {
+const UploadPictures = (thumb: string[], progress: number, onChange: any) => {
   return (
     <div className="w-85">
       <div className="w-100 text-end mb-60">

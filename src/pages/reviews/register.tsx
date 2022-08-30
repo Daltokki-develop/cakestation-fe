@@ -8,6 +8,7 @@ const RegisterShop = () => {
       <StoreSearch
         title={'가게 등록'}
         sub={'등록하고 싶은 가게를 선택해주세요.'}
+        isSimple
       />
     </Main>
   );

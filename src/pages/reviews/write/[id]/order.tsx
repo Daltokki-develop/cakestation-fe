@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 import Input from '@/components/common/input/input';
 import InputToggle from '@/components/common/input/inputToggle';
-import TextArea from '@/components/common/input/textArea';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
@@ -51,7 +50,7 @@ const AdditionalOption = () => {
       <div className="mb-8">
         <Typography category={'Bd2'}>추가 옵션</Typography>
       </div>
-      <TextArea placeholder={''} onChange={() => {}} />
+      <Input textarea placeholder={''} onChange={() => {}} />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import CheckBox from '@/components/common/checkbox';
-import TextArea from '@/components/common/input/textArea';
+import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
@@ -90,7 +90,7 @@ const GeneralLower = () => {
       <div className="w-100 mb-24 text-center">
         <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>
       </div>
-      <TextArea placeholder={''} onChange={() => {}} />
+      <Input textarea placeholder={''} onChange={() => {}} />
     </>
   );
 };

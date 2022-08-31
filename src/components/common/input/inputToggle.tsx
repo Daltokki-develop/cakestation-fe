@@ -40,8 +40,8 @@ const StyledSelect = styled.select`
 
 const StyledArrowBottom = styled.div`
   position: absolute;
-  top: 60%;
-  left: 90%;
+  top: 63%;
+  left: 92%;
   width: 0;
   height: 0;
   pointer-events: none;
@@ -51,7 +51,7 @@ const StyledArrowBottom = styled.div`
 `;
 
 const StyledArrowTop = styled(StyledArrowBottom)`
-  top: 20%;
+  top: 23%;
   transform: rotate(-180deg);
 `;
 

@@ -39,8 +39,9 @@ function Map({ latitude, longitude, positions }: MapProps) {
         };
         const map = new window.kakao.maps.Map(container, options);
 
-        const imageSize = new window.kakao.maps.Size(40, 40);
-        const imageOption = { offset: new window.kakao.maps.Point(16, 32) };
+        const PlacePinSize = new window.kakao.maps.Size(27, 27);
+        const NowPinSize = new window.kakao.maps.Size(27, 36);
+        const imageOption = {};
 
         // cake 가게 위치 마커 표시하기
         function createCakeMarkers() {
@@ -48,7 +49,7 @@ function Map({ latitude, longitude, positions }: MapProps) {
 
           const markerImage2 = new window.kakao.maps.MarkerImage(
             imageSrc2,
-            imageSize,
+            PlacePinSize,
             imageOption
           );
 
@@ -69,12 +70,12 @@ function Map({ latitude, longitude, positions }: MapProps) {
         createCakeMarkers();
 
         // 사용자 현재 위치 마커 표시하기
-        function displayPresentMarker(locPosition: number, message: string) {
+        function displayPresentMarker(locPosition: number) {
           const imageSrc = '/assets/images/icons/spot2.svg';
 
           const markerImage = new window.kakao.maps.MarkerImage(
             imageSrc,
-            imageSize,
+            NowPinSize,
             imageOption
           );
 
@@ -84,17 +85,19 @@ function Map({ latitude, longitude, positions }: MapProps) {
             image: markerImage,
           });
 
-          const iwContent = message; // 인포윈도우에 표시할 내용
-          const iwRemoveable = true;
+          console.log(marker);
+
+          // const iwContent = message; // 인포윈도우에 표시할 내용
+          // const iwRemoveable = true;
 
           // 인포윈도우를 생성
-          const infowindow = new window.kakao.maps.InfoWindow({
-            content: iwContent,
-            removable: iwRemoveable,
-          });
+          // const infowindow = new window.kakao.maps.InfoWindow({
+          //   content: iwContent,
+          //   removable: iwRemoveable,
+          // });
 
           // 인포윈도우를 마커위에 표시
-          infowindow.open(map, marker);
+          // infowindow.open(map, marker);
 
           // 지도 중심좌표를 접속위치로 변경
           map.setCenter(locPosition);
@@ -107,10 +110,10 @@ function Map({ latitude, longitude, positions }: MapProps) {
             const lon = position.coords.longitude;
 
             const locPosition = new window.kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성
-            const message = '<div style="padding:5px;">🍰현재위치</div>';
+            // const message = '<div style="padding:5px;">🍰현재위치</div>';
 
             // 마커와 인포윈도우를 표시
-            displayPresentMarker(locPosition, message);
+            displayPresentMarker(locPosition);
           });
         } else {
           // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정
@@ -119,9 +122,9 @@ function Map({ latitude, longitude, positions }: MapProps) {
             33.450701,
             126.570667
           );
-          const message = 'geolocation을 사용할수 없어요..';
+          // const message = 'geolocation을 사용할수 없어요..';
 
-          displayPresentMarker(locPosition, message);
+          displayPresentMarker(locPosition);
         }
       });
     };

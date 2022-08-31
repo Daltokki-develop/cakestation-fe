@@ -4,6 +4,7 @@ import palette from '../../styles/palette';
 
 interface TagProps {
   size: string;
+  color: string;
   icon: boolean;
   src: string;
   sizeStyle: any;
@@ -60,6 +61,13 @@ const IMAGESIZES = {
 
 const StyledTag = styled.div<TagProps>`
   ${(props) => props.sizeStyle};
+  ${(props) => {
+    return css`
+      color: ${palette[props.color]};
+      border-color: ${palette[props.color]};
+    `;
+  }};
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,10 +75,9 @@ const StyledTag = styled.div<TagProps>`
   padding: 0 0.375rem;
 
   background-color: ${palette.white};
-  border: 0.0625rem solid ${palette.black};
+  border: 0.0625rem solid;
   border-radius: 0.5rem;
 
-  color: ${palette.black};
   letter-spacing: -0.0131rem;
   font-family: 'Pretendard-Regular';
 `;
@@ -82,11 +89,13 @@ const StyledImage = styled.img<ImageProps>`
 
 function Tag({
   size,
+  color,
   icon,
   src,
   children,
 }: {
   size: string;
+  color: string;
   icon: boolean;
   src: string;
   children: any;
@@ -97,7 +106,13 @@ function Tag({
   const imageSize = IMAGESIZES[size as keyof typeof IMAGESIZES];
 
   return (
-    <StyledTag size={size} icon={icon} src={src} sizeStyle={sizeStyle}>
+    <StyledTag
+      size={size}
+      color={color}
+      icon={icon}
+      src={src}
+      sizeStyle={sizeStyle}
+    >
       {icon && <StyledImage src={src} imageStyle={imageSize} />}
       {children}
     </StyledTag>
@@ -105,6 +120,7 @@ function Tag({
 }
 
 Tag.defaultProps = {
+  color: palette.black,
   icon: false,
   src: '',
 };

@@ -10,11 +10,11 @@ import Navigation from '@/layouts/Navigation';
 import subways from '@/lib/전체지하철역.json';
 import { Main } from '@/templates/Main';
 
-const MapContainer = styled.div`
-  /* aspect-ratio: 4 / 3; */
-  width: 100%;
-  height: 100vh;
-`;
+// const MapContainer = styled.div`
+//   /* aspect-ratio: 4 / 3; */
+//   width: 100%;
+//   height: 100vh;
+// `;
 
 const Absolute = styled.div`
   position: absolute;
@@ -48,10 +48,13 @@ const Index = () => {
   return (
     <Main meta={<Meta title="Cakestation Map" description="지도 맛보기" />}>
       <Header style={'bar'}>
-        <SearchBar placeholder="가게와 가까운 지하철 역 검색" />
+        <SearchBar
+          placeholder="가게와 가까운 지하철 역 검색"
+          onChange={() => {}}
+        />
       </Header>
       <Absolute>
-        <MapContainer id="map" />
+        {/* <MapContainer id="map" /> */}
         <Map
           latitude={data[0] && data[0]['위도']}
           longitude={data[0] && data[0]['경도']}

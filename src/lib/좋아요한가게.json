@@ -1,0 +1,50 @@
+[
+  {
+    "title": "달토끼 케이크",
+    "rate": "4.5",
+    "count": 10,
+    "distance": "역에서 123m",
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  },
+  {
+    "title": "별토끼 케이크",
+    "rate": "4.0",
+    "count": 22,
+    "distance": "역에서 13m",
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  },
+  {
+    "title": "달나라 케이크",
+    "rate": "3.5",
+    "count": 2,
+    "distance": "역에서 423m",
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  },
+  {
+    "title": "별나라 케이크",
+    "rate": "5.0",
+    "count": 31,
+    "distance": "역에서 101m",
+    "pictures": [
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png",
+      "test-cakestore.png"
+    ]
+  }
+]

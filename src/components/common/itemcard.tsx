@@ -1,35 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import palette from '@/styles/palette';
 
-import HeartButton from './heartButton';
 import Typography from './typography';
 
 interface IItemCardProps {
   line?: boolean;
   title: string;
   icon?: string;
-  rate: string;
-  count: number;
+  rate?: string;
+  count?: number;
   distance?: string;
-  pictures: string[];
+  pictures?: string[];
   heart?: boolean;
+  // simplecard
+  isSimple?: boolean;
+  location?: string;
+  onClick?: () => void;
 }
 
 interface IStyledItemCardProps {
   line?: boolean;
+  isSimple?: boolean;
 }
 
 const StyledItemCard = styled.div<IStyledItemCardProps>`
-  width: 100%;
+  width: ${(props) => (props.isSimple ? 'calc(100% - 2rem)' : '100%')};
   border: ${(props) =>
     props.line ? `.0625rem solid ${palette.black}` : 'none'};
   border-radius: ${(props) => (props.line ? '1rem' : 0)};
-  padding: 1.5rem 0 0;
+  padding: ${(props) => (props.isSimple ? '1rem' : '1.5rem 0 0')};
 
   display: flex;
   flex-direction: column;
+  align-items: ${(props) => (props.isSimple ? 'flex-start' : 'normal')};
 
   background-color: ${palette.white};
   overflow: hidden;
@@ -38,6 +43,10 @@ const StyledItemCard = styled.div<IStyledItemCardProps>`
 
   &:hover {
     background-color: ${palette.grey_100};
+  }
+
+  & + & {
+    margin-top: 10px;
   }
 `;
 
@@ -51,7 +60,7 @@ const ItemCardHeader = styled.div`
   margin-bottom: 0.9375rem;
 `;
 
-const ItemCardTitle = styled.div`
+const StyledItemCardTitle = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -76,7 +85,42 @@ const CountText = styled.span`
   margin-right: 0.8125rem;
 `;
 
-const Pictures = styled.div`
+const ItemCardTitle = (props: IItemCardProps) => {
+  return (
+    <StyledItemCardTitle>
+      <Typography category={'Bd1'} color={'grey_800'}>
+        {props.title}
+      </Typography>
+      <ItemCardDesc>
+        <RateImage src="/assets/images/icons/rate_filled.svg" alt="rate" />
+        <RateText>
+          <Typography category={'Bd7'} color={'grey_800'}>
+            {props.rate}
+          </Typography>
+        </RateText>
+        <CountText>
+          <Typography category={'Bd7'} color={'grey_400'}>
+            ({props.count})
+          </Typography>
+        </CountText>
+        {props.distance && (
+          <span>
+            <Typography category={'Bd6'} color={'blue_500'}>
+              {props.distance}
+            </Typography>
+          </span>
+        )}
+      </ItemCardDesc>
+    </StyledItemCardTitle>
+  );
+};
+
+const HeartImage = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+`;
+
+const StyledPictures = styled.div`
   width: 100%;
   display: flex;
 `;
@@ -90,67 +134,69 @@ const EmptyPicture = styled.div`
   background-color: ${palette.grey_200};
 `;
 
-const ItemCard = (props: IItemCardProps) => {
-  const [like, setLike] = useState(false);
+const AddEmptyPicture = (props: IItemCardProps) => {
+  const pictureArray = [];
+  const picSize = props.pictures?.length || 0;
+  for (let index = 0; index < 4 - picSize; index += 1)
+    pictureArray.push(<EmptyPicture key={index} />);
+  return pictureArray;
+};
 
-  const toggleLike = () => {
-    setLike(!like);
-  };
-
-  const AddEmptyPicture = () => {
-    const pictureArray = [];
-    for (let index = 0; index < 4 - props.pictures.length; index += 1)
-      pictureArray.push(<EmptyPicture key={index} />);
-    return pictureArray;
-  };
-
+const Pictures = (props: IItemCardProps) => {
   return (
-    <StyledItemCard line={props.line}>
-      <ItemCardHeader>
-        <ItemCardTitle>
-          <Typography category={'Bd1'} color={'grey_800'}>
-            {props.title}
-          </Typography>
-          <ItemCardDesc>
-            <RateImage src="/assets/images/icons/rate_filled.svg" alt="rate" />
+    <StyledPictures>
+      {props.pictures?.map((picture, index) => {
+        return (
+          <Picture
+            key={index}
+            src={`/assets/images/${picture}`}
+            alt="picture"
+          />
+        );
+      })}
+      {AddEmptyPicture(props)}
+    </StyledPictures>
+  );
+};
 
-            <RateText>
-              <Typography category={'Bd7'} color={'grey_800'}>
-                {props.rate}
-              </Typography>
-            </RateText>
-            <CountText>
-              <Typography category={'Bd7'} color={'grey_400'}>
-                ({props.count})
-              </Typography>
-            </CountText>
-            {props.distance && (
-              <span>
-                <Typography category={'Bd6'} color={'blue_500'}>
-                  {props.distance}
-                </Typography>
-              </span>
+const SimpleCard = (props: IItemCardProps) => {
+  return (
+    <>
+      <Typography category={'Bd1'} color={'grey_800'}>
+        {props.title}
+      </Typography>
+      <Typography category={'Bd7'} color={'grey_800'}>
+        {props.location}
+      </Typography>
+    </>
+  );
+};
+
+const ItemCard = (props: IItemCardProps) => {
+  return (
+    <StyledItemCard
+      isSimple={props.isSimple}
+      line={props.line}
+      onClick={props.onClick}
+    >
+      {props.isSimple ? (
+        SimpleCard(props)
+      ) : (
+        <>
+          <ItemCardHeader>
+            {ItemCardTitle(props)}
+            {props.heart && (
+              <div>
+                <HeartImage
+                  src="/assets/images/icons/heart_color-filled.svg"
+                  alt="heart"
+                />
+              </div>
             )}
-          </ItemCardDesc>
-        </ItemCardTitle>
-        {props.heart && (
-          <div>
-            <HeartButton like={like} onClick={toggleLike} />
-          </div>
-        )}
-      </ItemCardHeader>
-      <Pictures>
-        {props.pictures.map((picture, index) => {
-          return (
-            <Picture
-              key={index}
-              src={`/assets/images/${picture}`}
-              alt="picture"
-            />
-          );
-        })}
-        {AddEmptyPicture()}
-      </Pictures>
+          </ItemCardHeader>
+          {Pictures(props)}
+        </>
+      )}
     </StyledItemCard>
   );
 };

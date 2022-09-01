@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import SearchBar from '@/components/common/searchbar';
 import Map from '@/components/Map';
 import BottomSheet from '@/layouts/bottomSheet/BottomSheet';
+import BottomSheetExample from '@/layouts/bottomSheet/BottomSheetExample';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
@@ -63,6 +64,7 @@ const Index = () => {
         />
       </Absolute>
       <BottomSheet />
+      <BottomSheetExample />
       <Navigation type={'default'} />
       {/* <Navigation type={'item'} /> */}
     </Main>

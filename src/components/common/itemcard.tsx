@@ -46,7 +46,7 @@ const StyledItemCard = styled.div<IStyledItemCardProps>`
   }
 
   & + & {
-    margin-top: 10px;
+    margin-top: 16px;
   }
 `;
 

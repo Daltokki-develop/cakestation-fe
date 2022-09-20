@@ -27,7 +27,7 @@ const DesignImplementation = () => {
 const satisfactionArray = (satisfaction: string, HandleSatisfaction: any) => {
   return (
     <div>
-      {satisfactionArr.map((satisfactionElement, index) => (
+      {Object.keys(satisfactionArr).map((satisfactionElement, index) => (
         <RadioButton
           key={index}
           value={satisfactionElement}
@@ -51,6 +51,12 @@ const Satisfaction = () => {
     setSatisfaction(e.target.value);
   };
 
+  const HandleNext = () => {
+    const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
+    reviewData.designSatisfaction = satisfactionArr[satisfaction];
+    sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
+  };
+
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
       <Review
@@ -58,9 +64,7 @@ const Satisfaction = () => {
         title={'디자인 구현도'}
         subtitle={'디자인 구현 만족도를 선택해주세요.'}
         nextText={'다음'}
-        nextFunc={() => {
-          console.log(`가게 ID : ${id}\n선택된 만족도 : ${satisfaction}`);
-        }}
+        nextFunc={HandleNext}
         nextLink={`/reviews/write/${id}/general/`}
       >
         {DesignImplementation()}

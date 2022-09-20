@@ -1,6 +1,5 @@
 import 'rc-rate/assets/index.css';
 
-import { useRouter } from 'next/router';
 import Rate from 'rc-rate';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -38,23 +37,6 @@ const HandleCheckList = (
   }
 };
 
-const GeneralUpper = () => {
-  return (
-    <>
-      <StyledRate
-        character={
-          <img src="/assets/images/icons/rate_filled.svg" alt="rate" />
-        }
-      />
-      <div className="w-100 mb-21 text-center">
-        <Typography category={'Bd2'}>
-          좋았던 점을 체크해주세요 (중복가능)
-        </Typography>
-      </div>
-    </>
-  );
-};
-
 const GeneralMiddle = (
   checkedList: any[],
   setCheckedList: {
@@ -84,22 +66,28 @@ const GeneralMiddle = (
   );
 };
 
-const GeneralLower = () => {
-  return (
-    <>
-      <div className="w-100 mb-24 text-center">
-        <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>
-      </div>
-      <Input textarea placeholder={''} onChange={() => {}} />
-    </>
-  );
-};
-
 const General = () => {
-  const router = useRouter();
-  const { id } = router.query;
+  // const router = useRouter();
+  // const { id } = router.query;
 
   const [checkedList, setCheckedList] = useState<Array<string>>([]);
+  const [star, setStar] = useState(0);
+  const [comment, setComment] = useState('');
+
+  function onChangeStar(v: number) {
+    setStar(v);
+  }
+
+  const HandleComment = (e: any) => {
+    setComment(e.target.value);
+  };
+
+  const HandleNext = () => {
+    const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
+    reviewData.score = star;
+    reviewData.content = comment;
+    sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
+  };
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -108,15 +96,28 @@ const General = () => {
         title={'마지막 총평'}
         subtitle={'이 가게는 전반적으로 어땠나요?'}
         nextText={'등록하기'}
-        nextFunc={() => {
-          console.log(`가게 ID : ${id}\n`);
-        }}
+        nextFunc={HandleNext}
         nextLink={`/`}
       >
-        {GeneralUpper()}
+        <StyledRate
+          character={
+            <img src="/assets/images/icons/rate_filled.svg" alt="rate" />
+          }
+          onChange={onChangeStar}
+        />
+        {/* {starRef.current.props} */}
+        <div className="w-100 mb-21 text-center">
+          <Typography category={'Bd2'}>
+            좋았던 점을 체크해주세요 (중복가능)
+          </Typography>
+        </div>
         <div className="w-85">
           {GeneralMiddle(checkedList, setCheckedList)}
-          {GeneralLower()}
+
+          <div className="w-100 mb-24 text-center">
+            <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>
+          </div>
+          <Input textarea placeholder={''} onChange={HandleComment} />
         </div>
       </Review>
     </Main>

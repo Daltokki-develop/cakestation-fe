@@ -140,7 +140,12 @@ const ResultList = (
           {firstSearch && !props.isSimple && NoResult()}
         </>
       ) : (
-        firstSearch && FirstSearch()
+        firstSearch && (
+          <>
+            {FirstSearch()}
+            {!props.isSimple && NoResult()}
+          </>
+        )
       )}
     </div>
   );

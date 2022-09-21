@@ -1,10 +1,10 @@
 import 'rc-rate/assets/index.css';
 
 import Rate from 'rc-rate';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import CheckBox from '@/components/common/checkbox';
+import Checkbox from '@/components/common/checkbox';
 import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
@@ -24,55 +24,38 @@ const StyledRate = styled(Rate)`
   }
 `;
 
-const HandleCheckList = (
-  checked: boolean,
-  item: any,
-  checkedList: any[],
-  setCheckedList: (arg0: any[]) => void
-) => {
-  if (checked) {
-    setCheckedList([...checkedList, item]);
-  } else if (!checked) {
-    setCheckedList(checkedList.filter((el) => el !== item));
+const copyObject = (inObject: object) => {
+  if (typeof inObject !== 'object' || inObject === null) {
+    return inObject;
   }
-};
 
-const GeneralMiddle = (
-  checkedList: any[],
-  setCheckedList: {
-    (value: React.SetStateAction<string[]>): void;
-    (arg0: any[]): void;
-  }
-) => {
-  return (
-    <div className="row contents-center mb-80 flex-wrap">
-      {tags.map((tag, index) => (
-        <CheckBox
-          key={index}
-          value={tag}
-          onChange={() =>
-            HandleCheckList(
-              !!checkedList.includes(tag),
-              tag,
-              checkedList,
-              setCheckedList
-            )
-          }
-          checked={!!checkedList.includes(tag)}
-          checkedItems={checkedList}
-        />
-      ))}
-    </div>
-  );
+  const outObject = Array.isArray(inObject) ? [] : {};
+  Object.keys(inObject).forEach((key) => {
+    const value = inObject[key];
+    outObject[key] =
+      typeof value === 'object' && value !== null ? copyObject(value) : value;
+  });
+
+  return outObject;
 };
 
 const General = () => {
   // const router = useRouter();
   // const { id } = router.query;
 
-  const [checkedList, setCheckedList] = useState<Array<string>>([]);
+  const [checkedList, setCheckedList] = useState({});
   const [star, setStar] = useState(0);
   const [comment, setComment] = useState('');
+
+  const handleChange = useCallback(
+    (name: string, value: string) => {
+      const checkedListCopy = copyObject(checkedList);
+      checkedListCopy[name] = value;
+
+      setCheckedList(checkedListCopy);
+    },
+    [checkedList]
+  );
 
   function onChangeStar(v: number) {
     setStar(v);
@@ -86,8 +69,13 @@ const General = () => {
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
     reviewData.score = star;
     reviewData.content = comment;
+    reviewData.tags = checkedList;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
   };
+
+  useEffect(() => {
+    setCheckedList(tags);
+  }, []);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -105,14 +93,23 @@ const General = () => {
           }
           onChange={onChangeStar}
         />
-        {/* {starRef.current.props} */}
         <div className="w-100 mb-21 text-center">
           <Typography category={'Bd2'}>
             좋았던 점을 체크해주세요 (중복가능)
           </Typography>
         </div>
         <div className="w-85">
-          {GeneralMiddle(checkedList, setCheckedList)}
+          <div className="row contents-center mb-80 flex-wrap">
+            {Object.keys(tags).map((tag, index) => (
+              <Checkbox
+                key={index}
+                name={tag}
+                onChange={handleChange}
+                currentValue={checkedList[tag] === 1}
+                label={tag}
+              />
+            ))}
+          </div>
 
           <div className="w-100 mb-24 text-center">
             <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>

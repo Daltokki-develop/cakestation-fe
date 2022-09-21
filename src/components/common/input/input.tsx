@@ -17,16 +17,20 @@ const StyledInput = styled.input`
     letter-spacing: -0.01em;
     color: ${palette.grey_400};
   }
+
   :required {
     background-color: ${palette.red_100};
     border: 0.125rem solid ${palette.red_500};
+
     ::placeholder {
       color: ${palette.grey_500};
     }
   }
+
   &:focus {
     background-color: ${palette.cakeLemon_100};
     border: 0.125rem solid ${palette.black};
+
     ::placeholder {
       color: transparent;
     }
@@ -46,6 +50,7 @@ const StyledTextArea = styled.textarea`
   padding: 1rem;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+
   ::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
   }
@@ -55,16 +60,20 @@ const StyledTextArea = styled.textarea`
     letter-spacing: -0.01em;
     color: ${palette.grey_400};
   }
+
   :required {
     background-color: ${palette.red_100};
     border: 0.125rem solid ${palette.red_500};
+
     ::placeholder {
       color: ${palette.grey_500};
     }
   }
+
   &:focus {
     background-color: ${palette.cakeLemon_100};
     border: 0.125rem solid ${palette.black};
+
     ::placeholder {
       color: transparent;
     }
@@ -72,24 +81,28 @@ const StyledTextArea = styled.textarea`
 `;
 
 function Input({
-  value,
   placeholder,
   onChange,
   textarea,
+  currentValue,
 }: {
-  value?: any;
+  currentValue?: any;
   placeholder: string;
   onChange: any;
   textarea?: boolean;
 }) {
   return textarea ? (
     <StyledTextArea
-      value={value}
+      value={currentValue || ''}
       placeholder={placeholder}
       onChange={onChange}
     />
   ) : (
-    <StyledInput value={value} placeholder={placeholder} onChange={onChange} />
+    <StyledInput
+      value={currentValue || ''}
+      placeholder={placeholder}
+      onChange={onChange}
+    />
   );
 }
 

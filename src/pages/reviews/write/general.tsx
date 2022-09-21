@@ -40,9 +40,6 @@ const copyObject = (inObject: object) => {
 };
 
 const General = () => {
-  // const router = useRouter();
-  // const { id } = router.query;
-
   const [checkedList, setCheckedList] = useState({});
   const [star, setStar] = useState(0);
   const [comment, setComment] = useState('');

@@ -2,7 +2,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Pagination } from 'swiper';
@@ -58,9 +57,6 @@ const UploadPictures = (thumb: string[], progress: number, onChange: any) => {
 };
 
 const AddPictures = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
   const [thumb, setThumb] = useState<string[]>([]);
   const [progress, setProgress] = useState<number>(0);
 
@@ -86,10 +82,8 @@ const AddPictures = () => {
         title={'리뷰 사진'}
         subtitle={'케이크 디자인이 잘 보이는 사진을 선택해 주세요.'}
         nextText={'다음'}
-        nextFunc={() => {
-          console.log(`가게 ID : ${id}\n`);
-        }}
-        nextLink={`/reviews/write/${id}/order/`}
+        nextFunc={() => {}}
+        nextLink={`/reviews/write/order/`}
       >
         {UploadPictures(thumb, progress, onChange)}
       </Review>

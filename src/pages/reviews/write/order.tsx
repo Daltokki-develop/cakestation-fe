@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import Input from '@/components/common/input/input';
@@ -49,9 +48,6 @@ const CakeSheet = (
 };
 
 const Order = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
   const [size, setSize] = useState<string>(`${cakeSizes[0]}호` || '');
   const [sheet, setSheet] = useState<string>(cakeSheet[0] || '');
   const [etc, setEtc] = useState<string>('');
@@ -89,7 +85,7 @@ const Order = () => {
         subtitle={'주문하셨던 케이크의 정보를 입력해주세요.'}
         nextText={'다음'}
         nextFunc={HandleNext}
-        nextLink={`/reviews/write/${id}/satisfaction/`}
+        nextLink={`/reviews/write/satisfaction/`}
       >
         <div className="w-85">
           {CakeSize(size, HandleSize)}

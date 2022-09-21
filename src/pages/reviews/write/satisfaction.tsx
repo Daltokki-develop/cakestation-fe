@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -40,9 +39,6 @@ const satisfactionArray = (satisfaction: string, HandleSatisfaction: any) => {
 };
 
 const Satisfaction = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
   const [satisfaction, setSatisfaction] = useState<string>(
     satisfactionArr[0] || ''
   );
@@ -65,7 +61,7 @@ const Satisfaction = () => {
         subtitle={'디자인 구현 만족도를 선택해주세요.'}
         nextText={'다음'}
         nextFunc={HandleNext}
-        nextLink={`/reviews/write/${id}/general/`}
+        nextLink={`/reviews/write/general/`}
       >
         {DesignImplementation()}
         {satisfactionArray(satisfaction, HandleSatisfaction)}

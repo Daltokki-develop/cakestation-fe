@@ -9,7 +9,7 @@ import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
-import { getSessionReview } from '@/lib/commonFunction';
+import { AXIOS_POST, getSessionReview } from '@/lib/commonFunction';
 import tagsData from '@/lib/총평태그.json';
 import { Main } from '@/templates/Main';
 
@@ -64,12 +64,22 @@ const General = () => {
     setComment(e.target.value);
   };
 
+  const HandleAPI = async () => {
+    console.log('흠');
+    const response = await AXIOS_POST(
+      'http://3.38.93.59:8080/api/stores/1234/reviews',
+      getSessionReview()
+    );
+    console.log(response);
+  };
+
   const HandleNext = () => {
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
     reviewData.score = star;
     reviewData.content = comment;
     reviewData.tags = checkedList;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
+    HandleAPI();
   };
 
   useEffect(() => {

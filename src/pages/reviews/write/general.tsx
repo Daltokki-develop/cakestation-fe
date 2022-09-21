@@ -9,7 +9,8 @@ import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
-import tags from '@/lib/총평태그.json';
+import { getSessionReview } from '@/lib/commonFunction';
+import tagsData from '@/lib/총평태그.json';
 import { Main } from '@/templates/Main';
 
 const StyledRate = styled(Rate)`
@@ -40,9 +41,10 @@ const copyObject = (inObject: object) => {
 };
 
 const General = () => {
-  const [checkedList, setCheckedList] = useState({});
   const [star, setStar] = useState(0);
+  const [checkedList, setCheckedList] = useState({});
   const [comment, setComment] = useState('');
+  const { score, content, tags } = getSessionReview();
 
   const handleChange = useCallback(
     (name: string, value: string) => {
@@ -54,7 +56,7 @@ const General = () => {
     [checkedList]
   );
 
-  function onChangeStar(v: number) {
+  function HandleStar(v: number) {
     setStar(v);
   }
 
@@ -71,7 +73,9 @@ const General = () => {
   };
 
   useEffect(() => {
-    setCheckedList(tags);
+    setStar(score || 0);
+    setCheckedList(tags || tagsData);
+    setComment(content || '');
   }, []);
 
   return (
@@ -88,7 +92,8 @@ const General = () => {
           character={
             <img src="/assets/images/icons/rate_filled.svg" alt="rate" />
           }
-          onChange={onChangeStar}
+          onChange={HandleStar}
+          defaultValue={score || 0}
         />
         <div className="w-100 mb-21 text-center">
           <Typography category={'Bd2'}>
@@ -97,13 +102,13 @@ const General = () => {
         </div>
         <div className="w-85">
           <div className="row contents-center mb-80 flex-wrap">
-            {Object.keys(tags).map((tag, index) => (
+            {Object.keys(tagsData).map((data, index) => (
               <Checkbox
                 key={index}
-                name={tag}
+                name={data}
                 onChange={handleChange}
-                currentValue={checkedList[tag] === 1}
-                label={tag}
+                currentValue={checkedList[data] === 1}
+                label={data}
               />
             ))}
           </div>
@@ -111,7 +116,12 @@ const General = () => {
           <div className="w-100 mb-24 text-center">
             <Typography category={'Bd2'}>하고싶은 말을 적어주세요!</Typography>
           </div>
-          <Input textarea placeholder={''} onChange={HandleComment} />
+          <Input
+            textarea
+            placeholder={''}
+            onChange={HandleComment}
+            currentValue={comment}
+          />
         </div>
       </Review>
     </Main>

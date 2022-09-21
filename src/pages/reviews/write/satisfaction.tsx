@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import RadioButton from '@/components/common/radiobutton';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
+import { getSessionReview } from '@/lib/commonFunction';
 import satisfactionArr from '@/lib/만족도.json';
 import { Main } from '@/templates/Main';
 
@@ -40,8 +41,9 @@ const satisfactionArray = (satisfaction: string, HandleSatisfaction: any) => {
 
 const Satisfaction = () => {
   const [satisfaction, setSatisfaction] = useState<string>(
-    satisfactionArr[0] || ''
+    Object.keys(satisfactionArr)[0] || ''
   );
+  const { designSatisfaction } = getSessionReview();
 
   const HandleSatisfaction = (e: any) => {
     setSatisfaction(e.target.value);
@@ -52,6 +54,16 @@ const Satisfaction = () => {
     reviewData.designSatisfaction = satisfactionArr[satisfaction];
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
   };
+
+  useEffect(() => {
+    const satisfactionHistory =
+      Object.keys(satisfactionArr).find(
+        (key) => satisfactionArr[key] === designSatisfaction
+      ) ||
+      Object.keys(satisfactionArr)[0] ||
+      '';
+    setSatisfaction(satisfactionHistory);
+  }, []);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>

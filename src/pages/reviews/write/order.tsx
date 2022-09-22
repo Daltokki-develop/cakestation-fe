@@ -66,8 +66,9 @@ const Order = () => {
 
   useEffect(() => {
     setSize(cakeNumber || cakeSizes[0]);
-    if (cakeSheet.includes(sheetType)) setSheet(sheetType || cakeSheet[0]);
-    else {
+    if (sheetType === undefined || cakeSheet.includes(sheetType)) {
+      setSheet(sheetType || cakeSheet[0]);
+    } else {
       setEtc(sheetType || '');
       setSheet(cakeSheet[-1] || '직접 입력');
     }

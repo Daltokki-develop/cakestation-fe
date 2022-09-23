@@ -1,15 +1,11 @@
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import axios from 'axios';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import ProgressBar from '@/components/common/progressbar';
-import Typography from '@/components/common/typography';
-import { UploadButton } from '@/components/uploadbutton';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
 import { Main } from '@/templates/Main';
@@ -17,63 +13,27 @@ import { Main } from '@/templates/Main';
 const StyledImage = styled.img`
   width: 292px;
   height: 292px;
+  border-radius: 10px;
   object-fit: cover;
 `;
 
-const SwiperArea = (thumb: string[], progress: number, onChange: any) => {
-  return (
-    <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-      {thumb.map((item: string, index: number) => {
-        console.log('item', item);
-        return (
-          <SwiperSlide key={index}>
-            {progress !== 100 && <ProgressBar width={`${progress}%`} />}
-            <StyledImage src={`/uploads/${item}`} alt="업로드이미지" />
-          </SwiperSlide>
-        );
-      })}
-      <SwiperSlide>
-        <UploadButton
-          allowMultipleFiles={true}
-          uploadFileName="file"
-          onChange={onChange}
-        />
-      </SwiperSlide>
-    </Swiper>
-  );
-};
-
-const UploadPictures = (thumb: string[], progress: number, onChange: any) => {
-  return (
-    <div className="w-85">
-      <div className="w-100 text-end mb-60">
-        <Typography category={'Bd2'} color={'cakeLemon_800'}>
-          ({thumb.length}/10)
-        </Typography>
-      </div>
-      {SwiperArea(thumb, progress, onChange)}
-    </div>
-  );
-};
-
 const AddPictures = () => {
-  const [thumb, setThumb] = useState<string[]>([]);
-  const [progress, setProgress] = useState<number>(0);
+  const [imageList, setImageList] = useState<any>([]);
 
-  const onChange = useCallback(
-    async (formData: FormData) => {
-      const config = {
-        headers: { 'content-type': 'multipart/form-data' },
-        onUploadProgress: (event: { loaded: number; total: number }) => {
-          setProgress(Math.round((event.loaded * 100) / event.total));
-        },
-      };
-      axios.post<any>('/api/imageupload', formData, config).then((res) => {
-        setThumb([...thumb, ...res.data]);
-      });
-    },
-    [thumb]
-  );
+  const onChangeImages = useCallback((e: any) => {
+    const currentImageList: string | string[] = [];
+    Object.values(e.target.files).forEach((file) => {
+      if (file instanceof Blob) {
+        currentImageList.push(URL.createObjectURL(file));
+      }
+    });
+    // @ts-ignore
+    setImageList([...imageList, currentImageList]);
+    // console.log('# fileList : ', fileList);
+    // console.log('# currentImageList : ', currentImageList);
+  }, []);
+
+  const imageInput = useRef(null);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -85,7 +45,30 @@ const AddPictures = () => {
         nextFunc={() => {}}
         nextLink={`/reviews/write/order/`}
       >
-        {UploadPictures(thumb, progress, onChange)}
+        <div className="w-85">
+          <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+            {imageList[0]?.map((item: string, index: number) => {
+              console.log('item', item);
+              return (
+                <SwiperSlide key={index}>
+                  {/* {progress !== 100 && <ProgressBar width={`${progress}%`} />} */}
+                  <StyledImage src={item} alt="업로드이미지" />
+                </SwiperSlide>
+              );
+            })}
+            <SwiperSlide>
+              <input
+                type="file"
+                accept={'image/*'}
+                name="image"
+                multiple
+                // hidden
+                ref={imageInput}
+                onChange={onChangeImages}
+              />
+            </SwiperSlide>
+          </Swiper>
+        </div>
       </Review>
     </Main>
   );

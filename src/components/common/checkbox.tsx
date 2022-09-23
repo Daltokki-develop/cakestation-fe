@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 import palette from '@/styles/palette';
@@ -6,21 +6,31 @@ import palette from '@/styles/palette';
 import Typography from './typography';
 
 interface ICheckBoxProps {
-  value?: string;
-  checked?: boolean;
+  name?: string;
+  groupName?: string;
   onChange?: any;
-  checkedItems?: any;
+  currentValue?: boolean;
+  label?: string;
+  disabled?: boolean;
+  onFocus?: any;
 }
+
+const CheckBoxWrapper = styled.div`
+  & + & {
+    margin-left: 6px;
+  }
+`;
 
 const HiddenCheck = styled.input<ICheckBoxProps>`
   visibility: hidden;
+  display: none;
   width: 0;
   height: 0;
 `;
 
 const StyledCheckBox = styled.label<ICheckBoxProps>`
   background: ${(props) =>
-    props.checked ? `${palette.cakeLemon_400}` : `${palette.grey_100}`};
+    props.currentValue ? `${palette.cakeLemon_400}` : `${palette.grey_100}`};
   border: 1px solid ${palette.black};
   padding: 10px 12px;
   margin: 3px 0;
@@ -35,36 +45,44 @@ const StyledCheckBox = styled.label<ICheckBoxProps>`
   height: fit-content;
 
   cursor: pointer;
-
-  & + & {
-    margin-left: 6px;
-  }
 `;
 
 const CheckBox = (props: ICheckBoxProps) => {
-  const [checked, setChecked] = useState(props.checked);
-  const handleCheck = ({ target }: { target: any }) => {
-    props.onChange(target.checked, target.value);
-    setChecked(target.checked);
-  };
+  const { name, groupName, onChange, currentValue, label, disabled, onFocus } =
+    props;
+  const handleChange = useCallback(
+    (e: any) => {
+      const value = e.target.checked ? 1 : 0;
+      // console.log(name, value);
 
-  useEffect(() => {
-    if (props.checkedItems.includes(props.value)) {
-      setChecked(true);
-    } else {
-      setChecked(false);
-    }
-  }, [props.checkedItems]);
+      if (onChange) {
+        // console.log(value);
+        onChange(name, value, label, e);
+      }
+    },
+    [label, name, onChange]
+  );
+
   return (
-    <StyledCheckBox checked={checked}>
+    <CheckBoxWrapper>
       <HiddenCheck
         type="checkbox"
-        value={props.value}
-        checked={checked}
-        onChange={({ e }: { e: any }) => handleCheck(e)}
+        value=""
+        checked={currentValue || false}
+        disabled={disabled}
+        id={name}
+        name={groupName}
+        onChange={handleChange}
+        onFocus={onFocus}
       />
-      <Typography category={'Bd7'}>{props.value}</Typography>
-    </StyledCheckBox>
+      <StyledCheckBox
+        currentValue={currentValue}
+        htmlFor={name}
+        className="custom-control-label"
+      >
+        <Typography category={'Bd7'}>{label && label}</Typography>
+      </StyledCheckBox>
+    </CheckBoxWrapper>
   );
 };
 

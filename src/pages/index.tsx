@@ -4,17 +4,18 @@ import styled from 'styled-components';
 import SearchBar from '@/components/common/searchbar';
 import Map from '@/components/Map';
 import BottomSheet from '@/layouts/bottomSheet/BottomSheet';
+import BottomSheetExample from '@/layouts/bottomSheet/BottomSheetExample';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
 import subways from '@/lib/전체지하철역.json';
 import { Main } from '@/templates/Main';
 
-const MapContainer = styled.div`
-  /* aspect-ratio: 4 / 3; */
-  width: 100%;
-  height: 100vh;
-`;
+// const MapContainer = styled.div`
+//   /* aspect-ratio: 4 / 3; */
+//   width: 100%;
+//   height: 100vh;
+// `;
 
 const Absolute = styled.div`
   position: absolute;
@@ -54,7 +55,7 @@ const Index = () => {
         />
       </Header>
       <Absolute>
-        <MapContainer id="map" />
+        {/* <MapContainer id="map" /> */}
         <Map
           latitude={data[0] && data[0]['위도']}
           longitude={data[0] && data[0]['경도']}
@@ -63,6 +64,7 @@ const Index = () => {
         />
       </Absolute>
       <BottomSheet />
+      <BottomSheetExample />
       <Navigation type={'default'} />
       {/* <Navigation type={'item'} /> */}
     </Main>

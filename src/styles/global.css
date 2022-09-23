@@ -33,8 +33,16 @@ a {
   width: 85%;
 }
 
+.flex {
+  display: flex;
+}
+
 .contents-center {
   justify-content: center;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .column {
@@ -62,9 +70,20 @@ a {
 .b-108 {
   bottom: 6.75rem;
 }
+  
+.pt-6 {
+  padding-top: 40px;
+}
 
 .mt-3 {
   margin-top: 0.188rem;
+
+.mt-6 {
+  margin-top: 6px;
+}
+
+.mt-8 {
+  margin-top: 8px;
 }
 
 .mt-20 {
@@ -77,6 +96,15 @@ a {
 
 .mt-48 {
   margin-top: 3rem;
+}
+
+.mt-75 {
+  margin-top: 75px;
+}
+
+
+.mt-79 {
+  margin-top: 79px;
 }
 
 .mt-143 {
@@ -157,4 +185,46 @@ a {
 
 .max-w-28 {
   max-width: 28rem;
+}
+
+/* swiper */
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper-pagination {
+  position: relative !important;
+}
+
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+  bottom: 0px !important;
+  margin-top: 40px;
+}
+
+.swiper-pagination-bullet {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #111111 !important;
+}
+
+/* Ruquired */
+.required {
+  position: relative;
+}
+
+.required::before {
+  position: absolute;
+  left: -8px;
+  top: -6px;
+  content: "*";
+  color: #ff7283;
+  font-size: 16px;
 }

@@ -1,6 +1,12 @@
+import 'swiper/css';
+import 'swiper/css/pagination';
+
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react';
+import styled from 'styled-components';
+import { Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import ProgressBar from '@/components/common/progressbar';
 import Typography from '@/components/common/typography';
@@ -8,6 +14,48 @@ import { UploadButton } from '@/components/uploadbutton';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
 import { Main } from '@/templates/Main';
+
+const StyledImage = styled.img`
+  width: 292px;
+  height: 292px;
+  object-fit: cover;
+`;
+
+const SwiperArea = (thumb: string[], progress: number, onChange: any) => {
+  return (
+    <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+      {thumb.map((item: string, index: number) => {
+        console.log('item', item);
+        return (
+          <SwiperSlide key={index}>
+            {progress !== 100 && <ProgressBar width={`${progress}%`} />}
+            <StyledImage src={`/uploads/${item}`} alt="업로드이미지" />
+          </SwiperSlide>
+        );
+      })}
+      <SwiperSlide>
+        <UploadButton
+          allowMultipleFiles={true}
+          uploadFileName="file"
+          onChange={onChange}
+        />
+      </SwiperSlide>
+    </Swiper>
+  );
+};
+
+const UploadPictures = (thumb: string[], progress: number, onChange: any) => {
+  return (
+    <div className="w-85">
+      <div className="w-100 text-end mb-60">
+        <Typography category={'Bd2'} color={'cakeLemon_800'}>
+          ({thumb.length}/10)
+        </Typography>
+      </div>
+      {SwiperArea(thumb, progress, onChange)}
+    </div>
+  );
+};
 
 const AddPictures = () => {
   const router = useRouter();
@@ -34,7 +82,7 @@ const AddPictures = () => {
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
       <Review
-        progress={'40%'}
+        progress={'25%'}
         title={'리뷰 사진'}
         subtitle={'케이크 디자인이 잘 보이는 사진을 선택해 주세요.'}
         nextText={'다음'}
@@ -43,27 +91,7 @@ const AddPictures = () => {
         }}
         nextLink={`/reviews/write/${id}/order/`}
       >
-        <div className="text-end mb-60">
-          <Typography category={'Bd2'} color={'cakeLemon_800'}>
-            (1/10)
-          </Typography>
-        </div>
-        <UploadButton
-          allowMultipleFiles={true}
-          uploadFileName="file"
-          onChange={onChange}
-        />
-        {progress !== 100 && <ProgressBar width={`${progress}%`} />}
-        <ul>
-          {thumb.map((item: string, i: number) => {
-            console.log('item', item);
-            return (
-              <li key={i}>
-                <img src={`/uploads/${item}`} width="300" alt="업로드이미지" />
-              </li>
-            );
-          })}
-        </ul>
+        {UploadPictures(thumb, progress, onChange)}
       </Review>
     </Main>
   );

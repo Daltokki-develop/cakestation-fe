@@ -6,8 +6,9 @@ const RegisterShop = () => {
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
       <StoreSearch
-        title={'가게 찾기'}
-        sub={'리뷰하고 싶은 가게를 선택해주세요.'}
+        title={'가게 등록'}
+        sub={'등록하고 싶은 가게를 선택해주세요.'}
+        isSimple
       />
     </Main>
   );

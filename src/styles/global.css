@@ -70,10 +70,13 @@ a {
 .b-108 {
   bottom: 6.75rem;
 }
-
+  
 .pt-6 {
   padding-top: 40px;
 }
+
+.mt-3 {
+  margin-top: 0.188rem;
 
 .mt-6 {
   margin-top: 6px;
@@ -91,12 +94,21 @@ a {
   margin-top: 30px;
 }
 
+.mt-48 {
+  margin-top: 3rem;
+}
+
 .mt-75 {
   margin-top: 75px;
 }
 
+
 .mt-79 {
   margin-top: 79px;
+}
+
+.mt-143 {
+  margin-top: 143px;
 }
 
 .mb-6 {

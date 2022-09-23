@@ -6,8 +6,9 @@ interface ButtonProps {
   size: string;
   category: string;
   disabled?: boolean;
-  sizeStyle: any;
+  sizeStyle?: any;
   onClick?: any;
+  children?: any;
 }
 
 const SIZES = {
@@ -50,7 +51,6 @@ const StyledButton = styled.div<ButtonProps>`
       background-color: ${palette.grey_200};
       color: ${palette.grey_500};
     `}
-
   &:hover {
     background-color: ${(props) =>
       props.category === 'primary'
@@ -65,19 +65,9 @@ const StyledButton = styled.div<ButtonProps>`
   }
 `;
 
-function Button({
-  size,
-  category,
-  disabled,
-  children,
-  onClick,
-}: {
-  size: string;
-  category: string;
-  disabled: boolean;
-  onClick?: () => void;
-  children: any;
-}) {
+const Button = (props: ButtonProps) => {
+  const { size, category, disabled, onClick, children } = props;
+
   const sizeStyle = SIZES[size as keyof typeof SIZES];
 
   return (
@@ -91,6 +81,6 @@ function Button({
       {children}
     </StyledButton>
   );
-}
+};
 
 export default Button;

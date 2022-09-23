@@ -4,10 +4,15 @@ import Button from '@/components/common/button';
 import Section from '@/components/common/section';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
+import { AXIOS_GET } from '@/lib/commonFunction';
+import { BASE_URL } from '@/lib/ConstantURL';
 import { Main } from '@/templates/Main';
 
 const Login = () => {
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    const response = await AXIOS_GET(`${BASE_URL}/api/login`);
+    console.log(response);
+  };
 
   return (
     <Main
@@ -25,12 +30,7 @@ const Login = () => {
             <img src="/assets/images/landing-logo.gif" alt="landing-logo" />
           </div>
           <div className="mt-48">
-            <Button
-              size={'medium'}
-              category={'primary'}
-              disabled={false}
-              onClick={() => handleLogin}
-            >
+            <Button size={'medium'} category={'primary'} onClick={handleLogin}>
               카카오톡으로 시작하기
             </Button>
           </div>

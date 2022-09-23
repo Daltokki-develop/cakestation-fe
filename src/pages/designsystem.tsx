@@ -6,6 +6,7 @@ import Input from '@/components/common/input/input';
 import InputToggle from '@/components/common/input/inputToggle';
 import ItemCard from '@/components/common/itemcard';
 import Modal from '@/components/common/modal';
+import Tab from '@/components/common/tab';
 import Tag from '@/components/common/tag';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
@@ -33,6 +34,12 @@ const DesignSystem = () => {
     'Bd9',
     'Bd10',
   ];
+  const menuList = {
+    0: <Typography> 내용 1</Typography>,
+    1: <Typography> 내용 2</Typography>,
+    2: <Typography> 내용 3</Typography>,
+    3: <Typography> 내용 4</Typography>,
+  };
 
   function openModal() {
     setIsOpen(true);
@@ -132,6 +139,15 @@ const DesignSystem = () => {
               'test-cakestore.png',
               'test-cakestore.png',
             ]}
+          />
+        </div>
+        <div>
+          <p>🥁 Tab</p>
+          <Tab
+            titles={['Tab 1', 'Tab 2', 'Tab 3', 'Tab 4']}
+            counts={[0, 0, 23, 10]}
+            icons={['/assets/images/icons/home_default.svg', '', '', '']}
+            contents={menuList}
           />
         </div>
       </div>

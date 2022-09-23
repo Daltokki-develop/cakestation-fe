@@ -9,7 +9,7 @@ import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
-import { AXIOS_GET, AXIOS_POST, getSessionReview } from '@/lib/commonFunction';
+import { AXIOS_POST, getSessionReview } from '@/lib/commonFunction';
 import { BASE_URL } from '@/lib/ConstantURL';
 import tagsData from '@/lib/총평태그.json';
 import { Main } from '@/templates/Main';
@@ -73,19 +73,12 @@ const General = () => {
     console.log(response);
   };
 
-  // 일단 로그인 처리를 위한 로그인 요청 함수
-  const HandleLogin = async () => {
-    const response = await AXIOS_GET(`${BASE_URL}/api/login`);
-    console.log(response);
-  };
-
   const HandleNext = () => {
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
     reviewData.score = star;
     reviewData.content = comment;
     reviewData.tags = checkedList;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
-    HandleLogin();
     HandleAPI();
   };
 

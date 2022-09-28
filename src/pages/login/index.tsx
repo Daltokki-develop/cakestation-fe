@@ -5,14 +5,12 @@ import Button from '@/components/common/button';
 import Section from '@/components/common/section';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
-import { BASE_URL } from '@/lib/ConstantURL';
+import { key, REDIRECT_URL } from '@/lib/ConstantURL';
 import { Main } from '@/templates/Main';
 
 const Login = () => {
   return (
-    <Main
-      meta={<Meta title="Cakestation Login" description="로그인 페이지이다" />}
-    >
+    <Main meta={<Meta title="Cakestation Login" description="login" />}>
       <Section>
         <div className="w-85">
           <div className="mt-143">
@@ -24,15 +22,16 @@ const Login = () => {
           <div className="mt-48">
             <img src="/assets/images/landing-logo.gif" alt="landing-logo" />
           </div>
-          <div className="mt-48">
-            <Link href={`${BASE_URL}/api/login`}>
-              <a>
-                <Button size={'medium'} category={'primary'}>
-                  카카오톡으로 시작하기
-                </Button>
-              </a>
-            </Link>
-          </div>
+          <Link
+            href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${key}&redirect_uri=${REDIRECT_URL}`}
+            className="mt-48"
+          >
+            <a>
+              <Button size={'medium'} category={'primary'}>
+                카카오톡으로 시작하기
+              </Button>
+            </a>
+          </Link>
         </div>
       </Section>
     </Main>

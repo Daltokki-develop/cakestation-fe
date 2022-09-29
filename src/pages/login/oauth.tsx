@@ -20,9 +20,7 @@ const Oauth = () => {
             `${BASE_URL}/api/oauth/kakao?code=${code}`
           );
           console.log(response);
-          // const token = response?.headers.authorization;
-          // window.localStorage.setItem('token', token || '');
-          // await router.push('/');
+          await router.push('/');
         } catch (e) {
           console.error(e);
         }

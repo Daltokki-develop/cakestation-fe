@@ -5,7 +5,6 @@ import Button from '@/components/common/button';
 import Section from '@/components/common/section';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
-import { key, REDIRECT_URL } from '@/lib/ConstantURL';
 import { Main } from '@/templates/Main';
 
 const Login = () => {
@@ -22,10 +21,7 @@ const Login = () => {
           <div className="mt-48">
             <img src="/assets/images/landing-logo.gif" alt="landing-logo" />
           </div>
-          <Link
-            href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${key}&redirect_uri=${REDIRECT_URL}`}
-            className="mt-48"
-          >
+          <Link href={`http://3.35.207.202:8080/api/login`} className="mt-48">
             <a>
               <Button size={'medium'} category={'primary'}>
                 카카오톡으로 시작하기

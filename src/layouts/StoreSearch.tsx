@@ -1,22 +1,19 @@
-import Link from 'next/link';
-import type { NextRouter } from 'next/router';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from '@/components/common/button';
 import ItemCard from '@/components/common/itemcard';
 import SearchBar from '@/components/common/searchbar';
 import Section from '@/components/common/section';
 import Typography from '@/components/common/typography';
-import Completed from '@/components/completed';
 import { Header } from '@/layouts/Header';
 import Navigation from '@/layouts/Navigation';
-import results from '@/lib/가게검색결과.json';
+import { AXIOS_GET } from '@/lib/commonFunction';
+import { BASE_URL } from '@/lib/ConstantURL';
 
 interface IStoreSearchProps {
   title: string;
   sub: string;
-  isSimple?: boolean;
 }
 
 const StoreSearchHeader = (props: IStoreSearchProps) => {
@@ -50,18 +47,6 @@ const FirstSearch = () => {
   );
 };
 
-const NoResult = () => {
-  return (
-    <Link href={'/reviews/register/'}>
-      <a className="mt-20">
-        <Typography category={'Bd7'} color={'grey_400'}>
-          <u>찾으시는 가게가 없으신가요?</u>
-        </Typography>
-      </a>
-    </Link>
-  );
-};
-
 const SearchButton = (FetchResultList: (() => void) | undefined) => {
   return (
     <div className="w-100 fixed b-108 max-w-28">
@@ -79,88 +64,42 @@ const SearchButton = (FetchResultList: (() => void) | undefined) => {
   );
 };
 
-const FetchResultList = (
+const FetchResultList = async (
   keyword: string,
-  resultList: any[],
-  setResultList: (
-    arg0: { id: number; title: string; location: string }[]
-  ) => void,
+  setResultList: any,
   setFirstSearch: (arg0: boolean) => void
 ) => {
-  console.log(`서치 키워드 : ${keyword}\n 서치 결과 : ${resultList}`);
-  if (keyword === '달토끼 케이크') setResultList(results);
-  else setResultList([]);
+  try {
+    const response = await AXIOS_GET(
+      `${BASE_URL}/api/stores/search?keyword=${keyword}`
+    );
+    setResultList(response?.data.result.content);
+  } catch (e) {
+    console.error(e);
+    setResultList({});
+  }
   setFirstSearch(true);
-};
-
-const HandleCompleted = (
-  router: NextRouter,
-  setCompleted: (arg0: boolean) => void
-) => {
-  setCompleted(true);
-  const timer = setTimeout(() => {
-    router.push('/reviews/write/1234/addpictures/');
-  }, 2000);
-  console.log(timer);
-};
-
-const GoReviewWrite = (router: NextRouter) => {
-  router.push('/reviews/write/1234/addpictures/');
-};
-
-const ResultList = (
-  resultList: any[],
-  props: IStoreSearchProps,
-  setCompleted: (arg0: boolean) => void,
-  firstSearch: boolean
-) => {
-  const router = useRouter();
-  return (
-    <div className="column mt-20 text-center">
-      {resultList?.length > 0 ? (
-        <>
-          {resultList.map((result: any, index: React.Key) => (
-            <ItemCard
-              key={index}
-              line={!props.isSimple}
-              title={result.title}
-              rate={result.rate}
-              count={result.count}
-              distance={result.distance}
-              pictures={result.pictures}
-              isSimple={props.isSimple}
-              location={result.location}
-              onClick={
-                props.isSimple
-                  ? () => HandleCompleted(router, setCompleted)
-                  : () => GoReviewWrite(router)
-              }
-            />
-          ))}
-          {firstSearch && !props.isSimple && NoResult()}
-        </>
-      ) : (
-        firstSearch && (
-          <>
-            {FirstSearch()}
-            {!props.isSimple && NoResult()}
-          </>
-        )
-      )}
-    </div>
-  );
 };
 
 const StoreSearch = (props: IStoreSearchProps) => {
   const [keyword, setKeyword] = useState<string>('');
   const [resultList, setResultList] = useState<Array<any>>([]);
   const [firstSearch, setFirstSearch] = useState<boolean>(false);
-  const [completed, setCompleted] = useState<boolean>(false);
+  const router = useRouter();
 
-  const FetchResultListwithKey = (e: any) => {
+  const FetchResultListwithKey = async (e: any) => {
     if (e.key === 'Enter')
-      FetchResultList(keyword, resultList, setResultList, setFirstSearch);
+      await FetchResultList(keyword, setResultList, setFirstSearch);
   };
+
+  const GoReviewWrite = async () => {
+    await router.push('/reviews/write/addpictures/');
+  };
+
+  useEffect(() => {
+    FetchResultList(keyword, setResultList, setFirstSearch);
+    sessionStorage.setItem('ReviewData', JSON.stringify(''));
+  }, []);
 
   return (
     <>
@@ -173,20 +112,37 @@ const StoreSearch = (props: IStoreSearchProps) => {
             onChange={(e: any) => setKeyword(e.target.value)}
             onKeyPress={FetchResultListwithKey}
           />
-          {ResultList(resultList, props, setCompleted, firstSearch)}
+          <div className="column mt-20 text-center">
+            {resultList?.length > 0 ? (
+              <>
+                {resultList.map((result: any, index: React.Key) => {
+                  const { address, name, score } = result;
+                  return (
+                    <ItemCard
+                      key={index}
+                      line
+                      title={name}
+                      rate={score || 0}
+                      count={0}
+                      distance={'역과의 거리거리~'}
+                      pictures={[]}
+                      location={address}
+                      onClick={GoReviewWrite}
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              firstSearch && <>{FirstSearch()}</>
+            )}
+          </div>
           {keyword &&
             SearchButton(() =>
-              FetchResultList(
-                keyword,
-                resultList,
-                setResultList,
-                setFirstSearch
-              )
+              FetchResultList(keyword, setResultList, setFirstSearch)
             )}
         </div>
       </Section>
       <Navigation type={'default'} />
-      {completed && <Completed text={'가게 등록이 완료되었습니다!'} />}
     </>
   );
 };

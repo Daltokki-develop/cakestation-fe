@@ -14,27 +14,23 @@ interface IItemCardProps {
   distance?: string;
   pictures?: string[];
   heart?: boolean;
-  // simplecard
-  isSimple?: boolean;
   location?: string;
   onClick?: () => void;
 }
 
 interface IStyledItemCardProps {
   line?: boolean;
-  isSimple?: boolean;
 }
 
 const StyledItemCard = styled.div<IStyledItemCardProps>`
-  width: ${(props) => (props.isSimple ? 'calc(100% - 2rem)' : '100%')};
+  width: 100%;
   border: ${(props) =>
     props.line ? `.0625rem solid ${palette.black}` : 'none'};
   border-radius: ${(props) => (props.line ? '1rem' : 0)};
-  padding: ${(props) => (props.isSimple ? '1rem' : '1.5rem 0 0')};
+  padding: 1.5rem 0 0;
 
   display: flex;
   flex-direction: column;
-  align-items: ${(props) => (props.isSimple ? 'flex-start' : 'normal')};
 
   background-color: ${palette.white};
   overflow: hidden;
@@ -63,6 +59,7 @@ const ItemCardHeader = styled.div`
 const StyledItemCardTitle = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 `;
 
 const ItemCardDesc = styled.div`
@@ -132,6 +129,12 @@ const Picture = styled.img`
 const EmptyPicture = styled.div`
   width: 25%;
   background-color: ${palette.grey_200};
+
+  &:after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
 `;
 
 const AddEmptyPicture = (props: IItemCardProps) => {
@@ -159,44 +162,23 @@ const Pictures = (props: IItemCardProps) => {
   );
 };
 
-const SimpleCard = (props: IItemCardProps) => {
-  return (
-    <>
-      <Typography category={'Bd1'} color={'grey_800'}>
-        {props.title}
-      </Typography>
-      <Typography category={'Bd7'} color={'grey_800'}>
-        {props.location}
-      </Typography>
-    </>
-  );
-};
-
 const ItemCard = (props: IItemCardProps) => {
   return (
-    <StyledItemCard
-      isSimple={props.isSimple}
-      line={props.line}
-      onClick={props.onClick}
-    >
-      {props.isSimple ? (
-        SimpleCard(props)
-      ) : (
-        <>
-          <ItemCardHeader>
-            {ItemCardTitle(props)}
-            {props.heart && (
-              <div>
-                <HeartImage
-                  src="/assets/images/icons/heart_color-filled.svg"
-                  alt="heart"
-                />
-              </div>
-            )}
-          </ItemCardHeader>
-          {Pictures(props)}
-        </>
-      )}
+    <StyledItemCard line={props.line} onClick={props.onClick}>
+      <>
+        <ItemCardHeader>
+          {ItemCardTitle(props)}
+          {props.heart && (
+            <div>
+              <HeartImage
+                src="/assets/images/icons/heart_color-filled.svg"
+                alt="heart"
+              />
+            </div>
+          )}
+        </ItemCardHeader>
+        {Pictures(props)}
+      </>
     </StyledItemCard>
   );
 };

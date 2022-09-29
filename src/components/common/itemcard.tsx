@@ -14,7 +14,6 @@ interface IItemCardProps {
   distance?: string;
   pictures?: string[];
   heart?: boolean;
-  location?: string;
   onClick?: () => void;
 }
 

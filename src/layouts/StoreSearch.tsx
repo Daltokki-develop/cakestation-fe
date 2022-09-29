@@ -124,9 +124,8 @@ const StoreSearch = (props: IStoreSearchProps) => {
                       title={name}
                       rate={score || 0}
                       count={0}
-                      distance={'역과의 거리거리~'}
+                      distance={address}
                       pictures={[]}
-                      location={address}
                       onClick={GoReviewWrite}
                     />
                   );

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import palette from '@/styles/palette';
@@ -6,6 +6,7 @@ import palette from '@/styles/palette';
 import Button from '../common/button';
 import Divider from '../common/divider';
 import ReviewCard from '../common/reviewCard';
+import Tag from '../common/tag';
 import Typography from '../common/typography';
 import MapforDetails from './MapforDetails';
 
@@ -56,7 +57,7 @@ const StyledTitle = styled.div`
 `;
 
 const StyledSubTitle = styled.div`
-  padding-bottom: 20px;
+  padding: 24px 0;
   padding-left: 20px;
 `;
 
@@ -84,6 +85,33 @@ const ButtonArea = styled.div`
 const ButtonWrapper = styled.div`
   width: 10.8125rem;
   margin: 0 auto;
+`;
+
+const CakeSizeList = styled.div`
+  width: 90%;
+  height: 68px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CakeSelectGuide = styled.div`
+  width: 90%;
+  padding-bottom: 85%;
+  background-color: ${palette.grey_200};
+  margin: 0 auto;
+  margin-bottom: 16px;
+`;
+
+const CakeFlavorList = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 16px;
 `;
 
 const MoreIcon = styled.div`
@@ -136,35 +164,85 @@ const ReviewBoardTitle = styled.div`
 `;
 
 function DetailPage({ address, more }: { address: string; more: string }) {
-  const scrollRefAll = useRef<HTMLLIElement>(null);
-  const scrollRefMenu = useRef<HTMLLIElement>(null);
-  const scrollRefPicture = useRef<HTMLLIElement>(null);
-  const scrollRefReview = useRef<HTMLLIElement>(null);
   const [activeId, setActiveId] = useState(0);
+  const TAB_HEIGHT = 49.2;
 
-  const moveToAll = () => {
-    scrollRefAll.current?.scrollIntoView({ behavior: 'smooth' });
-    setActiveId(0);
-  };
+  function setContentsHeight() {
+    if (typeof window !== 'object') return;
+    const contentHeights = [0, 0, 0, 0];
 
-  const moveToMenu = () => {
-    scrollRefMenu.current?.scrollIntoView({ behavior: 'smooth' });
-    setActiveId(1);
-  };
+    const elementAll = document.getElementsByClassName(
+      'store-all'
+    )[0] as HTMLElement | null;
+    if (elementAll) {
+      contentHeights[0] = elementAll.offsetTop - TAB_HEIGHT;
+    }
 
-  const moveToPicture = () => {
-    scrollRefPicture.current?.scrollIntoView({ behavior: 'smooth' });
-    setActiveId(2);
-  };
+    const elementMenu = document.getElementsByClassName(
+      'store-menu'
+    )[0] as HTMLElement | null;
+    if (elementMenu) {
+      contentHeights[1] = elementMenu.offsetTop - TAB_HEIGHT;
+    }
 
-  const moveToReview = () => {
-    scrollRefReview.current?.scrollIntoView({ behavior: 'smooth' });
-    setActiveId(3);
+    const elementPicture = document.getElementsByClassName(
+      'store-picture'
+    )[0] as HTMLElement | null;
+    if (elementPicture) {
+      contentHeights[2] = elementPicture.offsetTop - TAB_HEIGHT;
+    }
+
+    const elementReview = document.getElementsByClassName(
+      'store-review'
+    )[0] as HTMLElement | null;
+    if (elementReview) {
+      contentHeights[3] = elementReview.offsetTop - TAB_HEIGHT;
+    }
+
+    // eslint-disable-next-line consistent-return
+    return contentHeights;
+  }
+
+  const moveToTarget = (idx: number) => {
+    if (typeof window !== 'object') return;
+    const mainSectionElement =
+      document.getElementsByClassName('main-section')[0];
+    const targetHeight = setContentsHeight();
+
+    if (mainSectionElement && targetHeight) {
+      mainSectionElement.scrollTo({
+        top: targetHeight[idx],
+        behavior: 'auto',
+      });
+    }
+    setActiveId(idx);
   };
 
   const HandleMapButton = () => {
     window.open(more);
   };
+
+  const handleScroll = useCallback((e: Event) => {
+    const target = e.target as HTMLDivElement;
+    // console.log(target.scrollTop);
+    const contentHeights = setContentsHeight();
+    contentHeights?.map(function (value, index) {
+      if (target.scrollTop + 1 > value) {
+        return setActiveId(index);
+      }
+      return null;
+    });
+  }, []);
+
+  useEffect(() => {
+    const mainSectionElement =
+      document.getElementsByClassName('main-section')[0];
+
+    mainSectionElement?.addEventListener('scroll', handleScroll);
+    return () => {
+      mainSectionElement?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div>
@@ -172,7 +250,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
         <TabTitles className="tab-contents">
           <TitleList
             className={`${activeId === 0 ? 'all active' : 'all'}`}
-            onClick={moveToAll}
+            onClick={() => moveToTarget(0)}
           >
             <Typography
               category={'Bd1'}
@@ -183,7 +261,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
           </TitleList>
           <TitleList
             className={`${activeId === 1 ? 'menu active' : 'menu'}`}
-            onClick={moveToMenu}
+            onClick={() => moveToTarget(1)}
           >
             <Typography
               category={'Bd1'}
@@ -194,7 +272,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
           </TitleList>
           <TitleList
             className={`${activeId === 2 ? 'picture active' : 'picture'}`}
-            onClick={moveToPicture}
+            onClick={() => moveToTarget(2)}
           >
             <Typography
               category={'Bd1'}
@@ -208,7 +286,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
           </TitleList>
           <TitleList
             className={`${activeId === 3 ? 'review active' : 'review'}`}
-            onClick={moveToReview}
+            onClick={() => moveToTarget(3)}
           >
             <Typography
               category={'Bd1'}
@@ -224,7 +302,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
         <Divider size={'small'} />
       </Tab>
       <ul className="tab-contents">
-        <ContentList className="store-all" ref={scrollRefAll}>
+        <ContentList className="store-all">
           <StyledTitle>
             <Typography category={'H2'} color={'black'}>
               오시는 길
@@ -252,21 +330,78 @@ function DetailPage({ address, more }: { address: string; more: string }) {
           </StyledText>
         </ContentList>
         <Divider size={'large'} />
-        <ContentList className="store-menu" ref={scrollRefMenu}>
+        <ContentList className="store-menu">
           <StyledTitle>
             <Typography category={'H2'} color={'black'}>
-              메뉴
+              케이크 호수 및 가격
             </Typography>
           </StyledTitle>
+          <div>
+            <CakeSizeList>
+              <div>
+                <Typography category={'Bd1'} color={'cakeLavender_800'}>
+                  케이크호수
+                </Typography>
+              </div>
+              <div>
+                <Typography category={'Bd1'} color={'grey_800'}>
+                  32000~
+                </Typography>
+              </div>
+            </CakeSizeList>
+            <CakeSizeList>
+              <div>
+                <Typography category={'Bd1'} color={'cakeLavender_800'}>
+                  1호
+                </Typography>
+              </div>
+              <div>
+                <Typography category={'Bd1'} color={'grey_800'}>
+                  32000~
+                </Typography>
+              </div>
+            </CakeSizeList>
+            <CakeSizeList>
+              <div>
+                <Typography category={'Bd1'} color={'cakeLavender_800'}>
+                  2호
+                </Typography>
+              </div>
+              <div>
+                <Typography category={'Bd1'} color={'grey_800'}>
+                  32000~
+                </Typography>
+              </div>
+            </CakeSizeList>
+          </div>
           <StyledSubTitle>
-            <Typography category={'Bd1'} color={'black'}>
-              케이크 사이즈
+            <Typography category={'H3'} color={'black'}>
+              케이크 선택 가이드
             </Typography>
           </StyledSubTitle>
-          <img src={'/assets/images/test-cakesize.png'} alt={'메뉴사진'} />
+          <CakeSelectGuide />
+          <StyledSubTitle>
+            <Typography category={'H3'} color={'black'}>
+              케이크 맛
+            </Typography>
+          </StyledSubTitle>
+          <CakeFlavorList>
+            <Tag size={'large'} color={'black'}>
+              바닐라 빵 + 크림치즈 생크림
+            </Tag>
+            <Tag size={'large'} color={'black'}>
+              초코빵 + 오레오 크림
+            </Tag>
+            <Tag size={'large'} color={'black'}>
+              얼그레이 빵 + 일반 생크림
+            </Tag>
+            <Tag size={'large'} color={'black'}>
+              얼그레이 빵
+            </Tag>
+          </CakeFlavorList>
         </ContentList>
         <Divider size={'large'} />
-        <ContentList className="store-picture" ref={scrollRefPicture}>
+        <ContentList className="store-picture">
           <StyledTitle>
             <Typography category={'H2'} color={'black'}>
               리뷰사진
@@ -285,7 +420,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
           </Pictures>
         </ContentList>
         <Divider size={'large'} />
-        <ContentList className="store-review" ref={scrollRefReview}>
+        <ContentList className="store-review">
           <StyledTitle>
             <Typography category={'H2'} color={'black'}>
               리뷰

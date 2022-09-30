@@ -1,7 +1,7 @@
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
+import { getSessionReview } from '@/lib/commonFunction';
 import { Main } from '@/templates/Main';
 
 const StyledImage = styled.img`
@@ -28,36 +29,35 @@ const StyledLabel = styled.label`
 
 const AddPictures = () => {
   const [imageList, setImageList] = useState<any>([]);
-  const [fileList, setFileList] = useState<any>([]);
-  const imageInput = useRef(null);
+  const currentImageList: string[] = [];
+  const { reviewImages } = getSessionReview();
 
   const onChangeImages = useCallback((e: any) => {
-    const currentImageList: string | string[] = [];
-    Object.values(e.target.files).forEach((file) => {
+    // 백엔으로 보낼 이미지 폼데이터
+    const { files } = e.target;
+    Object.values(files).forEach((file) => {
       if (file instanceof Blob) {
         currentImageList.push(URL.createObjectURL(file));
       }
     });
+
     // @ts-ignore
-    setImageList([...imageList, currentImageList]);
-    setFileList(e.target.files);
-    // console.log('# fileList : ', fileList);
-    // console.log('# currentImageList : ', currentImageList);
+    console.log('currentImageList', currentImageList);
+    setImageList(
+      imageList ? [...imageList, ...currentImageList] : currentImageList
+    );
   }, []);
 
   const HandleNext = () => {
     sessionStorage.setItem(
       'ReviewData',
       JSON.stringify({
-        reviewImages: fileList,
+        reviewImages: imageList,
       })
     );
   };
 
-  useEffect(
-    () => console.log('fileList', fileList, 'imageList', imageList),
-    [fileList, imageList]
-  );
+  useEffect(() => setImageList(reviewImages ? [reviewImages] : null), []);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -72,12 +72,11 @@ const AddPictures = () => {
         <div className="w-85">
           <div className={'w-100 text-end mb-60'}>
             <Typography category={'Bd2'} color={'cakeLemon_800'}>
-              ({fileList.length}/10)
+              ({imageList?.length || 0}/10)
             </Typography>
           </div>
           <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-            {imageList[0]?.map((item: string, index: number) => {
-              console.log('item', item);
+            {imageList?.map((item: string, index: number) => {
               return (
                 <SwiperSlide key={index}>
                   {/* {progress !== 100 && <ProgressBar width={`${progress}%`} />} */}
@@ -94,7 +93,6 @@ const AddPictures = () => {
                 name="image"
                 multiple
                 hidden
-                ref={imageInput}
                 onChange={onChangeImages}
               />
             </SwiperSlide>

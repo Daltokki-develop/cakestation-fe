@@ -54,14 +54,11 @@ const Order = () => {
 
   const HandleNext = () => {
     const sheetTypeResult = sheet === '직접 입력' ? etc : sheet;
-    sessionStorage.setItem(
-      'ReviewData',
-      JSON.stringify({
-        cakeNumber: size,
-        sheetType: sheetTypeResult,
-        requestOption: option,
-      })
-    );
+    const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
+    reviewData.cakeNumber = size;
+    reviewData.sheetType = sheetTypeResult;
+    reviewData.requestOption = option;
+    sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
   };
 
   useEffect(() => {

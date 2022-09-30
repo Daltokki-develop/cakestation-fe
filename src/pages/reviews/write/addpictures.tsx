@@ -44,7 +44,10 @@ const AddPictures = () => {
     // @ts-ignore
     console.log('currentImageList', currentImageList);
     setImageList(
-      imageList ? [...imageList, ...currentImageList] : currentImageList
+      (imageList
+        ? [...imageList, ...currentImageList]
+        : currentImageList
+      ).slice(0, 10)
     );
   }, []);
 
@@ -84,18 +87,20 @@ const AddPictures = () => {
                 </SwiperSlide>
               );
             })}
-            <SwiperSlide>
-              <StyledLabel htmlFor={'upload-image'} />
-              <input
-                id={'upload-image'}
-                type="file"
-                accept={'image/*'}
-                name="image"
-                multiple
-                hidden
-                onChange={onChangeImages}
-              />
-            </SwiperSlide>
+            {imageList?.length !== 10 && (
+              <SwiperSlide>
+                <StyledLabel htmlFor={'upload-image'} />
+                <input
+                  id={'upload-image'}
+                  type="file"
+                  accept={'image/*'}
+                  name="image"
+                  multiple
+                  hidden
+                  onChange={onChangeImages}
+                />
+              </SwiperSlide>
+            )}
           </Swiper>
         </div>
       </Review>

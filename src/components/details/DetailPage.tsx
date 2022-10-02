@@ -223,6 +223,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
   };
 
   const handleScroll = useCallback((e: Event) => {
+    if (typeof window !== 'object') return;
     const target = e.target as HTMLDivElement;
     // console.log(target.scrollTop);
     const contentHeights = setContentsHeight();

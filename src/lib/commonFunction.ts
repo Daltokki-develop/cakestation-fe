@@ -20,7 +20,7 @@ export const getSessionUserData = () => {
 // axios 요청에 포함될 헤더 값 세팅
 const getAuthHeader = (method: string) => {
   const sessionUserData = getSessionUserData();
-  // axios.defaults.withCredentials = true; // withCredentials 전역 설정
+  axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
   // let token = '';
   if (!!sessionUserData && !!sessionUserData.accessToken) {

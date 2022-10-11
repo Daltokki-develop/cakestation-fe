@@ -8,7 +8,9 @@ import Divider from '../common/divider';
 import ReviewCard from '../common/reviewCard';
 import Tag from '../common/tag';
 import Typography from '../common/typography';
+import CheckChip from './checkChip';
 import MapforDetails from './MapforDetails';
+import PictureModal from './PictureModal';
 
 const Tab = styled.div`
   width: 100%;
@@ -131,6 +133,7 @@ const Pictures = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding-bottom: 4px;
 `;
 
 const Picture = styled.img`
@@ -140,7 +143,7 @@ const Picture = styled.img`
 const ReviewBoard = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 24px;
   margin: 0 auto;
@@ -163,8 +166,17 @@ const ReviewBoardTitle = styled.div`
   justify-content: center;
 `;
 
+const ReviewBoardChips = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 7px;
+  grid-column-gap: 6px;
+`;
+
 function DetailPage({ address, more }: { address: string; more: string }) {
   const [activeId, setActiveId] = useState(0);
+  const [showDetailPicture, setShowDetailPicture] = useState(false);
+  const [showPictureModal, setShowPictureModal] = useState(false);
   const TAB_HEIGHT = 49.2;
 
   function setContentsHeight() {
@@ -203,6 +215,14 @@ function DetailPage({ address, more }: { address: string; more: string }) {
     return contentHeights;
   }
 
+  const clickDetailPicture = () => {
+    setShowDetailPicture(true);
+  };
+
+  const clickPicture = () => {
+    setShowPictureModal(true);
+  };
+
   const moveToTarget = (idx: number) => {
     if (typeof window !== 'object') return;
     const mainSectionElement =
@@ -215,10 +235,16 @@ function DetailPage({ address, more }: { address: string; more: string }) {
         behavior: 'auto',
       });
     }
+
+    if (idx === 2) {
+      // 사진 클릭시
+      clickDetailPicture();
+    }
+
     setActiveId(idx);
   };
 
-  const HandleMapButton = () => {
+  const handleMapButton = () => {
     window.open(more);
   };
 
@@ -246,214 +272,312 @@ function DetailPage({ address, more }: { address: string; more: string }) {
   }, []);
 
   return (
-    <div>
-      <Tab className="fixedTitle">
-        <TabTitles className="tab-contents">
-          <TitleList
-            className={`${activeId === 0 ? 'all active' : 'all'}`}
-            onClick={() => moveToTarget(0)}
-          >
-            <Typography
-              category={'Bd1'}
-              color={`${activeId === 0 ? 'cakeLavender_700' : 'black'}`}
+    <>
+      <div>
+        <Tab className="fixedTitle">
+          <TabTitles className="tab-contents">
+            <TitleList
+              className={`${activeId === 0 ? 'all active' : 'all'}`}
+              onClick={() => moveToTarget(0)}
             >
-              전체
-            </Typography>
-          </TitleList>
-          <TitleList
-            className={`${activeId === 1 ? 'menu active' : 'menu'}`}
-            onClick={() => moveToTarget(1)}
-          >
-            <Typography
-              category={'Bd1'}
-              color={`${activeId === 1 ? 'cakeLavender_700' : 'black'}`}
+              <Typography
+                category={'Bd1'}
+                color={`${activeId === 0 ? 'cakeLavender_700' : 'black'}`}
+              >
+                전체
+              </Typography>
+            </TitleList>
+            <TitleList
+              className={`${activeId === 1 ? 'menu active' : 'menu'}`}
+              onClick={() => moveToTarget(1)}
             >
-              메뉴
-            </Typography>
-          </TitleList>
-          <TitleList
-            className={`${activeId === 2 ? 'picture active' : 'picture'}`}
-            onClick={() => moveToTarget(2)}
-          >
-            <Typography
-              category={'Bd1'}
-              color={`${activeId === 2 ? 'cakeLavender_700' : 'black'}`}
+              <Typography
+                category={'Bd1'}
+                color={`${activeId === 1 ? 'cakeLavender_700' : 'black'}`}
+              >
+                메뉴
+              </Typography>
+            </TitleList>
+            <TitleList
+              className={`${activeId === 2 ? 'picture active' : 'picture'}`}
+              onClick={() => moveToTarget(2)}
             >
-              사진
-            </Typography>
-            <Typography category={'Bd8'} color={'grey_500'}>
-              <StyledNumber>23</StyledNumber>
-            </Typography>
-          </TitleList>
-          <TitleList
-            className={`${activeId === 3 ? 'review active' : 'review'}`}
-            onClick={() => moveToTarget(3)}
-          >
-            <Typography
-              category={'Bd1'}
-              color={`${activeId === 3 ? 'cakeLavender_700' : 'black'}`}
+              <Typography
+                category={'Bd1'}
+                color={`${activeId === 2 ? 'cakeLavender_700' : 'black'}`}
+              >
+                사진
+              </Typography>
+              <Typography category={'Bd8'} color={'grey_500'}>
+                <StyledNumber>23</StyledNumber>
+              </Typography>
+            </TitleList>
+            <TitleList
+              className={`${activeId === 3 ? 'review active' : 'review'}`}
+              onClick={() => moveToTarget(3)}
             >
-              리뷰
-            </Typography>
-            <Typography category={'Bd8'} color={'grey_500'}>
-              <StyledNumber>23</StyledNumber>
-            </Typography>
-          </TitleList>
-        </TabTitles>
-        <Divider size={'small'} />
-      </Tab>
-      <ul className="tab-contents">
-        <ContentList className="store-all">
-          <StyledTitle>
-            <Typography category={'H2'} color={'black'}>
-              오시는 길
-            </Typography>
-          </StyledTitle>
-          <MapContainer>
-            <MapforDetails searchAddress={address} />
-            <ButtonArea>
-              <ButtonWrapper>
-                <Button
-                  size={'small'}
-                  category={'primary'}
-                  disabled={false}
-                  onClick={HandleMapButton}
-                >
-                  카카오맵에서 위치 열기
-                </Button>
-              </ButtonWrapper>
-            </ButtonArea>
-          </MapContainer>
-          <StyledText>
-            <Typography category={'Bd6'} color={'grey_700'}>
-              {address}
-            </Typography>
-          </StyledText>
-        </ContentList>
-        <Divider size={'large'} />
-        <ContentList className="store-menu">
-          <StyledTitle>
-            <Typography category={'H2'} color={'black'}>
-              케이크 호수 및 가격
-            </Typography>
-          </StyledTitle>
-          <div>
-            <CakeSizeList>
-              <div>
-                <Typography category={'Bd1'} color={'cakeLavender_800'}>
-                  케이크호수
-                </Typography>
-              </div>
-              <div>
-                <Typography category={'Bd1'} color={'grey_800'}>
-                  32000~
-                </Typography>
-              </div>
-            </CakeSizeList>
-            <CakeSizeList>
-              <div>
-                <Typography category={'Bd1'} color={'cakeLavender_800'}>
-                  1호
-                </Typography>
-              </div>
-              <div>
-                <Typography category={'Bd1'} color={'grey_800'}>
-                  32000~
-                </Typography>
-              </div>
-            </CakeSizeList>
-            <CakeSizeList>
-              <div>
-                <Typography category={'Bd1'} color={'cakeLavender_800'}>
-                  2호
-                </Typography>
-              </div>
-              <div>
-                <Typography category={'Bd1'} color={'grey_800'}>
-                  32000~
-                </Typography>
-              </div>
-            </CakeSizeList>
-          </div>
-          <StyledSubTitle>
-            <Typography category={'H3'} color={'black'}>
-              케이크 선택 가이드
-            </Typography>
-          </StyledSubTitle>
-          <CakeSelectGuide />
-          <StyledSubTitle>
-            <Typography category={'H3'} color={'black'}>
-              케이크 맛
-            </Typography>
-          </StyledSubTitle>
-          <CakeFlavorList>
-            <Tag size={'large'} color={'black'}>
-              바닐라 빵 + 크림치즈 생크림
-            </Tag>
-            <Tag size={'large'} color={'black'}>
-              초코빵 + 오레오 크림
-            </Tag>
-            <Tag size={'large'} color={'black'}>
-              얼그레이 빵 + 일반 생크림
-            </Tag>
-            <Tag size={'large'} color={'black'}>
-              얼그레이 빵
-            </Tag>
-          </CakeFlavorList>
-        </ContentList>
-        <Divider size={'large'} />
-        <ContentList className="store-picture">
-          <StyledTitle>
-            <Typography category={'H2'} color={'black'}>
-              리뷰사진
-            </Typography>
-            <MoreIcon>
-              <img
-                src={'/assets/images/icons/right_black.svg'}
-                alt={'더보기'}
-              />
-            </MoreIcon>
-          </StyledTitle>
-          <Pictures>
-            <Picture src={`/assets/images/test-cakestore.png`} alt="picture" />
-            <Picture src={`/assets/images/test-cakestore.png`} alt="picture" />
-            <Picture src={`/assets/images/test-cakestore.png`} alt="picture" />
-          </Pictures>
-        </ContentList>
-        <Divider size={'large'} />
-        <ContentList className="store-review">
-          <StyledTitle>
-            <Typography category={'H2'} color={'black'}>
-              리뷰
-            </Typography>
-          </StyledTitle>
-          <ReviewBoard>
-            <div
-              className="column"
-              style={{ alignItems: 'center', gap: '8px' }}
-            >
-              <ReviewBoardTitle>
-                <Typography category={'Bd9'}>별점평균</Typography>
-              </ReviewBoardTitle>
-              <img
-                src="/assets/images/icons/rate_filled.svg"
-                alt="rate"
-                style={{ width: '20px', height: '20px' }}
-              />
-              <div>
-                <Typography category={'Bd1'}>4.5</Typography>
-              </div>
-            </div>
-            <div></div>
-          </ReviewBoard>
-          <div>최신순</div>
+              <Typography
+                category={'Bd1'}
+                color={`${activeId === 3 ? 'cakeLavender_700' : 'black'}`}
+              >
+                리뷰
+              </Typography>
+              <Typography category={'Bd8'} color={'grey_500'}>
+                <StyledNumber>23</StyledNumber>
+              </Typography>
+            </TitleList>
+          </TabTitles>
           <Divider size={'small'} />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-        </ContentList>
-      </ul>
-    </div>
+        </Tab>
+        <ul className="tab-contents">
+          <ContentList className="store-all">
+            <StyledTitle>
+              <Typography category={'H2'} color={'black'}>
+                오시는 길
+              </Typography>
+            </StyledTitle>
+            <MapContainer>
+              <MapforDetails searchAddress={address} />
+              <ButtonArea>
+                <ButtonWrapper>
+                  <Button
+                    size={'small'}
+                    category={'primary'}
+                    disabled={false}
+                    onClick={handleMapButton}
+                  >
+                    카카오맵에서 위치 열기
+                  </Button>
+                </ButtonWrapper>
+              </ButtonArea>
+            </MapContainer>
+            <StyledText>
+              <Typography category={'Bd6'} color={'grey_700'}>
+                {address}
+              </Typography>
+            </StyledText>
+          </ContentList>
+          <Divider size={'large'} />
+          <ContentList className="store-menu">
+            <StyledTitle>
+              <Typography category={'H2'} color={'black'}>
+                케이크 호수 및 가격
+              </Typography>
+            </StyledTitle>
+            <div>
+              <CakeSizeList>
+                <div>
+                  <Typography category={'Bd1'} color={'cakeLavender_800'}>
+                    케이크호수
+                  </Typography>
+                </div>
+                <div>
+                  <Typography category={'Bd1'} color={'grey_800'}>
+                    32000~
+                  </Typography>
+                </div>
+              </CakeSizeList>
+              <CakeSizeList>
+                <div>
+                  <Typography category={'Bd1'} color={'cakeLavender_800'}>
+                    1호
+                  </Typography>
+                </div>
+                <div>
+                  <Typography category={'Bd1'} color={'grey_800'}>
+                    32000~
+                  </Typography>
+                </div>
+              </CakeSizeList>
+              <CakeSizeList>
+                <div>
+                  <Typography category={'Bd1'} color={'cakeLavender_800'}>
+                    2호
+                  </Typography>
+                </div>
+                <div>
+                  <Typography category={'Bd1'} color={'grey_800'}>
+                    32000~
+                  </Typography>
+                </div>
+              </CakeSizeList>
+            </div>
+            <StyledSubTitle>
+              <Typography category={'H3'} color={'black'}>
+                케이크 선택 가이드
+              </Typography>
+            </StyledSubTitle>
+            <CakeSelectGuide />
+            <StyledSubTitle>
+              <Typography category={'H3'} color={'black'}>
+                케이크 맛
+              </Typography>
+            </StyledSubTitle>
+            <CakeFlavorList>
+              <Tag size={'large'} color={'black'}>
+                바닐라 빵 + 크림치즈 생크림
+              </Tag>
+              <Tag size={'large'} color={'black'}>
+                초코빵 + 오레오 크림
+              </Tag>
+              <Tag size={'large'} color={'black'}>
+                얼그레이 빵 + 일반 생크림
+              </Tag>
+              <Tag size={'large'} color={'black'}>
+                얼그레이 빵
+              </Tag>
+            </CakeFlavorList>
+          </ContentList>
+          <Divider size={'large'} />
+          <ContentList className="store-picture">
+            {showDetailPicture ? (
+              <>
+                <Pictures>
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                </Pictures>
+                <Pictures>
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                </Pictures>
+                <Pictures>
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                </Pictures>
+                <Pictures>
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                  />
+                </Pictures>
+              </>
+            ) : (
+              <>
+                <StyledTitle>
+                  <Typography category={'H2'} color={'black'}>
+                    리뷰사진
+                  </Typography>
+                  <MoreIcon onClick={clickDetailPicture}>
+                    <img
+                      src={'/assets/images/icons/right_black.svg'}
+                      alt={'더보기'}
+                    />
+                  </MoreIcon>
+                </StyledTitle>
+                <Pictures>
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                    onClick={clickPicture}
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                    onClick={clickPicture}
+                  />
+                  <Picture
+                    src={`/assets/images/test-cakestore.png`}
+                    alt="picture"
+                    onClick={clickPicture}
+                  />
+                </Pictures>
+              </>
+            )}
+          </ContentList>
+          <Divider size={'large'} />
+          <ContentList className="store-review">
+            <StyledTitle>
+              <Typography category={'H2'} color={'black'}>
+                리뷰
+              </Typography>
+            </StyledTitle>
+            <ReviewBoard>
+              <div
+                className="column"
+                style={{ alignItems: 'center', gap: '8px' }}
+              >
+                <ReviewBoardTitle>
+                  <Typography category={'Bd9'}>별점평균</Typography>
+                </ReviewBoardTitle>
+                <img
+                  src="/assets/images/icons/rate_filled.svg"
+                  alt="rate"
+                  style={{ width: '20px', height: '20px' }}
+                />
+                <div>
+                  <Typography category={'Bd1'}>4.5</Typography>
+                </div>
+              </div>
+              <ReviewBoardChips>
+                <CheckChip isCheck={true}>
+                  <Typography category={'Bd10'}>직원이 친절해요</Typography>
+                </CheckChip>
+                <CheckChip isCheck={false}>
+                  <Typography category={'Bd10'}>역과 가까워요</Typography>
+                </CheckChip>
+                <CheckChip isCheck={false}>
+                  <Typography category={'Bd10'}>가격이 저렴해요</Typography>
+                </CheckChip>
+                <CheckChip isCheck={false}>
+                  <Typography category={'Bd10'}>예약이 편해요</Typography>
+                </CheckChip>
+                <CheckChip isCheck={true}>
+                  <Typography category={'Bd10'}>케잌이 맛있어요</Typography>
+                </CheckChip>
+              </ReviewBoardChips>
+            </ReviewBoard>
+            <div>최신순</div>
+            <Divider size={'small'} />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+          </ContentList>
+        </ul>
+        {showPictureModal ? (
+          <PictureModal
+            closeModal={() => setShowPictureModal(!showPictureModal)}
+          />
+        ) : null}
+      </div>
+    </>
   );
 }
 

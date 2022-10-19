@@ -52,12 +52,9 @@ const AddPictures = () => {
   }, []);
 
   const HandleNext = () => {
-    sessionStorage.setItem(
-      'ReviewData',
-      JSON.stringify({
-        reviewImages: imageList,
-      })
-    );
+    const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
+    reviewData.reviewImages = imageList;
+    sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
   };
 
   useEffect(() => setImageList(reviewImages ? [reviewImages] : null), []);

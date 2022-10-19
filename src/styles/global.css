@@ -33,6 +33,14 @@ a {
   width: 85%;
 }
 
+.w-21 {
+  width: 21px;
+}
+
+.h-19_3 {
+  height: 19.3px;
+}
+
 .flex {
   display: flex;
 }
@@ -174,6 +182,10 @@ a {
 
 .mb-83 {
   margin-bottom: 83px;
+}
+
+.mr-7_5 {
+  margin-right: 7.5px;
 }
 
 .text-center {

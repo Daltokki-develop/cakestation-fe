@@ -20,32 +20,29 @@ export const getSessionUserData = () => {
 // axios 요청에 포함될 헤더 값 세팅
 const getAuthHeader = (method: string) => {
   const sessionUserData = getSessionUserData();
-  // axios.defaults.withCredentials = true; // withCredentials 전역 설정
+  axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
-  // let token = '';
+  let token = '';
   if (!!sessionUserData && !!sessionUserData.accessToken) {
-    // token = sessionUserData.accessToken;
+    token = sessionUserData.accessToken;
   }
 
   const header = {
-    // Authorization: '',
+    Authorization: token,
     'Content-Type': '',
   };
 
   switch (method) {
     case 'GET':
     case 'DELETE':
-      // header.Authorization = token;
       break;
 
     case 'POST':
     case 'PUT':
-      // header.Authorization = token;
       header['Content-Type'] = 'application/json';
       break;
 
     case 'FORM':
-      // header.Authorization = token;
       header['Content-Type'] = 'multipart/form-data';
       break;
 
@@ -61,7 +58,7 @@ const TIME_OUT = 2500;
 
 // 헤더가 세팅된 axios GET 요청
 export const AXIOS_GET = (url: string, timeOut: number = TIME_OUT) => {
-  console.log(`=======AXIOS_GET========`);
+  console.log(`====== AXIOS_GET =======`);
   console.log('url :: ', url);
 
   const header = getAuthHeader('GET');
@@ -75,7 +72,7 @@ export const AXIOS_GET = (url: string, timeOut: number = TIME_OUT) => {
       // withCredentials: true,
     })
     .catch(function (error) {
-      console.log(`==========ERROR=========`);
+      console.log(`========= ERROR ========`);
       if (error.response) {
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
         console.log('# 데이터 :: ', error.response.data);
@@ -101,7 +98,7 @@ export const AXIOS_POST = (
   sendString = '',
   timeOut: number = TIME_OUT
 ) => {
-  console.log(`=======AXIOS_POST=======`);
+  console.log(`====== AXIOS_POST ======`);
   console.log('url :: ', url);
 
   const header = getAuthHeader('POST');
@@ -115,7 +112,7 @@ export const AXIOS_POST = (
       // withCredentials: true,
     })
     .catch(function (error) {
-      console.log(`==========ERROR=========`);
+      console.log(`========= ERROR ========`);
       if (error.response) {
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
         console.log(
@@ -139,6 +136,44 @@ export const AXIOS_POST = (
       }
       console.log('# config :: ', error.config);
       console.log(`========================`);
+    });
+};
+
+export const AXIOS_POST_OBJECT = (
+  url: string,
+  sendObject: Object,
+  timeOut = TIME_OUT
+) => {
+  const header = getAuthHeader('POST');
+
+  return axios
+    .post(url, sendObject, {
+      headers: header,
+      timeout: timeOut,
+    })
+    .catch(function (error) {
+      if (error.response) {
+        // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+        console.log(
+          '요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.'
+        );
+        console.log('# 데이터: ', error.response.data);
+        console.log('# 상태: ', error.response.status);
+        console.log('# 헤더: ', error.response.headers);
+      } else if (error.request) {
+        // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+        // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+        // Node.js의 http.ClientRequest 인스턴스입니다.
+        console.log('요청이 이루어 졌으나 응답을 받지 못했습니다.');
+        console.log('# 리퀘스트: ', error.request);
+      } else {
+        // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+        console.log(
+          '오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.'
+        );
+        console.log('# 에러: ', error.message);
+      }
+      console.log('# config: ', error.config);
     });
 };
 

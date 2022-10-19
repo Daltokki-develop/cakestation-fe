@@ -19,7 +19,12 @@ const Oauth = () => {
           const response = await AXIOS_GET(
             `${BASE_URL}/api/oauth?code=${code}`
           );
-          if (response) await router.push('/');
+          if (response) {
+            const UserData = { accessToken: '' };
+            UserData.accessToken = response.data.result;
+            sessionStorage.setItem('UserData', JSON.stringify(UserData));
+            await router.push('/');
+          }
         } catch (e) {
           // console.error(e);
         }

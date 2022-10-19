@@ -29,7 +29,7 @@ const StoreSearchHeader = (props: IStoreSearchProps) => {
   );
 };
 
-const FirstSearch = () => {
+const NoResult = () => {
   return (
     <div className="column items-center">
       <img
@@ -64,41 +64,47 @@ const SearchButton = (FetchResultList: (() => void) | undefined) => {
   );
 };
 
-const FetchResultList = async (
-  keyword: string,
-  setResultList: any,
-  setFirstSearch: (arg0: boolean) => void
-) => {
+const FetchAllResultList = async (setResultList: any) => {
   try {
-    const response = await AXIOS_GET(
-      `${BASE_URL}/api/stores/search?keyword=${keyword}`
-    );
-    setResultList(response?.data.result.content);
+    const response = await AXIOS_GET(`${BASE_URL}/api/stores/all`);
+    setResultList(response?.data.result);
   } catch (e) {
     console.error(e);
     setResultList({});
   }
-  setFirstSearch(true);
+};
+
+const FetchResultList = async (keyword: string, setResultList: any) => {
+  try {
+    const response = await AXIOS_GET(
+      `${BASE_URL}/api/stores/search?keyword=${keyword}`
+    );
+    setResultList(response?.data.result);
+  } catch (e) {
+    console.error(e);
+    setResultList({});
+  }
 };
 
 const StoreSearch = (props: IStoreSearchProps) => {
   const [keyword, setKeyword] = useState<string>('');
   const [resultList, setResultList] = useState<Array<any>>([]);
-  const [firstSearch, setFirstSearch] = useState<boolean>(false);
   const router = useRouter();
 
   const FetchResultListwithKey = async (e: any) => {
-    if (e.key === 'Enter')
-      await FetchResultList(keyword, setResultList, setFirstSearch);
+    if (e.key === 'Enter') await FetchResultList(keyword, setResultList);
   };
 
-  const GoReviewWrite = async () => {
+  const GoReviewWrite = async (storeId: string) => {
+    const reviewData = { storeId: '' };
+    reviewData.storeId = storeId;
+    sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
     await router.push('/reviews/write/addpictures/');
   };
 
   useEffect(() => {
-    FetchResultList(keyword, setResultList, setFirstSearch);
-    sessionStorage.setItem('ReviewData', JSON.stringify(''));
+    FetchAllResultList(setResultList);
+    // sessionStorage.setItem('ReviewData', JSON.stringify(''));
   }, []);
 
   return (
@@ -113,32 +119,30 @@ const StoreSearch = (props: IStoreSearchProps) => {
             onKeyPress={FetchResultListwithKey}
           />
           <div className="column mt-20 text-center">
-            {resultList?.length > 0 ? (
+            {resultList.length > 0 ? (
               <>
                 {resultList.map((result: any, index: React.Key) => {
-                  const { address, name, score } = result;
+                  const { storeId, address, name, score, reviewNum } = result;
                   return (
                     <ItemCard
                       key={index}
                       line
                       title={name}
                       rate={score || 0}
-                      count={0}
+                      count={reviewNum}
                       distance={address}
                       pictures={[]}
-                      onClick={GoReviewWrite}
+                      onClick={() => GoReviewWrite(storeId)}
                     />
                   );
                 })}
               </>
             ) : (
-              firstSearch && <>{FirstSearch()}</>
+              NoResult()
             )}
           </div>
           {keyword &&
-            SearchButton(() =>
-              FetchResultList(keyword, setResultList, setFirstSearch)
-            )}
+            SearchButton(() => FetchResultList(keyword, setResultList))}
         </div>
       </Section>
       <Navigation type={'default'} />

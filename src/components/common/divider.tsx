@@ -8,6 +8,9 @@ interface DividerProps {
 }
 
 const SIZES = {
+  tiny: css`
+    height: 1px;
+  `,
   small: css`
     height: 0.125rem;
   `,

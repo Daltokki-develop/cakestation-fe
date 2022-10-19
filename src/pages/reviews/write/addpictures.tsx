@@ -1,6 +1,7 @@
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Pagination } from 'swiper';
@@ -31,6 +32,7 @@ const AddPictures = () => {
   const [imageList, setImageList] = useState<any>([]);
   const currentImageList: string[] = [];
   const { reviewImages } = getSessionReview();
+  const router = useRouter();
 
   const onChangeImages = useCallback((e: any) => {
     // 백엔으로 보낼 이미지 폼데이터
@@ -55,6 +57,8 @@ const AddPictures = () => {
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
     reviewData.reviewImages = imageList;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
+
+    router.push('/reviews/write/order/');
   };
 
   useEffect(() => setImageList(reviewImages ? [reviewImages] : null), []);
@@ -67,7 +71,6 @@ const AddPictures = () => {
         subtitle={'케이크 디자인이 잘 보이는 사진을 선택해 주세요.'}
         nextText={'다음'}
         nextFunc={HandleNext}
-        nextLink={`/reviews/write/order/`}
       >
         <div className="w-85">
           <div className={'w-100 text-end mb-60'}>

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import Input from '@/components/common/input/input';
@@ -35,6 +36,7 @@ const Order = () => {
   const [etc, setEtc] = useState<string>('');
   const [option, setOption] = useState<String>('');
   const { cakeNumber, sheetType, requestOption } = getSessionReview();
+  const router = useRouter();
 
   const HandleSize = (e: any) => {
     setSize(e.target.value);
@@ -59,6 +61,7 @@ const Order = () => {
     reviewData.sheetType = sheetTypeResult;
     reviewData.requestOption = option;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
+    router.push('/reviews/write/satisfaction/');
   };
 
   useEffect(() => {
@@ -82,7 +85,6 @@ const Order = () => {
         subtitle={'주문하셨던 케이크의 정보를 입력해주세요.'}
         nextText={'다음'}
         nextFunc={HandleNext}
-        nextLink={`/reviews/write/satisfaction/`}
       >
         <div className="w-85">
           {CakeSize(size, HandleSize)}

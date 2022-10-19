@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import Button from '@/components/common/button';
 import ProgressBar from '@/components/common/progressbar';
 import Section from '@/components/common/section';
@@ -13,7 +11,6 @@ interface IReviewProps {
   subtitle: string;
   nextText: string;
   nextFunc: any;
-  nextLink: string;
   children: any;
 }
 
@@ -33,18 +30,14 @@ const Review = (props: IReviewProps) => {
         </div>
         {props.children}
         <div className="fixed b-0 w-100 max-w-28">
-          <Link href={props.nextLink}>
-            <a>
-              <Button
-                size={'large'}
-                category={'primary'}
-                disabled={false}
-                onClick={props.nextFunc}
-              >
-                {props.nextText}
-              </Button>
-            </a>
-          </Link>
+          <Button
+            size={'large'}
+            category={'primary'}
+            disabled={false}
+            onClick={props.nextFunc}
+          >
+            {props.nextText}
+          </Button>
         </div>
       </Section>
     </>

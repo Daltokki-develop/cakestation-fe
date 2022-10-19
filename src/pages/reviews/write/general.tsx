@@ -1,5 +1,6 @@
 import 'rc-rate/assets/index.css';
 
+import { useRouter } from 'next/router';
 import Rate from 'rc-rate';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -7,6 +8,7 @@ import styled from 'styled-components';
 import Checkbox from '@/components/common/checkbox';
 import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
+import Completed from '@/components/completed';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
 import { AXIOS_POST_FORM, getSessionReview } from '@/lib/commonFunction';
@@ -45,7 +47,9 @@ const General = () => {
   const [star, setStar] = useState(0);
   const [checkedList, setCheckedList] = useState({});
   const [comment, setComment] = useState('');
+  const [completed, setCompleted] = useState(false);
   const { storeId, score, content, tags } = getSessionReview();
+  const router = useRouter();
 
   const handleChange = useCallback(
     (name: string, value: string) => {
@@ -76,7 +80,16 @@ const General = () => {
       `${BASE_URL}/api/stores/${storeId}/reviews`,
       getSessionReview()
     );
-    console.log(response);
+    if (response?.data.code === 201) {
+      setCompleted(true);
+      const timer = setTimeout(() => {
+        router.push('/');
+      }, 2000);
+      console.log(timer);
+    } else {
+      alert('리뷰 등록에 실패했습니다!');
+      router.push('/login');
+    }
   };
 
   useEffect(() => {
@@ -93,7 +106,6 @@ const General = () => {
         subtitle={'이 가게는 전반적으로 어땠나요?'}
         nextText={'등록하기'}
         nextFunc={HandleNext}
-        nextLink={`/`}
       >
         <StyledRate
           character={
@@ -131,6 +143,7 @@ const General = () => {
           />
         </div>
       </Review>
+      {completed && <Completed text={'리뷰 등록이 완료되었습니다!'} />}
     </Main>
   );
 };

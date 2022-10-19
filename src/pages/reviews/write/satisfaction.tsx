@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -44,6 +45,7 @@ const Satisfaction = () => {
     Object.keys(satisfactionArr)[0] || ''
   );
   const { designSatisfaction } = getSessionReview();
+  const router = useRouter();
 
   const HandleSatisfaction = (e: any) => {
     setSatisfaction(e.target.value);
@@ -53,6 +55,7 @@ const Satisfaction = () => {
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
     reviewData.designSatisfaction = satisfactionArr[satisfaction];
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
+    router.push('/reviews/write/general/');
   };
 
   useEffect(() => {
@@ -73,7 +76,6 @@ const Satisfaction = () => {
         subtitle={'디자인 구현 만족도를 선택해주세요.'}
         nextText={'다음'}
         nextFunc={HandleNext}
-        nextLink={`/reviews/write/general/`}
       >
         {DesignImplementation()}
         {satisfactionArray(satisfaction, HandleSatisfaction)}

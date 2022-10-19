@@ -17,12 +17,11 @@ const Oauth = () => {
       if (code) {
         try {
           const response = await AXIOS_GET(
-            `${BASE_URL}/api/oauth/kakao?code=${code}`
+            `${BASE_URL}/api/oauth?code=${code}`
           );
-          console.log(response);
-          await router.push('/');
+          if (response) await router.push('/');
         } catch (e) {
-          console.error(e);
+          // console.error(e);
         }
       }
     })();

@@ -20,32 +20,29 @@ export const getSessionUserData = () => {
 // axios 요청에 포함될 헤더 값 세팅
 const getAuthHeader = (method: string) => {
   const sessionUserData = getSessionUserData();
-  // axios.defaults.withCredentials = true; // withCredentials 전역 설정
+  axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
-  // let token = '';
+  let token = '';
   if (!!sessionUserData && !!sessionUserData.accessToken) {
-    // token = sessionUserData.accessToken;
+    token = sessionUserData.accessToken;
   }
 
   const header = {
-    // Authorization: '',
+    Authorization: token,
     'Content-Type': '',
   };
 
   switch (method) {
     case 'GET':
     case 'DELETE':
-      // header.Authorization = token;
       break;
 
     case 'POST':
     case 'PUT':
-      // header.Authorization = token;
       header['Content-Type'] = 'application/json';
       break;
 
     case 'FORM':
-      // header.Authorization = token;
       header['Content-Type'] = 'multipart/form-data';
       break;
 

@@ -17,14 +17,16 @@ const Oauth = () => {
       if (code) {
         try {
           const response = await AXIOS_GET(
-            `${BASE_URL}/api/oauth/kakao?code=${code}`
+            `${BASE_URL}/api/oauth?code=${code}`
           );
-          console.log(response);
-          // const token = response?.headers.authorization;
-          // window.localStorage.setItem('token', token || '');
-          // await router.push('/');
+          if (response) {
+            const UserData = { accessToken: '' };
+            UserData.accessToken = response.data.result;
+            sessionStorage.setItem('UserData', JSON.stringify(UserData));
+            await router.push('/');
+          }
         } catch (e) {
-          console.error(e);
+          // console.error(e);
         }
       }
     })();

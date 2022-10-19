@@ -90,7 +90,7 @@ const Main = (props: IMainProps) => (
       <CustomSection>
         <img src="/assets/images/test-custom-section.png" alt="Cakestation" />
       </CustomSection>
-      <MainSection>
+      <MainSection className="main-section">
         <ContentWrapper>{props.children}</ContentWrapper>
       </MainSection>
     </MainContainer>

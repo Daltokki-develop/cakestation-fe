@@ -58,6 +58,10 @@ const Index = () => {
     { 위도: '37.5666805', 경도: '126.9784147' },
   ]);
   const [center, setCenter] = useState({
+    lat: 33.450701,
+    lng: 126.570667,
+  });
+  const [now, setNow] = useState({
     center: {
       lat: 33.450701,
       lng: 126.570667,
@@ -87,7 +91,7 @@ const Index = () => {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setCenter((prev) => ({
+          setNow((prev) => ({
             ...prev,
             center: {
               lat: position.coords.latitude, // 위도
@@ -97,7 +101,7 @@ const Index = () => {
           }));
         },
         (err) => {
-          setCenter((prev) => ({
+          setNow((prev) => ({
             ...prev,
             errMsg: err.message,
             isLoading: false,
@@ -106,13 +110,17 @@ const Index = () => {
       );
     } else {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-      setCenter((prev) => ({
+      setNow((prev) => ({
         ...prev,
         errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
   }, []);
+
+  useEffect(() => {
+    setCenter(now.center);
+  }, [now]);
 
   return (
     <Main meta={<Meta title="Cakestation Map" description="지도 맛보기" />}>
@@ -134,7 +142,7 @@ const Index = () => {
       <Absolute>
         {loaded && (
           <Map // 지도를 표시할 Container
-            center={center.center}
+            center={center}
             style={{
               // 지도의 크기
               width: '100%',
@@ -157,18 +165,14 @@ const Index = () => {
                 onClick={() => {
                   setSheetOpen(true);
                   setCenter({
-                    center: {
-                      lat: position.위도,
-                      lng: position.경도,
-                    },
-                    errMsg: '',
-                    isLoading: true,
+                    lat: position.위도,
+                    lng: position.경도,
                   });
                 }}
               />
             ))}
             <MapMarker
-              position={center.center} // 마커를 표시할 위치
+              position={now.center} // 마커를 표시할 위치
               image={{
                 src: '/assets/images/icons/spot2.svg', // 마커이미지의 주소입니다
                 size: {

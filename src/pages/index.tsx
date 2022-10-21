@@ -57,6 +57,19 @@ const Index = () => {
   const [positions, setPositions] = useState<Array<any>>([
     { 위도: '37.5666805', 경도: '126.9784147' },
   ]);
+  const [center, setCenter] = useState({
+    lat: 33.450701,
+    lng: 126.570667,
+  });
+  const [now, setNow] = useState({
+    center: {
+      lat: 33.450701,
+      lng: 126.570667,
+    },
+    errMsg: '',
+    isLoading: true,
+  });
+
   const [isSheetOpen, setSheetOpen] = useState(false);
 
   useEffect(() => {
@@ -72,6 +85,42 @@ const Index = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setNow((prev) => ({
+            ...prev,
+            center: {
+              lat: position.coords.latitude, // 위도
+              lng: position.coords.longitude, // 경도
+            },
+            isLoading: false,
+          }));
+        },
+        (err) => {
+          setNow((prev) => ({
+            ...prev,
+            errMsg: err.message,
+            isLoading: false,
+          }));
+        }
+      );
+    } else {
+      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+      setNow((prev) => ({
+        ...prev,
+        errMsg: 'geolocation을 사용할수 없어요..',
+        isLoading: false,
+      }));
+    }
+  }, []);
+
+  useEffect(() => {
+    setCenter(now.center);
+  }, [now]);
 
   return (
     <Main meta={<Meta title="Cakestation Map" description="지도 맛보기" />}>
@@ -93,17 +142,13 @@ const Index = () => {
       <Absolute>
         {loaded && (
           <Map // 지도를 표시할 Container
-            center={{
-              // 지도의 중심좌표
-              lat: 33.450701,
-              lng: 126.570667,
-            }}
+            center={center}
             style={{
               // 지도의 크기
               width: '100%',
               height: '100vh',
             }}
-            level={3} // 지도의 확대 레벨
+            level={5} // 지도의 확대 레벨
           >
             {positions.map((position, index) => (
               <MapMarker
@@ -117,9 +162,26 @@ const Index = () => {
                   }, // 마커이미지의 크기입니다
                 }}
                 title={position.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                onClick={() => setSheetOpen(true)}
+                onClick={() => {
+                  setSheetOpen(true);
+                  setCenter({
+                    lat: position.위도,
+                    lng: position.경도,
+                  });
+                }}
               />
             ))}
+            <MapMarker
+              position={now.center} // 마커를 표시할 위치
+              image={{
+                src: '/assets/images/icons/spot2.svg', // 마커이미지의 주소입니다
+                size: {
+                  width: 27,
+                  height: 36,
+                }, // 마커이미지의 크기입니다
+              }}
+              title={'현재 위치'} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            />
             {/* <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다
             position={{
               // 인포윈도우가 표시될 위치입니다
@@ -134,8 +196,7 @@ const Index = () => {
           </Map>
         )}
       </Absolute>
-      <button onClick={() => setSheetOpen(true)}>Open sheet</button>
-
+      지도 로딩중...
       <CustomSheet isOpen={isSheetOpen} onClose={() => setSheetOpen(false)}>
         <CustomSheet.Container>
           <CustomSheet.Header />

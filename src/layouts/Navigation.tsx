@@ -12,6 +12,8 @@ interface TypeProps {
 
 const StyledNav = styled.div`
   position: fixed;
+  display: flex;
+  align-items: center;
   bottom: 0;
   max-width: 28rem;
   width: 100%;
@@ -32,8 +34,7 @@ const NavigatorContent = styled.div<TypeProps>`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding-top: ${(props) =>
-    props.type === 'default' ? '.4375rem' : '1.3125rem'};
+  padding-top: ${(props) => (props.type === 'default' ? '0' : '1.3125rem')};
 `;
 
 const StyledIcon = styled.img`

@@ -39,7 +39,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+
+      "types": ["kakao.maps.d.ts"]
     }
   },
   "exclude": ["./out/**/*", "./node_modules/**/*"],

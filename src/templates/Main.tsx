@@ -26,13 +26,28 @@ const MainScreen = styled.div`
 `;
 
 const MainContainer = styled.div`
-  background-color: ${palette.grey_100};
+  background-image: url('/assets/images/background.png');
+  background-position: center;
+  animation: movebg 35s linear infinite;
+  background-size: cover;
   justify-content: center;
   display: flex;
   position: relative;
 
   @media (max-width: 56.25rem) {
     background-color: ${palette.white};
+  }
+
+  @keyframes movebg {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 750px 0px;
+    }
+    100% {
+      background-position: 1500px 0px;
+    }
   }
 `;
 
@@ -87,9 +102,7 @@ const Main = (props: IMainProps) => (
     <MainContainer className="w-full px-1 text-gray-700 antialiased">
       {props.meta}
 
-      <CustomSection>
-        <img src="/assets/images/test-custom-section.png" alt="Cakestation" />
-      </CustomSection>
+      <CustomSection></CustomSection>
       <MainSection className="main-section">
         <ContentWrapper>{props.children}</ContentWrapper>
       </MainSection>

@@ -129,7 +129,7 @@ const StoreSearch = (props: IStoreSearchProps) => {
                       line
                       title={name}
                       rate={score || 0}
-                      count={reviewNum}
+                      count={reviewNum || 0}
                       distance={address}
                       pictures={[]}
                       onClick={() => GoReviewWrite(storeId)}

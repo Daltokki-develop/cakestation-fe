@@ -81,6 +81,16 @@ const CountText = styled.span`
   margin-right: 0.8125rem;
 `;
 
+const DistanceSpan = styled.div`
+  width: 60%;
+  span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
+
 const ItemCardTitle = (props: IItemCardProps) => {
   return (
     <StyledItemCardTitle>
@@ -100,11 +110,11 @@ const ItemCardTitle = (props: IItemCardProps) => {
           </Typography>
         </CountText>
         {props.distance && (
-          <span>
+          <DistanceSpan>
             <Typography category={'Bd6'} color={'blue_500'}>
               {props.distance}
             </Typography>
-          </span>
+          </DistanceSpan>
         )}
       </ItemCardDesc>
     </StyledItemCardTitle>

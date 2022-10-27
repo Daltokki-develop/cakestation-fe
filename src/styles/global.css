@@ -49,6 +49,10 @@ a {
   justify-content: center;
 }
 
+.contents-between {
+  justify-content: space-between;
+}
+
 .items-center {
   align-items: center;
 }
@@ -184,8 +188,16 @@ a {
   margin-bottom: 83px;
 }
 
+.mr-6 {
+  margin-right: 6px;
+}
+
 .mr-7_5 {
   margin-right: 7.5px;
+}
+
+.ml-6 {
+  margin-left: 6px;
 }
 
 .text-center {

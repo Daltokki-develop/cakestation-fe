@@ -4,11 +4,14 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Sheet from 'react-modal-sheet';
 import styled from 'styled-components';
 
+import ItemCard from '@/components/common/itemcard';
 import SearchBar from '@/components/common/searchbar';
+import Typography from '@/components/common/typography';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
 import subways from '@/lib/전체지하철역.json';
+import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
 
 // const MapContainer = styled.div`
@@ -48,6 +51,34 @@ const CustomSheet = styled(Sheet)`
   }
 `;
 
+const SheetHeader = styled.div`
+  padding: 0 20px;
+`;
+
+const SheetContent = styled.div`
+  /* padding: 0 20px; */
+`;
+
+// const StationTag = styled.div`
+//   padding: 8px 10px;
+//   width: max-content;
+//   height: max-content;
+//   background-color: ${palette.green_500};
+//   color: ${palette.white};
+//   border-radius: 16px;
+// `;
+
+const Chip = styled.div`
+  width: 70px;
+  height: 32px;
+  background-color: ${palette.black};
+  color: ${palette.white};
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 let isAlreadyLoaded = false;
 
 const Index = () => {
@@ -69,6 +100,7 @@ const Index = () => {
     errMsg: '',
     isLoading: true,
   });
+  const [selected, setSelected] = useState('');
 
   const [isSheetOpen, setSheetOpen] = useState(false);
 
@@ -161,13 +193,14 @@ const Index = () => {
                     height: 27,
                   }, // 마커이미지의 크기입니다
                 }}
-                title={position.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                title={position.역명} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                 onClick={() => {
                   setSheetOpen(true);
                   setCenter({
                     lat: position.위도,
                     lng: position.경도,
                   });
+                  setSelected(position.역명);
                 }}
               />
             ))}
@@ -201,7 +234,77 @@ const Index = () => {
         <CustomSheet.Container>
           <CustomSheet.Header />
           <CustomSheet.Content>
-            {/* Your CustomSheet content goes here */}
+            <SheetHeader>
+              <div className="mb-20">
+                <span className="mr-6">
+                  <Typography category="H4" color="black">
+                    선택한 역
+                  </Typography>
+                </span>
+                <Typography category="H4" color="cakeLavender_700">
+                  {selected}
+                </Typography>
+              </div>
+              {/* <div>
+                <StationTag>
+                  <Typography category="Bd9">2호선</Typography>
+                </StationTag>
+                <StationTag>
+                  <Typography category="Bd9">8호선</Typography>
+                </StationTag>
+              </div> */}
+              <div className="flex items-center contents-between">
+                <Typography category="H3">이 근처 케이크집 리뷰</Typography>
+                <Chip>
+                  <Typography category="Bd8">최신순</Typography>
+                  <img
+                    className="ml-6"
+                    src="/assets/images/icons/chip_arrow.svg"
+                    alt="arrow"
+                  />
+                </Chip>
+              </div>
+            </SheetHeader>
+            <SheetContent>
+              <div>
+                <ItemCard
+                  key={0}
+                  title={'케이크집 이름 1'}
+                  rate={'3.5'}
+                  count={12}
+                  distance={'신림역에서 100m'}
+                  pictures={[]}
+                  onClick={() => {}}
+                />
+                <ItemCard
+                  key={1}
+                  title={'케이크집 이름 2'}
+                  rate={'3.5'}
+                  count={12}
+                  distance={'신림역에서 100m'}
+                  pictures={[]}
+                  onClick={() => {}}
+                />
+                <ItemCard
+                  key={2}
+                  title={'케이크집 이름 3'}
+                  rate={'3.5'}
+                  count={12}
+                  distance={'신림역에서 100m'}
+                  pictures={[]}
+                  onClick={() => {}}
+                />
+                <ItemCard
+                  key={3}
+                  title={'케이크집 이름 4'}
+                  rate={'3.5'}
+                  count={12}
+                  distance={'신림역에서 100m'}
+                  pictures={[]}
+                  onClick={() => {}}
+                />
+              </div>
+            </SheetContent>
           </CustomSheet.Content>
         </CustomSheet.Container>
 

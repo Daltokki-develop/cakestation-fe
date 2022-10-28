@@ -41,8 +41,6 @@ const AddPictures = () => {
       }
     });
 
-    // @ts-ignore
-    console.log('currentImageList', currentImageList);
     setImageList(
       (imageList
         ? [...imageList, ...currentImageList]
@@ -52,7 +50,9 @@ const AddPictures = () => {
   }, []);
 
   const HandleNext = () => {
-    const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
+    const reviewData = sessionStorage.getItem('ReviewData')
+      ? JSON.parse(sessionStorage.getItem('ReviewData') || '')
+      : {};
     reviewData.reviewImages = imageList;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
   };

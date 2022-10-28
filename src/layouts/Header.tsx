@@ -19,7 +19,7 @@ const STYLES = {
     justify-content: center;
   `,
   'icon+text': css`
-    padding: 3.4375rem 0.5rem 0 0.5rem;
+    padding: 3.4375rem 0.5rem 0 1rem;
     display: flex;
     justify-content: space-between;
   `,
@@ -64,8 +64,8 @@ const LogoContainer = styled.div`
 `;
 
 const Icon = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1rem;
+  height: 1rem;
   object-fit: cover;
 `;
 

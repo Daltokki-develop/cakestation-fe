@@ -30,9 +30,8 @@ const Absolute = styled.div`
 `;
 
 const CustomSheet = styled(Sheet)`
-  margin: 0px auto;
+  margin: 5.1875rem 0;
   max-width: 28rem;
-  margin-bottom: 5.1875rem;
 
   .react-modal-sheet-backdrop {
     background-color: transparent !important;
@@ -53,6 +52,13 @@ const CustomSheet = styled(Sheet)`
 
 const SheetHeader = styled.div`
   padding: 0 20px;
+`;
+
+const SheetTitle = styled.div`
+  width: fit-content;
+  padding: 4px 0;
+  border-bottom: 2px solid ${palette.grey_800};
+  margin-bottom: 32px;
 `;
 
 const SheetContent = styled.div`
@@ -235,7 +241,7 @@ const Index = () => {
           <CustomSheet.Header />
           <CustomSheet.Content>
             <SheetHeader>
-              <div className="mb-20">
+              <SheetTitle>
                 <span className="mr-6">
                   <Typography category="H4" color="black">
                     선택한 역
@@ -244,7 +250,7 @@ const Index = () => {
                 <Typography category="H4" color="cakeLavender_700">
                   {selected}
                 </Typography>
-              </div>
+              </SheetTitle>
               {/* <div>
                 <StationTag>
                   <Typography category="Bd9">2호선</Typography>

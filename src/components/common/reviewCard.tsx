@@ -26,6 +26,7 @@ const PostInfo = styled.div`
 const RateInfo = styled.div`
   display: flex;
   padding-bottom: 12px;
+  gap: 6px;
 `;
 
 const Rate = styled.img`
@@ -49,10 +50,27 @@ const SummaryTitle = styled.div`
 `;
 
 const ReviewImage = styled.div`
+  position: relative;
   width: 100%;
   padding-bottom: 95%;
   background-color: ${palette.grey_200};
   margin-bottom: 16px;
+`;
+
+const ImageNumberChip = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  display: flex;
+  width: 42px;
+  height: 30px;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: ${palette.black};
+  border-radius: 16px;
 `;
 
 const Content = styled.div`
@@ -75,7 +93,7 @@ function ReviewCard() {
         <PostInfo>
           <div>
             <Typography category={'Bd5'} color={'grey_800'}>
-              빛********
+              다리세개공룡
             </Typography>
           </div>
           <div>
@@ -85,10 +103,29 @@ function ReviewCard() {
           </div>
         </PostInfo>
         <RateInfo>
-          <Rate src={'/assets/images/icons/rate_filled.svg'} alt={'메뉴사진'} />
-          <Rate src={'/assets/images/icons/rate_filled.svg'} alt={'메뉴사진'} />
-          <Rate src={'/assets/images/icons/rate_filled.svg'} alt={'메뉴사진'} />
-          <Rate src={'/assets/images/icons/rate_filled.svg'} alt={'메뉴사진'} />
+          <div>
+            <Rate
+              src={'/assets/images/icons/rate_filled.svg'}
+              alt={'메뉴사진'}
+            />
+            <Rate
+              src={'/assets/images/icons/rate_filled.svg'}
+              alt={'메뉴사진'}
+            />
+            <Rate
+              src={'/assets/images/icons/rate_filled.svg'}
+              alt={'메뉴사진'}
+            />
+            <Rate
+              src={'/assets/images/icons/rate_filled.svg'}
+              alt={'메뉴사진'}
+            />
+          </div>
+          <div>
+            <Typography category={'Bd5'} color={'grey_800'}>
+              4점
+            </Typography>
+          </div>
         </RateInfo>
         <SummaryInfo>
           <Summary>
@@ -116,7 +153,13 @@ function ReviewCard() {
             </div>
           </Summary>
         </SummaryInfo>
-        <ReviewImage></ReviewImage>
+        <ReviewImage>
+          <ImageNumberChip>
+            <Typography category={'Bd9'} color={'white'}>
+              1 / 2
+            </Typography>
+          </ImageNumberChip>
+        </ReviewImage>
         <Content>
           <div>
             <Typography category={'Bd5'} color={'grey_800'}>

@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Sheet from 'react-modal-sheet';
 import styled from 'styled-components';
@@ -30,7 +30,7 @@ const Absolute = styled.div`
 `;
 
 const CustomSheet = styled(Sheet)`
-  margin: 5.1875rem 0;
+  margin: 5.1875rem auto;
   max-width: 28rem;
 
   .react-modal-sheet-backdrop {
@@ -74,6 +74,24 @@ const SheetContent = styled.div`
 //   border-radius: 16px;
 // `;
 
+const SetMyLocationButton = styled.div`
+  position: absolute;
+  bottom: 6rem;
+  right: 1rem;
+  width: 53px;
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: ${palette.white};
+  box-shadow: 0 4px 22px rgba(133, 133, 133, 0.34);
+  border-radius: 50%;
+  z-index: 100;
+
+  cursor: pointer;
+`;
+
 const Chip = styled.div`
   width: 70px;
   height: 32px;
@@ -109,6 +127,23 @@ const Index = () => {
   const [selected, setSelected] = useState('');
 
   const [isSheetOpen, setSheetOpen] = useState(false);
+
+  const mapRef = useRef();
+
+  const handleMoveLocation = () => {
+    const map = mapRef.current;
+    setCenter({
+      // @ts-ignore
+      lat: map?.getCenter().getLat(),
+
+      // @ts-ignore
+      lng: map?.getCenter().getLng(),
+    });
+  };
+
+  const setCurrentLocation = () => {
+    setCenter(now.center);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -186,7 +221,11 @@ const Index = () => {
               width: '100%',
               height: '100vh',
             }}
+            // @ts-ignore
+            ref={mapRef}
             level={5} // 지도의 확대 레벨
+            isPanto
+            onDragEnd={handleMoveLocation}
           >
             {positions.map((position, index) => (
               <MapMarker
@@ -259,7 +298,7 @@ const Index = () => {
                   <Typography category="Bd9">8호선</Typography>
                 </StationTag>
               </div> */}
-              <div className="flex items-center contents-between">
+              <div className="flex items-center contents-space-between">
                 <Typography category="H3">이 근처 케이크집 리뷰</Typography>
                 <Chip>
                   <Typography category="Bd8">최신순</Typography>
@@ -316,6 +355,9 @@ const Index = () => {
 
         <CustomSheet.Backdrop />
       </CustomSheet>
+      <SetMyLocationButton onClick={setCurrentLocation}>
+        <img src={'/assets/images/icons/spot.svg'} alt={'spot'} />
+      </SetMyLocationButton>
       <Navigation type={'default'} />
       {/* <Navigation type={'item'} /> */}
     </Main>

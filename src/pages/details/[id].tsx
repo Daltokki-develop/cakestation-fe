@@ -1,15 +1,14 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Divider from '@/components/common/divider';
 import HeartButton from '@/components/common/heartButton';
-// import Tab from '@/components/common/tab';
 import Tag from '@/components/common/tag';
 import Typography from '@/components/common/typography';
 import DetailPage from '@/components/details/DetailPage';
-// import TotalDetail from '@/components/details/TotalDetail';
 import { Meta } from '@/layouts/Meta';
+import Navigation from '@/layouts/Navigation';
 import results from '@/lib/가게상세페이지.json';
 import { Main } from '@/templates/Main';
 
@@ -92,19 +91,34 @@ const defaultResult = {
 const Detail = () => {
   const router = useRouter();
   const result = results[Number(router.query.id)] || defaultResult;
-
-  // const menuList = {
-  //   0: <TotalDetail address={result.address} more={result.more} />,
-  //   1: <Typography> 내용 2</Typography>,
-  //   2: <Typography> 내용 3</Typography>,
-  //   3: <Typography> 내용 4</Typography>,
-  // };
-
   const [like, setLike] = useState(false);
+  const [showBottomNav, setShowBottomNav] = useState(false);
 
   const toggleLike = () => {
     setLike(!like);
   };
+
+  const handleScroll = useCallback((e: Event) => {
+    if (typeof window !== 'object') return;
+    const target = e.target as HTMLDivElement;
+    const topIcons = document.getElementsByClassName('icons')[0] as HTMLElement;
+
+    if (target.scrollTop > topIcons.offsetTop) {
+      setShowBottomNav(true);
+    } else {
+      setShowBottomNav(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const mainSectionElement =
+      document.getElementsByClassName('main-section')[0];
+
+    mainSectionElement?.addEventListener('scroll', handleScroll);
+    return () => {
+      mainSectionElement?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <Main
@@ -176,15 +190,10 @@ const Detail = () => {
           </div>
         </Container>
         <Divider size={'large'} />
-        <div className="tab">
-          {/* <Tab
-            titles={['전체', '메뉴', '사진', '리뷰']}
-            counts={[0, 0, 23, 23]}
-            icons={['', '', '', '']}
-            contents={menuList}
-          /> */}
+        <div className="detail">
           <DetailPage address={result.address} more={result.more} />
         </div>
+        {showBottomNav ? <Navigation type={'item'}></Navigation> : null}
       </Styles>
     </Main>
   );

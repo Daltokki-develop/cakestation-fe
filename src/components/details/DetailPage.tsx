@@ -216,7 +216,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
   }
 
   const clickDetailPicture = () => {
-    setShowDetailPicture(true);
+    setShowDetailPicture(!showDetailPicture);
   };
 
   const clickPicture = () => {
@@ -430,12 +430,31 @@ function DetailPage({ address, more }: { address: string; more: string }) {
           </ContentList>
           <Divider size={'large'} />
           <ContentList className="store-picture">
+            <StyledTitle>
+              <Typography category={'H2'} color={'black'}>
+                리뷰사진
+              </Typography>
+              <MoreIcon onClick={clickDetailPicture}>
+                {showDetailPicture ? (
+                  <img
+                    src={'/assets/images/icons/arrow_down_black.png'}
+                    alt={'더보기'}
+                  />
+                ) : (
+                  <img
+                    src={'/assets/images/icons/right_black.svg'}
+                    alt={'더보기'}
+                  />
+                )}
+              </MoreIcon>
+            </StyledTitle>
             {showDetailPicture ? (
               <>
                 <Pictures>
                   <Picture
                     src={`/assets/images/test-cakestore.png`}
                     alt="picture"
+                    onClick={clickPicture}
                   />
                   <Picture
                     src={`/assets/images/test-cakestore.png`}
@@ -491,32 +510,18 @@ function DetailPage({ address, more }: { address: string; more: string }) {
               </>
             ) : (
               <>
-                <StyledTitle>
-                  <Typography category={'H2'} color={'black'}>
-                    리뷰사진
-                  </Typography>
-                  <MoreIcon onClick={clickDetailPicture}>
-                    <img
-                      src={'/assets/images/icons/right_black.svg'}
-                      alt={'더보기'}
-                    />
-                  </MoreIcon>
-                </StyledTitle>
                 <Pictures>
                   <Picture
                     src={`/assets/images/test-cakestore.png`}
                     alt="picture"
-                    onClick={clickPicture}
                   />
                   <Picture
                     src={`/assets/images/test-cakestore.png`}
                     alt="picture"
-                    onClick={clickPicture}
                   />
                   <Picture
                     src={`/assets/images/test-cakestore.png`}
                     alt="picture"
-                    onClick={clickPicture}
                   />
                 </Pictures>
               </>

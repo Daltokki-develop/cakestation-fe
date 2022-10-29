@@ -51,7 +51,7 @@ for index, gu_name in enumerate(gu_list): # index.__str__() + '_' + gu_name + '.
 
     # 다음 
     next_btn = driver.find_element("id", "info.search.page.next")
-    has_next = "disabled" not in next_btn.get_attribute("class").split(" ")
+    has_next = "disabled" in next_btn.get_attribute("class").split(" ")
     Page = 1
     while has_next: # 다음 페이지가 있으면 loop
         file = open(fileName, 'a', encoding='utf-8')
@@ -114,15 +114,18 @@ for index, gu_name in enumerate(gu_list): # index.__str__() + '_' + gu_name + '.
                 except:
                     place_photo = ""
 
-                # 카카오맵 url 수집
-                place_map = ""
+                # driver.close()
+                # driver.switch_to.window(driver.window_handles[0])
+                time.sleep(1)
+                # 카카오맵 상세보기 url 수집
+                place_more = ""
+                map_more = driver.find_elements('css selector', 'a.link_place')[0]
                 try: 
-                  select_map = driver.find_element('css selector', 'a.link_place')
-                  map_url = select_map.get_attribute('href')
-                  if map_url == "#none":
-                      place_map = ""
+                  more = map_more.get_attribute('href');
+                  if more == "#none":
+                      place_more = ""
                   else:
-                      place_map = map_url
+                      place_map = more
                 except:
                     place_map = ""
                 driver.close()
@@ -131,6 +134,54 @@ for index, gu_name in enumerate(gu_list): # index.__str__() + '_' + gu_name + '.
                 print(place_name, place_map)
 
                 file.write(place_name + "|" + place_address + "|" + place_hour + "|" + place_tel + "|" + place_photo + "|" + place_url + "|" + place_map + "\n")
+
+                # 역에서의 도보 시간 2개 수집 (더 빠른 시간)
+                # 지하철역에서 찾아가는 길 개수
+                walkway_list = driver.find_elements('css selector', 'ul.list_wayout > li')
+                walkway_li = [[], []]
+
+                if (len(walkway_list)) > 1:
+                  for i in range(0, 2):
+                    li = walkway_list[i]
+                    txt_station = li.find_element('css selector', 'a.link_station').text # 역 이름
+
+                    subway_li = li.find_elements('css selector', 'span.ico_traffic') # 해당 역을 지나가는 지하철 호선
+                    txt_subway_li = []
+                    for j in range(0, len(subway_li)):
+                      if subway_li[j].text == '':
+                        txt_subway_li.append('신림선')
+                      else:
+                        txt_subway_li.append(subway_li[j].text)
+
+                    num_wayout = li.find_element('css selector', 'span.num_wayout').text + "번 출구" # 가까운 출구
+                    txt_walk = li.find_element('css selector', 'span.txt_walk').text # 도보 몇분
+
+                    walkway_li[i] = [txt_station, txt_subway_li, num_wayout, txt_walk]
+                elif (len(walkway_list)) == 1:
+                  li = walkway_list[0]
+                  txt_station = li.find_element('css selector', 'a.link_station').text # 역 이름
+
+                  subway_li = li.find_elements('css selector', 'span.ico_traffic') # 해당 역을 지나가는 지하철 호선
+                  txt_subway_li = []
+                  for j in range(0, len(subway_li)):
+                    if subway_li[j].text == '':
+                      txt_subway_li.append('신림선')
+                    else:
+                      txt_subway_li.append(subway_li[j].text)
+
+                  num_wayout = li.find_element('css selector', 'span.num_wayout').text + "번 출구" # 가까운 출구
+                  txt_walk = li.find_element('css selector', 'span.txt_walk').text # 도보 몇분
+                  walkway_li[0] = [txt_station, txt_subway_li, num_wayout, txt_walk]
+                else: 
+                  walkway_li = [[], []]
+                # print(walkway_li)
+            
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
+
+                print(place_name, place_photo, place_url, place_more, str(walkway_li))
+                file.write(place_name + "|" + place_address + "|" + place_hour + "|" + place_tel + "|" + place_photo + "|" + place_url + "|" + place_more + "|" + str(walkway_li) + "\n")
+
             print(i, ' of', ' [ ' , Page, ' ] ')
         next_btn = driver.find_element("id", "info.search.page.next")
         has_next = "disabled" not in next_btn.get_attribute("class").split(" ")

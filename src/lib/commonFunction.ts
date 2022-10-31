@@ -20,7 +20,6 @@ export const getSessionUserData = () => {
 // axios 요청에 포함될 헤더 값 세팅
 const getAuthHeader = (method: string) => {
   const sessionUserData = getSessionUserData();
-  axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
   let token = '';
   if (!!sessionUserData && !!sessionUserData.accessToken) {
@@ -29,6 +28,7 @@ const getAuthHeader = (method: string) => {
 
   const header = {
     Authorization: token,
+    'Access-Control-Allow-Credentials': true,
     'Content-Type': '',
   };
 
@@ -69,7 +69,6 @@ export const AXIOS_GET = (url: string, timeOut: number = TIME_OUT) => {
     .get(url, {
       headers: header,
       timeout: timeOut,
-      // withCredentials: true,
     })
     .catch(function (error) {
       console.log(`========= ERROR ========`);

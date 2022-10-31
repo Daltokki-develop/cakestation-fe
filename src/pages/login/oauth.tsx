@@ -20,8 +20,9 @@ const Oauth = () => {
             `${BASE_URL}/api/oauth?code=${code}`
           );
           if (response) {
-            const UserData = { accessToken: '' };
-            UserData.accessToken = response.data.result;
+            const UserData = { accessToken: '', userId: '' };
+            UserData.userId = response.data.result;
+            UserData.accessToken = response.headers.authorization || '';
             sessionStorage.setItem('UserData', JSON.stringify(UserData));
             await router.push('/');
           }

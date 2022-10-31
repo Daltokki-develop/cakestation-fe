@@ -20,6 +20,7 @@ const VerticalBar = styled.div`
 
 const MyPage = () => {
   const [myData, setMyData] = useState({
+    randomNumber: 1,
     nickName: null,
     reviewCount: 0,
     reviewImageCount: 0,
@@ -42,6 +43,9 @@ const MyPage = () => {
     FetchMyData();
   }, []);
 
+  const { randomNumber, nickName, reviewCount, reviewImageCount, likeCount } =
+    myData;
+
   return (
     <Main meta={<Meta title="Cakestation Review" description="마이페이지" />}>
       <Header style={'text'}>마이페이지</Header>
@@ -50,11 +54,11 @@ const MyPage = () => {
           <div className="flex items-center mt-16 pl-18">
             <img
               className={'w-74 h-74 mr-18'}
-              src={'/assets/images/profile/0.svg'}
+              src={`/assets/images/profile/${randomNumber}.svg`}
               alt={'프로필 사진'}
             />
             <Typography category={'H1'}>
-              {myData.nickName || '비어있는 닉네임'}
+              {nickName || '비어있는 닉네임'}
             </Typography>
           </div>
           <div className="mt-34 pl-18 pr-18 column">
@@ -67,7 +71,7 @@ const MyPage = () => {
                   alt="rate"
                 />
                 <Typography category={'Bd5'} color={'grey_500'}>
-                  리뷰 {myData.reviewCount}
+                  리뷰 {reviewCount}
                 </Typography>
               </div>
               <VerticalBar />
@@ -78,7 +82,7 @@ const MyPage = () => {
                   alt="photo"
                 />
                 <Typography category={'Bd5'} color={'grey_500'}>
-                  사진 {myData.reviewImageCount}
+                  사진 {reviewImageCount}
                 </Typography>
               </div>
             </div>
@@ -87,7 +91,7 @@ const MyPage = () => {
           <div className="h-68 flex items-center contents-space-between pl-18 pr-18">
             <Typography category={'Bd4'}>좋아요</Typography>
             <div>
-              <Typography category={'Bd4'}>{myData.likeCount}</Typography>
+              <Typography category={'Bd4'}>{likeCount}</Typography>
               <img
                 className="w-12 h-12 ml-18"
                 src={'/assets/images/icons/right_black.svg'}
@@ -99,7 +103,7 @@ const MyPage = () => {
           <div className="h-68 flex items-center contents-space-between pl-18 pr-18">
             <Typography category={'Bd4'}>내가 등록한 리뷰</Typography>
             <div>
-              <Typography category={'Bd4'}>{myData.reviewCount}</Typography>
+              <Typography category={'Bd4'}>{reviewCount}</Typography>
               <img
                 className="w-12 h-12 ml-18"
                 src={'/assets/images/icons/right_black.svg'}

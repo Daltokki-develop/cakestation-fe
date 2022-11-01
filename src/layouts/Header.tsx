@@ -1,5 +1,8 @@
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
+import { getSessionUserData } from '@/lib/commonFunction';
 import palette from '@/styles/palette';
 
 type IHeaderProps = {
@@ -84,6 +87,14 @@ const Header = ({
   children: any;
 }) => {
   const styleType = STYLES[style as keyof typeof STYLES];
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const { accessToken } = getSessionUserData() || '';
+    console.log('액세수토쿤', accessToken);
+    if (!accessToken) router.push('/login').then(() => {});
+  }, []);
 
   return (
     <>

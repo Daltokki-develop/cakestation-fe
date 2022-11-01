@@ -27,7 +27,7 @@ const Oauth = () => {
             await router.push('/');
           }
         } catch (e) {
-          // console.error(e);
+          await router.push('/login');
         }
       }
     })();

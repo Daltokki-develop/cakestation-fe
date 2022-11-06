@@ -238,7 +238,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
 
     if (idx === 2) {
       // 사진 클릭시
-      clickDetailPicture();
+      setShowDetailPicture(true);
     }
 
     setActiveId(idx);

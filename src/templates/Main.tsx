@@ -85,7 +85,7 @@ const MainSection = styled(BasicSection)`
 
   @media (max-width: 56.25rem) {
     box-shadow: none;
-    overflow-y: inherit;
+    /* overflow-y: inherit; */
   }
 `;
 

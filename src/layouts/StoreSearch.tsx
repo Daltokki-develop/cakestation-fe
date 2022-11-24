@@ -77,7 +77,7 @@ const FetchAllResultList = async (setResultList: any) => {
 const FetchResultList = async (keyword: string, setResultList: any) => {
   try {
     const response = await AXIOS_GET(
-      `${BASE_URL}/api/stores/search?keyword=${keyword}`
+      `${BASE_URL}/api/stores/search/name?storeName=${keyword}`
     );
     setResultList(response?.data.result);
   } catch (e) {
@@ -119,7 +119,7 @@ const StoreSearch = (props: IStoreSearchProps) => {
             onKeyPress={FetchResultListwithKey}
           />
           <div className="column mt-20 text-center">
-            {resultList.length > 0 ? (
+            {resultList?.length > 0 ? (
               <>
                 {resultList.map((result: any, index: React.Key) => {
                   const { storeId, address, name, score, reviewNum } = result;

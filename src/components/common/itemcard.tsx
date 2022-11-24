@@ -81,8 +81,8 @@ const CountText = styled.span`
   margin-right: 0.8125rem;
 `;
 
-const DistanceSpan = styled.div`
-  width: 60%;
+const DistanceSpan = styled.div<IStyledItemCardProps>`
+  width: ${(props) => (props.line ? '60%' : '100%')};
   span {
     display: block;
     white-space: nowrap;
@@ -110,7 +110,7 @@ const ItemCardTitle = (props: IItemCardProps) => {
           </Typography>
         </CountText>
         {props.distance && (
-          <DistanceSpan>
+          <DistanceSpan line={props.line}>
             <Typography category={'Bd6'} color={'blue_500'}>
               {props.distance}
             </Typography>

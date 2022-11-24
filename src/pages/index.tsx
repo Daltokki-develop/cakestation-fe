@@ -10,6 +10,8 @@ import Typography from '@/components/common/typography';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
+import { AXIOS_GET } from '@/lib/commonFunction';
+import { BASE_URL } from '@/lib/ConstantURL';
 import subways from '@/lib/전체지하철역.json';
 import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
@@ -30,8 +32,13 @@ const Absolute = styled.div`
 `;
 
 const CustomSheet = styled(Sheet)`
-  margin: 5.1875rem auto;
+  margin-bottom: 5.1875rem;
+  margin-left: calc(50%); //  TODO: 어떻게 맞출까
   max-width: 28rem;
+
+  @media (max-width: 56.25rem) {
+    margin: 5.1875rem auto;
+  }
 
   .react-modal-sheet-backdrop {
     background-color: transparent !important;
@@ -127,6 +134,8 @@ const Index = () => {
   const [selected, setSelected] = useState('');
 
   const [isSheetOpen, setSheetOpen] = useState(false);
+
+  const [resultList, setResultList] = useState<Array<any>>([]);
 
   const mapRef = useRef();
 
@@ -232,20 +241,29 @@ const Index = () => {
                 key={index}
                 position={{ lat: position.위도, lng: position.경도 }} // 마커를 표시할 위치
                 image={{
-                  src: '/assets/images/icons/pin.svg', // 마커이미지의 주소입니다
+                  src: '/assets/images/icons/station_pin.svg', // 마커이미지의 주소입니다
                   size: {
-                    width: 27,
-                    height: 27,
+                    width: 50,
+                    height: 31.4,
                   }, // 마커이미지의 크기입니다
                 }}
                 title={position.역명} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                onClick={() => {
+                onClick={async () => {
                   setSheetOpen(true);
                   setCenter({
                     lat: position.위도,
                     lng: position.경도,
                   });
                   setSelected(position.역명);
+                  try {
+                    const response = await AXIOS_GET(
+                      `${BASE_URL}/api/stores/search/station?stationName=${position.역명}`
+                    );
+                    setResultList(response?.data.result);
+                  } catch (e) {
+                    console.error(e);
+                    setResultList([]);
+                  }
                 }}
               />
             ))}
@@ -312,42 +330,20 @@ const Index = () => {
             </SheetHeader>
             <SheetContent>
               <div>
-                <ItemCard
-                  key={0}
-                  title={'케이크집 이름 1'}
-                  rate={'3.5'}
-                  count={12}
-                  distance={'신림역에서 100m'}
-                  pictures={[]}
-                  onClick={() => {}}
-                />
-                <ItemCard
-                  key={1}
-                  title={'케이크집 이름 2'}
-                  rate={'3.5'}
-                  count={12}
-                  distance={'신림역에서 100m'}
-                  pictures={[]}
-                  onClick={() => {}}
-                />
-                <ItemCard
-                  key={2}
-                  title={'케이크집 이름 3'}
-                  rate={'3.5'}
-                  count={12}
-                  distance={'신림역에서 100m'}
-                  pictures={[]}
-                  onClick={() => {}}
-                />
-                <ItemCard
-                  key={3}
-                  title={'케이크집 이름 4'}
-                  rate={'3.5'}
-                  count={12}
-                  distance={'신림역에서 100m'}
-                  pictures={[]}
-                  onClick={() => {}}
-                />
+                {resultList.map((result: any, index: React.Key) => {
+                  const { address, name, score, reviewNum } = result; // storeId,
+                  return (
+                    <ItemCard
+                      key={index}
+                      title={name}
+                      rate={score || 0}
+                      count={reviewNum || 0}
+                      distance={address}
+                      pictures={[]}
+                      // onClick={() => GoReviewWrite(storeId)}
+                    />
+                  );
+                })}
               </div>
             </SheetContent>
           </CustomSheet.Content>

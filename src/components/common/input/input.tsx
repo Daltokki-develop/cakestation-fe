@@ -29,7 +29,7 @@ const StyledInput = styled.input`
 
   &:focus {
     background-color: ${palette.cakeLemon_100};
-    border: 0.125rem solid ${palette.black};
+    outline: -webkit-focus-ring-color auto 1px;
 
     ::placeholder {
       color: transparent;
@@ -72,7 +72,7 @@ const StyledTextArea = styled.textarea`
 
   &:focus {
     background-color: ${palette.cakeLemon_100};
-    border: 0.125rem solid ${palette.black};
+    outline: -webkit-focus-ring-color auto 1px;
 
     ::placeholder {
       color: transparent;

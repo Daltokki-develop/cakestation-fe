@@ -42,7 +42,7 @@ const StyledArrowBottom = styled.div`
   position: absolute;
   top: 63%;
   left: 92%;
-  width: 0;
+  width: 0 !important;
   height: 0;
   pointer-events: none;
   border-style: solid;

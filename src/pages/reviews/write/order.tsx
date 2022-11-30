@@ -16,7 +16,7 @@ const CakeSize = (size: number, HandleSize: (e: any) => void) => {
     option[i] = `${cakeSize}호`;
   });
   return (
-    <div className="mt-75 mb-26 required">
+    <div className="mb-26 required  w-100">
       <div className="mb-8">
         <Typography category={'Bd2'}>케이크의 호수</Typography>
       </div>
@@ -70,9 +70,7 @@ const Order = () => {
       setSheet(cakeSheet[-1] || '직접 입력');
     }
     setOption(requestOption || '');
-  }, []);
-
-  useEffect(() => console.log(etc), [etc]);
+  }, [cakeNumber, requestOption, sheetType]);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -84,39 +82,36 @@ const Order = () => {
         nextFunc={HandleNext}
         nextLink={`/reviews/write/satisfaction/`}
       >
-        <div className="w-85">
-          {CakeSize(size, HandleSize)}
-
-          <div className="mb-20 required">
-            <div className="mb-8">
-              <Typography category={'Bd2'}>케이크 시트의 종류</Typography>
-            </div>
-            <InputToggle
-              value={sheet}
-              options={cakeSheet}
-              onChange={HandleSheet}
-            />
-            {sheet === '직접 입력' && (
-              <div className="mt-8">
-                <Input
-                  placeholder={'케이크 시트의 종류를 직접 입력해주세요.'}
-                  onChange={HandleEtc}
-                  currentValue={etc}
-                />
-              </div>
-            )}
+        {CakeSize(size, HandleSize)}
+        <div className="mb-20 required w-100">
+          <div className="mb-8">
+            <Typography category={'Bd2'}>케이크 시트의 종류</Typography>
           </div>
-          <div className="mb-20">
-            <div className="mb-8">
-              <Typography category={'Bd2'}>추가 옵션</Typography>
+          <InputToggle
+            value={sheet}
+            options={cakeSheet}
+            onChange={HandleSheet}
+          />
+          {sheet === '직접 입력' && (
+            <div className="mt-8">
+              <Input
+                placeholder={'케이크 시트의 종류를 직접 입력해주세요.'}
+                onChange={HandleEtc}
+                currentValue={etc}
+              />
             </div>
-            <Input
-              textarea
-              placeholder={''}
-              onChange={HandleOption}
-              currentValue={option}
-            />
+          )}
+        </div>
+        <div className="mb-20  w-100">
+          <div className="mb-8">
+            <Typography category={'Bd2'}>추가 옵션</Typography>
           </div>
+          <Input
+            textarea
+            placeholder={''}
+            onChange={HandleOption}
+            currentValue={option}
+          />
         </div>
       </Review>
     </Main>

@@ -92,9 +92,8 @@ const Header = ({
 
   useEffect(() => {
     const { accessToken } = getSessionUserData() || '';
-    console.log('액세수토쿤', accessToken);
     if (!accessToken) router.push('/login').then(() => {});
-  }, []);
+  }, [router]);
 
   return (
     <>

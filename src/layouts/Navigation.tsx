@@ -62,13 +62,13 @@ function Navigation({ type }: { type: string }) {
             <Link href="/">
               <StyledIcon src="/assets/images/icons/home_default.svg" />
             </Link>
-            <Link href="/">
+            <Link href="/reviews/search">
               <StyledIcon src="/assets/images/icons/write.svg" />
             </Link>
             <Link href="/likes">
               <StyledIcon src="/assets/images/icons/heart_empty.svg" />
             </Link>
-            <Link href="/">
+            <Link href="/mypage">
               <StyledIcon src="/assets/images/icons/user_default.svg" />
             </Link>
           </>

@@ -21,23 +21,32 @@ interface IStoreSearchProps {
 }
 
 const LoadingContainer = styled.div`
-  position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  background-color: ${palette.black};
-  opacity: 0.5;
-
   z-index: 105;
 
   .loading-icon {
     margin-bottom: 4px;
   }
+`;
+
+const SearchResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  height: max-content;
+  min-height: calc(100vh - 6rem - 5.1875rem - 11rem - 76px - 40px - 20px);
+
+  justify-content: center;
+  align-items: center;
 `;
 
 const StoreSearchHeader = (props: IStoreSearchProps) => {
@@ -127,16 +136,6 @@ const StoreSearch = (props: IStoreSearchProps) => {
 
   return (
     <>
-      {loading && (
-        <LoadingContainer>
-          <div className="loading-icon">
-            <ClipLoader color={palette.white} loading={loading} size={30} />
-          </div>
-          <Typography category="Bd5" color="white">
-            가게 목록을 불러오고 있습니다...
-          </Typography>
-        </LoadingContainer>
-      )}
       <Header style={'text'}>{props.title}</Header>
       <Section padding={'11rem'}>
         <div className="w-85">
@@ -146,7 +145,7 @@ const StoreSearch = (props: IStoreSearchProps) => {
             onChange={(e: Object) => HandleInputChange(e)}
             onKeyPress={FetchResultListwithKey}
           />
-          <div className="column mt-20 text-center">
+          <SearchResultContainer>
             {resultList?.length > 0 ? (
               <>
                 {resultList.map((result: any, index: React.Key) => {
@@ -168,7 +167,21 @@ const StoreSearch = (props: IStoreSearchProps) => {
             ) : (
               searchComplete && <NoResult />
             )}
-          </div>
+            {loading && (
+              <LoadingContainer>
+                <div className="loading-icon">
+                  <ClipLoader
+                    color={palette.grey_800}
+                    loading={loading}
+                    size={30}
+                  />
+                </div>
+                <Typography category="Bd5" color="grey_800">
+                  가게 목록을 불러오고 있습니다...
+                </Typography>
+              </LoadingContainer>
+            )}
+          </SearchResultContainer>
           {keyword && SearchButton(() => FetchResultList())}
         </div>
       </Section>

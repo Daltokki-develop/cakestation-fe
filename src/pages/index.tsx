@@ -5,12 +5,14 @@ import Script from 'next/script';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Sheet from 'react-modal-sheet';
+import ClipLoader from 'react-spinners/ClipLoader';
 import styled from 'styled-components';
 
 import Chip from '@/components/common/chip';
 import Divider from '@/components/common/divider';
 import ItemCard from '@/components/common/itemcard';
 import Typography from '@/components/common/typography';
+import NoResult from '@/components/NoResult';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
@@ -61,6 +63,7 @@ const CustomSheet = styled(Sheet)`
 `;
 
 const SheetHeader = styled.div`
+  height: 95.6px;
   padding: 0 20px;
 `;
 
@@ -72,15 +75,33 @@ const SheetTitle = styled.div`
 `;
 
 const SheetContent = styled.div`
-  /* padding: 0 20px; */
+  height: calc(100% - 95.6px);
 `;
-//   padding: 8px 10px;
 //   width: max-content;
 //   height: max-content;
 //   background-color: ${palette.green_500};
 //   color: ${palette.white};
 //   border-radius: 16px;
 // `;
+
+const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: ${palette.black};
+  opacity: 0.5;
+
+  z-index: 105;
+
+  .loading-icon {
+    margin-bottom: 4px;
+  }
+`;
 
 const SetMyLocationButton = styled.div`
   position: absolute;
@@ -165,20 +186,6 @@ const SearchResultContent = styled.div`
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
-  }
-`;
-
-const NoResultContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  .no-result-image {
-    margin-bottom: 4px;
   }
 `;
 
@@ -477,23 +484,7 @@ const Index = () => {
                         })}
                       </>
                     ) : (
-                      <NoResultContainer>
-                        <div className="no-result-image">
-                          <Image
-                            src="/assets/images/icons/no_result.svg"
-                            alt="NO RESULT"
-                            width={140}
-                            height={140}
-                          />
-                        </div>
-                        <Typography category={'Bd2'} color={'grey_400'}>
-                          앗!
-                          <br />
-                        </Typography>
-                        <Typography category={'Bd7'} color={'grey_400'}>
-                          검색 결과가 없습니다.
-                        </Typography>
-                      </NoResultContainer>
+                      <NoResult />
                     )}
                   </SearchResultContent>
                 </>
@@ -590,7 +581,14 @@ const Index = () => {
             )}
           </Map>
         ) : (
-          <div>로딩</div>
+          <LoadingContainer>
+            <div className="loading-icon">
+              <ClipLoader color={palette.white} loading={!loaded} size={30} />
+            </div>
+            <Typography category="Bd5" color="white">
+              지도를 불러오고 있습니다...
+            </Typography>
+          </LoadingContainer>
         )}
       </Absolute>
       <CustomSheet isOpen={isSheetOpen} onClose={() => setSheetOpen(false)}>
@@ -622,26 +620,24 @@ const Index = () => {
               </div>
             </SheetHeader>
             <SheetContent>
-              <div>
-                {resultList.length > 0 ? (
-                  resultList.map((result: any, index: React.Key) => {
-                    const { address, name, score, reviewNum } = result; // storeId,
-                    return (
-                      <ItemCard
-                        key={index}
-                        title={name}
-                        rate={score || 0}
-                        count={reviewNum || 0}
-                        distance={address}
-                        pictures={[]}
-                        // onClick={() => GoReviewWrite(storeId)}
-                      />
-                    );
-                  })
-                ) : (
-                  <div>검색결과 업슴</div>
-                )}
-              </div>
+              {resultList.length > 0 ? (
+                resultList.map((result: any, index: React.Key) => {
+                  const { address, name, score, reviewNum } = result; // storeId,
+                  return (
+                    <ItemCard
+                      key={index}
+                      title={name}
+                      rate={score || 0}
+                      count={reviewNum || 0}
+                      distance={address}
+                      pictures={[]}
+                      // onClick={() => GoReviewWrite(storeId)}
+                    />
+                  );
+                })
+              ) : (
+                <NoResult />
+              )}
             </SheetContent>
           </CustomSheet.Content>
         </CustomSheet.Container>

@@ -17,6 +17,17 @@ export const getSessionUserData = () => {
   return sessionUserData ? JSON.parse(sessionUserData) : null;
 };
 
+// 메인 화면 검색어 기록 받아오기
+export const getSessionSearchHistory = () => {
+  const sessionSearchHistory = getSession('SearchHistory');
+  return sessionSearchHistory ? JSON.parse(sessionSearchHistory) : null;
+};
+
+// 메인 화면 검색어 기록 추가하기
+export const setSessionSearchHistory = (searchHistory: Object) => {
+  sessionStorage.setItem('SearchHistory', JSON.stringify(searchHistory));
+};
+
 // axios 요청에 포함될 헤더 값 세팅
 const getAuthHeader = (method: string) => {
   const sessionUserData = getSessionUserData();

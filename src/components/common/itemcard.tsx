@@ -83,6 +83,7 @@ const CountText = styled.span`
 
 const DistanceSpan = styled.div<IStyledItemCardProps>`
   width: ${(props) => (props.line ? '60%' : '100%')};
+  max-width: 15rem;
   span {
     display: block;
     white-space: nowrap;

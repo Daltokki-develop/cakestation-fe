@@ -557,7 +557,6 @@ const Index = () => {
                     );
                     setResultList(response?.data.result);
                   } catch (e) {
-                    console.error(e);
                     setResultList([]);
                   }
                 }}

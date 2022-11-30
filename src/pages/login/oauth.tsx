@@ -31,7 +31,7 @@ const Oauth = () => {
         }
       }
     })();
-  }, [code]);
+  }, [code, router]);
 
   return (
     <Main meta={<Meta title="Cakestation Oauth" description="oauth" />}>

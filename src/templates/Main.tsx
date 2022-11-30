@@ -37,6 +37,13 @@ const MainContainer = styled.div`
 
 const BasicSection = styled.div`
   max-width: 28rem;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 const BackgroundSection = styled.div`
@@ -49,7 +56,7 @@ const BackgroundSection = styled.div`
   img {
     position: absolute;
     height: 5.435546875%; // 5556/1024
-    left: 81px;
+    left: 100px;
     bottom: 48.763671875%; //49934/1024
 
     @media (max-width: 56.25rem) {
@@ -66,10 +73,10 @@ const BackgroundSection = styled.div`
     position: absolute;
     width: 299px;
     height: 96px;
-    left: 81px;
-    bottom: 36.671875%; // 37552/1024
+    left: 100px;
+    bottom: 34%; // 37552/1024 TODO: 각 화면 고려해 조정하기
 
-    font-family: 'Pretendard';
+    font-family: 'Pretendard-Medium';
     font-style: normal;
     font-weight: 500;
     font-size: 28.7619px;
@@ -80,8 +87,8 @@ const BackgroundSection = styled.div`
     color: ${palette.black};
 
     span {
+      font-family: 'Pretendard-Bold';
       font-size: 32px;
-      font-weight: bold;
     }
 
     @media (max-width: 56.25rem) {
@@ -127,7 +134,7 @@ const BackgroundSection = styled.div`
 
 const CustomSection = styled(BasicSection)`
   width: 100%;
-  max-width: 512px;
+  /* max-width: 32%; */
   height: 100%;
   background-color: transparent;
   left: 0;

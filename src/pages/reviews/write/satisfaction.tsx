@@ -15,7 +15,7 @@ const DesignImplementationImage = styled.img`
 
 const DesignImplementation = () => {
   return (
-    <div className="mb-27">
+    <div className="mb-33">
       <DesignImplementationImage
         src="/assets/images/design-implementation.svg"
         alt="Design Implementation"

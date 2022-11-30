@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import styled from 'styled-components';
 
 import Button from '@/components/common/button';
 import ProgressBar from '@/components/common/progressbar';
@@ -17,6 +18,15 @@ interface IReviewProps {
   children: any;
 }
 
+const ReviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  height: calc(100vh - 6rem - 3px - 22px - 76px - 64px);
+  justify-content: center;
+  align-items: center;
+`;
+
 const Review = (props: IReviewProps) => {
   return (
     <>
@@ -27,11 +37,9 @@ const Review = (props: IReviewProps) => {
           <div className="mb-10">
             <Typography category={'H1'}>{props.title}</Typography>
           </div>
-          <div className="mb-18">
-            <Typography category={'Bd2'}>{props.subtitle}</Typography>
-          </div>
+          <Typography category={'Bd2'}>{props.subtitle}</Typography>
         </div>
-        {props.children}
+        <ReviewContainer>{props.children}</ReviewContainer>
         <div className="fixed b-0 w-100 max-w-28">
           <Link href={props.nextLink}>
             <a>

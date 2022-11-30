@@ -63,7 +63,7 @@ const Satisfaction = () => {
       Object.keys(satisfactionArr)[0] ||
       '';
     setSatisfaction(satisfactionHistory);
-  }, []);
+  }, [designSatisfaction]);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>

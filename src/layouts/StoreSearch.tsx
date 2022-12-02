@@ -22,7 +22,7 @@ interface IStoreSearchProps {
 
 const LoadingContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 6rem - 5.1875rem - 11rem - 76px - 40px - 20px);
 
   display: flex;
   flex-direction: column;
@@ -45,8 +45,12 @@ const SearchResultContainer = styled.div`
   height: max-content;
   min-height: calc(100vh - 6rem - 5.1875rem - 11rem - 76px - 40px - 20px);
 
-  justify-content: center;
   align-items: center;
+`;
+
+const NoResultContainer = styled.div`
+  width: 100%;
+  height: calc(100vh - 6rem - 5.1875rem - 11rem - 76px - 40px - 20px);
 `;
 
 const StoreSearchHeader = (props: IStoreSearchProps) => {
@@ -146,10 +150,17 @@ const StoreSearch = (props: IStoreSearchProps) => {
             onKeyPress={FetchResultListwithKey}
           />
           <SearchResultContainer>
-            {resultList?.length > 0 ? (
+            {!loading && resultList?.length > 0 && (
               <>
                 {resultList.map((result: any, index: React.Key) => {
-                  const { storeId, address, name, score, reviewNum } = result;
+                  const {
+                    storeId,
+                    address,
+                    name,
+                    score,
+                    reviewNum,
+                    thumbnail,
+                  } = result;
                   return (
                     <ItemCard
                       key={index}
@@ -158,14 +169,17 @@ const StoreSearch = (props: IStoreSearchProps) => {
                       rate={score || 0}
                       count={reviewNum || 0}
                       distance={address}
-                      pictures={[]}
+                      pictures={thumbnail ? [thumbnail] : []}
                       onClick={() => GoReviewWrite(storeId)}
                     />
                   );
                 })}
               </>
-            ) : (
-              searchComplete && <NoResult />
+            )}
+            {!loading && resultList?.length === 0 && searchComplete && (
+              <NoResultContainer>
+                <NoResult />
+              </NoResultContainer>
             )}
             {loading && (
               <LoadingContainer>

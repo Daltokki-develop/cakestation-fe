@@ -193,6 +193,7 @@ const RecentSearchItem = styled.div`
   padding: 15.5px 16px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   .list-icon {
     width: 24px;
@@ -264,7 +265,7 @@ const Index = () => {
   const [searchComplete, setSearchComplete] = useState(false);
 
   const [searchHistoryList, setSearchHistoryList] = useState<
-    Array<{ category: string; keyword: string }>
+    Array<{ category: string; params: string; keyword: string }>
   >([]);
 
   const [resultList, setResultList] = useState<Array<any>>([]);
@@ -294,14 +295,20 @@ const Index = () => {
     setResultList([]);
   }, []);
 
-  const HandleFetchData = useCallback(async () => {
-    const { value, params } = category;
-    const response = await AXIOS_GET(
-      `${BASE_URL}/api/stores/search/${value}?${params}=${keyword}`
-    );
+  const HandleFetchData = useCallback(
+    async (_category: any, _keyword: string) => {
+      setKeyword(_keyword);
+      setSearchComplete(true);
 
-    setResultList(response?.data.result);
-  }, [category, keyword]);
+      const { value, params } = _category;
+      const response = await AXIOS_GET(
+        `${BASE_URL}/api/stores/search/${value}?${params}=${_keyword}`
+      );
+
+      setResultList(response?.data.result);
+    },
+    []
+  );
 
   const HandleSearchHistory = useCallback(() => {
     let searchHistory = getSessionSearchHistory();
@@ -317,20 +324,17 @@ const Index = () => {
       };
     }
 
-    const _searchHistoryList:
-      | ((
-          prevState: {
-            category: string;
-            keyword: string;
-          }[]
-        ) => { category: string; keyword: string }[])
-      | { category: any; keyword: any }[] = [];
+    const _searchHistoryList: any[] = [];
     Object.keys(searchHistory).forEach((index) => {
       const _split = searchHistory[index].split(' ||| ');
-      const _category = _split[0];
+      const _value = _split[0];
+      const _params = _split[1];
       const _keyword = _split[2];
       if (_keyword) {
-        _searchHistoryList.push({ category: _category, keyword: _keyword });
+        _searchHistoryList.push({
+          category: { value: _value, params: _params },
+          keyword: _keyword,
+        });
       }
     });
 
@@ -341,15 +345,14 @@ const Index = () => {
   const HandleInputKeyDown = useCallback(
     (event: any) => {
       if (event.key === 'Enter') {
-        setSearchComplete(true);
-        HandleFetchData();
+        HandleFetchData(category, keyword);
 
         if (keyword) {
           HandleSearchHistory();
         }
       }
     },
-    [HandleFetchData, HandleSearchHistory, keyword]
+    [HandleFetchData, HandleSearchHistory, category, keyword]
   );
 
   const handleMoveLocation = () => {
@@ -499,13 +502,20 @@ const Index = () => {
                 <SearchResultContent>
                   {searchHistoryList?.map((item, index) => {
                     return (
-                      <RecentSearchItem key={index}>
+                      <RecentSearchItem
+                        key={index}
+                        onClick={() =>
+                          HandleFetchData(item.category, item.keyword)
+                        }
+                      >
                         <div className="list-icon">
                           <Image
-                            src={`/assets/images/icons/${item.category}.svg`}
+                            // @ts-ignore
+                            src={`/assets/images/icons/${item.category.value}.svg`}
                             width={24}
                             height={24}
-                            alt={item.category}
+                            // @ts-ignore
+                            alt={item.category.value}
                           />
                         </div>
                         <Typography category="Bd2">{item.keyword}</Typography>

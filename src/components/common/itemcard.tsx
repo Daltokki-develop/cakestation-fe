@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -132,7 +133,7 @@ const StyledPictures = styled.div`
   display: flex;
 `;
 
-const Picture = styled.img`
+const Picture = styled(Image)`
   width: 25%;
 `;
 
@@ -162,7 +163,9 @@ const Pictures = (props: IItemCardProps) => {
         return (
           <Picture
             key={index}
-            src={`/assets/images/${picture}`}
+            src={`https://${picture}`}
+            width={112}
+            height={112}
             alt="picture"
           />
         );

@@ -449,6 +449,7 @@ const Index = () => {
             />
           </Toggle>
           <input
+            value={keyword}
             placeholder="지하철역, 가게이름 검색"
             onChange={HandleInputChange}
             onKeyDown={HandleInputKeyDown}

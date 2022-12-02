@@ -473,7 +473,8 @@ const Index = () => {
                     {resultList.length > 0 ? (
                       <>
                         {resultList.map((result: any, index: React.Key) => {
-                          const { address, name, score, reviewNum } = result; // storeId,
+                          const { address, name, score, reviewNum, thumbnail } =
+                            result; // storeId,
                           return (
                             <ItemCard
                               key={index}
@@ -481,7 +482,7 @@ const Index = () => {
                               rate={score || 0}
                               count={reviewNum || 0}
                               distance={address}
-                              pictures={[]}
+                              pictures={thumbnail ? [thumbnail] : []}
                               // onClick={() => GoReviewWrite(storeId)}
                             />
                           );
@@ -632,7 +633,7 @@ const Index = () => {
             <SheetContent>
               {resultList.length > 0 ? (
                 resultList.map((result: any, index: React.Key) => {
-                  const { address, name, score, reviewNum } = result; // storeId,
+                  const { address, name, score, reviewNum, thumbnail } = result; // storeId,
                   return (
                     <ItemCard
                       key={index}
@@ -640,7 +641,7 @@ const Index = () => {
                       rate={score || 0}
                       count={reviewNum || 0}
                       distance={address}
-                      pictures={[]}
+                      pictures={thumbnail ? [thumbnail] : []}
                       // onClick={() => GoReviewWrite(storeId)}
                     />
                   );

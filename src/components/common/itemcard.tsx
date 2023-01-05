@@ -163,7 +163,7 @@ const Pictures = (props: IItemCardProps) => {
         return (
           <Picture
             key={index}
-            src={`https://${picture}`}
+            src={picture}
             width={112}
             height={112}
             alt="picture"

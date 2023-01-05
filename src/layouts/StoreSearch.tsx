@@ -161,6 +161,9 @@ const StoreSearch = (props: IStoreSearchProps) => {
                     reviewNum,
                     thumbnail,
                   } = result;
+
+                  let validThumbnail = false;
+                  validThumbnail = thumbnail?.includes('//');
                   return (
                     <ItemCard
                       key={index}
@@ -169,7 +172,7 @@ const StoreSearch = (props: IStoreSearchProps) => {
                       rate={score || 0}
                       count={reviewNum || 0}
                       distance={address}
-                      pictures={thumbnail ? [thumbnail] : []}
+                      pictures={validThumbnail ? [`https:${thumbnail}`] : []}
                       onClick={() => GoReviewWrite(storeId)}
                     />
                   );

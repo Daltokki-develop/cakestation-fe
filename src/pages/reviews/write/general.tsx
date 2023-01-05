@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/naming-convention */
 import 'rc-rate/assets/index.css';
 
 import Rate from 'rc-rate';
@@ -66,24 +68,45 @@ const General = () => {
   };
 
   const HandleNext = async () => {
+    const _checkedList: string[] = [];
+    Object.keys(checkedList)?.forEach((tag) => {
+      if (checkedList[tag] === 1) {
+        _checkedList.push(tag);
+      }
+    });
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
+    const userData = JSON.parse(sessionStorage.getItem('UserData') || '');
     reviewData.score = star;
     reviewData.content = comment;
-    reviewData.tags = checkedList;
+    // reviewData.tags = _checkedList;
+    reviewData.tags = ['KIND'];
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
 
+    const sendData = new FormData();
+    const testData: string[] = [];
+    Object.keys(reviewData).forEach((key) => {
+      sendData.append(key, reviewData[key]);
+      testData.push(`${key}: ${reviewData[key]}`);
+    });
+
+    sendData.append('Authorization', userData.accessToken);
+    testData.push(`Authorization: ${userData.accessToken}`);
+
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const response = await AXIOS_POST_FORM(
       `${BASE_URL}/api/stores/${storeId}/reviews`,
-      getSessionReview()
+      sendData
     );
-    console.log(response);
+
+    console.log(response, 'response');
+    console.log(testData, 'testData');
   };
 
   useEffect(() => {
     setStar(score || 0);
     setCheckedList(tags || tagsData);
     setComment(content || '');
-  }, []);
+  }, [content, score, tags]);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>

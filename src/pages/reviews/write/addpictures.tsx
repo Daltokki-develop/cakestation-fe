@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-underscore-dangle */
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -29,35 +31,59 @@ const StyledLabel = styled.label`
 
 const AddPictures = () => {
   const [imageList, setImageList] = useState<any>([]);
-  const currentImageList: string[] = [];
+  const [sendImageList, setSendImageList] = useState<any>([]);
   const { reviewImages } = getSessionReview();
 
-  const onChangeImages = useCallback((e: any) => {
-    // 백엔으로 보낼 이미지 폼데이터
-    const { files } = e.target;
-    Object.values(files).forEach((file) => {
-      if (file instanceof Blob) {
-        currentImageList.push(URL.createObjectURL(file));
-      }
-    });
+  const onChangeImages = useCallback(
+    (e: any) => {
+      const currentImageList: string[] = [];
 
-    setImageList(
-      (imageList
-        ? [...imageList, ...currentImageList]
-        : currentImageList
-      ).slice(0, 10)
-    );
-  }, []);
+      // 백엔으로 보낼 이미지 폼데이터
+      const { files } = e.target;
+      const _sendImageList: unknown[] = [];
+      Object.values(files).forEach((file) => {
+        if (file instanceof Blob) {
+          currentImageList.push(URL.createObjectURL(file));
+        }
+        _sendImageList.push(file);
+      });
+      // const _sendImageList = new FormData();
+      console.log(files, 'files');
+      console.log(files.length, 'files.length');
+      // for (let i = 0; i < length; i + 1) {
+      //   console.log('냐');
+      //   // _sendImageList.append('reviewImages', files[i]);
+      // }
+      setSendImageList(files);
+
+      setImageList(
+        (imageList
+          ? [...imageList, ...currentImageList]
+          : currentImageList
+        ).slice(0, 10)
+      );
+      setSendImageList(_sendImageList);
+    },
+    [imageList]
+  );
 
   const HandleNext = () => {
     const reviewData = sessionStorage.getItem('ReviewData')
       ? JSON.parse(sessionStorage.getItem('ReviewData') || '')
       : {};
-    reviewData.reviewImages = imageList;
+    const _sendImageList = new FormData();
+    for (let i = 0; i < sendImageList.length; i + 1) {
+      _sendImageList.append('reviewImages', sendImageList[i]);
+    }
+    console.log(_sendImageList, '_sendImageList');
+    // reviewData.reviewImages = _sendImageList;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
   };
 
-  useEffect(() => setImageList(reviewImages ? [reviewImages] : null), []);
+  useEffect(
+    () => setImageList(reviewImages ? [reviewImages] : null),
+    [reviewImages]
+  );
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>

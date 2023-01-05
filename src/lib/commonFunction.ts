@@ -189,10 +189,12 @@ export const AXIOS_POST_OBJECT = (
 
 export const AXIOS_POST_FORM = (
   url: string,
-  sendObject: Object,
+  sendObject: FormData,
   timeOut = TIME_OUT
 ) => {
   const header = getAuthHeader('FORM');
+  console.log(sendObject, 'sendObject');
+  console.log(header, 'header');
 
   return axios
     .post(url, sendObject, {

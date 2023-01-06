@@ -3,7 +3,7 @@
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,7 +11,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
-import { getSessionReview } from '@/lib/commonFunction';
 import { Main } from '@/templates/Main';
 
 const StyledImage = styled.img`
@@ -29,61 +28,84 @@ const StyledLabel = styled.label`
   cursor: pointer;
 `;
 
+const FullHeightContainer = styled.div`
+  width: 85%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const NumberOfImages = styled.div`
+  width: 100%;
+  height: 5%;
+  text-align: end;
+  margin-top: 28px;
+`;
+
+const ImageControlContainer = styled.div`
+  width: 100%;
+  height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const AddPictures = () => {
-  const [imageList, setImageList] = useState<any>([]);
-  const [sendImageList, setSendImageList] = useState<any>([]);
-  const { reviewImages } = getSessionReview();
+  const [imagePreviewList, setImagePreviewList] = useState<any>([]);
+  const [base64List, setBase64List] = useState<any>([]);
 
   const onChangeImages = useCallback(
     (e: any) => {
       const currentImageList: string[] = [];
+      const currentBase64List: string[] = [];
 
       // 백엔으로 보낼 이미지 폼데이터
       const { files } = e.target;
-      const _sendImageList: unknown[] = [];
       Object.values(files).forEach((file) => {
+        const reader = new FileReader();
+
         if (file instanceof Blob) {
           currentImageList.push(URL.createObjectURL(file));
-        }
-        _sendImageList.push(file);
-      });
-      // const _sendImageList = new FormData();
-      console.log(files, 'files');
-      console.log(files.length, 'files.length');
-      // for (let i = 0; i < length; i + 1) {
-      //   console.log('냐');
-      //   // _sendImageList.append('reviewImages', files[i]);
-      // }
-      setSendImageList(files);
 
-      setImageList(
-        (imageList
-          ? [...imageList, ...currentImageList]
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            const base64data = reader.result as string;
+            currentBase64List.push(base64data);
+
+            const concatList = base64List.concat(currentBase64List);
+            if (concatList.length > 10) {
+              setBase64List(concatList.slice(0, 10));
+            } else {
+              setBase64List(concatList);
+            }
+          };
+        }
+      });
+
+      // console.log(currentImageList, 'currentImageList');
+      setImagePreviewList(
+        (imagePreviewList
+          ? [...imagePreviewList, ...currentImageList]
           : currentImageList
         ).slice(0, 10)
       );
-      setSendImageList(_sendImageList);
     },
-    [imageList]
+    [base64List, imagePreviewList]
   );
 
   const HandleNext = () => {
     const reviewData = sessionStorage.getItem('ReviewData')
       ? JSON.parse(sessionStorage.getItem('ReviewData') || '')
       : {};
-    const _sendImageList = new FormData();
-    for (let i = 0; i < sendImageList.length; i + 1) {
-      _sendImageList.append('reviewImages', sendImageList[i]);
-    }
-    console.log(_sendImageList, '_sendImageList');
-    // reviewData.reviewImages = _sendImageList;
+    sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
+    reviewData.reviewImages = base64List;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
   };
 
-  useEffect(
-    () => setImageList(reviewImages ? [reviewImages] : null),
-    [reviewImages]
-  );
+  // useEffect(
+  //   () => setImagePreviewList(reviewImages ? [reviewImages] : null),
+  //   [reviewImages]
+  // );
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -95,37 +117,43 @@ const AddPictures = () => {
         nextFunc={HandleNext}
         nextLink={`/reviews/write/order/`}
       >
-        <div className="w-85">
-          <div className={'w-100 text-end mb-60'}>
+        <FullHeightContainer>
+          <NumberOfImages>
             <Typography category={'Bd2'} color={'cakeLemon_800'}>
-              ({imageList?.length || 0}/10)
+              ({imagePreviewList?.length || 0}/10)
             </Typography>
-          </div>
-          <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-            {imageList?.map((item: string, index: number) => {
-              return (
-                <SwiperSlide key={index}>
-                  {/* {progress !== 100 && <ProgressBar width={`${progress}%`} />} */}
-                  <StyledImage src={item} alt="업로드이미지" />
+          </NumberOfImages>
+          <ImageControlContainer>
+            <Swiper
+              pagination={true}
+              modules={[Pagination]}
+              className="mySwiper"
+            >
+              {imagePreviewList?.map((item: string, index: number) => {
+                return (
+                  <SwiperSlide key={index}>
+                    {/* {progress !== 100 && <ProgressBar width={`${progress}%`} />} */}
+                    <StyledImage src={item} alt="업로드이미지" />
+                  </SwiperSlide>
+                );
+              })}
+              {imagePreviewList?.length !== 10 && (
+                <SwiperSlide>
+                  <StyledLabel htmlFor={'upload-image'} />
+                  <input
+                    id={'upload-image'}
+                    type="file"
+                    accept={'image/*'}
+                    name="image"
+                    multiple
+                    hidden
+                    onChange={onChangeImages}
+                  />
                 </SwiperSlide>
-              );
-            })}
-            {imageList?.length !== 10 && (
-              <SwiperSlide>
-                <StyledLabel htmlFor={'upload-image'} />
-                <input
-                  id={'upload-image'}
-                  type="file"
-                  accept={'image/*'}
-                  name="image"
-                  multiple
-                  hidden
-                  onChange={onChangeImages}
-                />
-              </SwiperSlide>
-            )}
-          </Swiper>
-        </div>
+              )}
+            </Swiper>
+          </ImageControlContainer>
+        </FullHeightContainer>
       </Review>
     </Main>
   );

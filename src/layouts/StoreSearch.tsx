@@ -22,7 +22,7 @@ interface IStoreSearchProps {
 
 const LoadingContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 6rem - 5.1875rem - 11rem - 76px - 40px - 20px);
+  height: calc(100vh - 6rem - 75px - 11rem - 76px - 40px - 20px);
 
   display: flex;
   flex-direction: column;
@@ -43,14 +43,14 @@ const SearchResultContainer = styled.div`
   text-align: center;
   width: 100%;
   height: max-content;
-  min-height: calc(100vh - 6rem - 5.1875rem - 11rem - 76px - 40px - 20px);
+  min-height: calc(100vh - 6rem - 75px - 11rem - 76px - 40px - 20px);
 
   align-items: center;
 `;
 
 const NoResultContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 6rem - 5.1875rem - 11rem - 76px - 40px - 20px);
+  height: calc(100vh - 6rem - 75px - 11rem - 76px - 40px - 20px);
 `;
 
 const StoreSearchHeader = (props: IStoreSearchProps) => {

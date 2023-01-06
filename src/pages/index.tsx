@@ -37,12 +37,12 @@ const Absolute = styled.div`
 `;
 
 const CustomSheet = styled(Sheet)`
-  margin-bottom: 5.1875rem;
+  margin-bottom: 75px;
   margin-left: calc(50%); //  TODO: 어떻게 맞출까
   max-width: 28rem;
 
   @media (max-width: 56.25rem) {
-    margin: 5.1875rem auto;
+    margin: 75px auto;
   }
 
   .react-modal-sheet-backdrop {
@@ -177,9 +177,9 @@ const SearchResultHeader = styled.div`
 `;
 
 const SearchResultContent = styled.div`
-  height: calc(100vh - 5.1875rem - 7.5rem - 0.375rem - 54px);
+  height: calc(100vh - 75px - 7.5rem - 0.375rem - 54px);
   overflow-y: scroll;
-  margin-bottom: 5.1875rem;
+  margin-bottom: 75px;
 
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -219,12 +219,12 @@ const CATEGORY_LIST = [
   {
     label: '지하철역',
     value: 'station',
-    params: 'stationName',
+    params: 'name',
   },
   {
     label: '가게',
-    value: 'name',
-    params: 'storeName',
+    value: 'store',
+    params: 'name',
   },
 ];
 
@@ -470,7 +470,7 @@ const Index = () => {
                   </SearchResultHeader>
                   <Divider size={'large'} />
                   <SearchResultContent>
-                    {resultList.length > 0 ? (
+                    {resultList?.length > 0 ? (
                       <>
                         {resultList.map((result: any, index: React.Key) => {
                           const { address, name, score, reviewNum, thumbnail } =
@@ -482,7 +482,7 @@ const Index = () => {
                               rate={score || 0}
                               count={reviewNum || 0}
                               distance={address}
-                              pictures={thumbnail ? [thumbnail] : []}
+                              pictures={thumbnail ? [`https:${thumbnail}`] : []}
                               // onClick={() => GoReviewWrite(storeId)}
                             />
                           );
@@ -565,7 +565,7 @@ const Index = () => {
                   setSelected(position.역명);
                   try {
                     const response = await AXIOS_GET(
-                      `${BASE_URL}/api/stores/search/station?stationName=${position.역명}`
+                      `${BASE_URL}/api/stores/search/station?name=${position.역명}`
                     );
                     setResultList(response?.data.result);
                   } catch (e) {
@@ -631,7 +631,7 @@ const Index = () => {
               </div>
             </SheetHeader>
             <SheetContent>
-              {resultList.length > 0 ? (
+              {resultList?.length > 0 ? (
                 resultList.map((result: any, index: React.Key) => {
                   const { address, name, score, reviewNum, thumbnail } = result; // storeId,
                   return (
@@ -641,7 +641,7 @@ const Index = () => {
                       rate={score || 0}
                       count={reviewNum || 0}
                       distance={address}
-                      pictures={thumbnail ? [thumbnail] : []}
+                      pictures={thumbnail ? [`https:${thumbnail}`] : []}
                       // onClick={() => GoReviewWrite(storeId)}
                     />
                   );

@@ -30,7 +30,7 @@ const CakeSize = (size: number, HandleSize: (e: any) => void) => {
 };
 
 const Order = () => {
-  const [size, setSize] = useState<number>(0);
+  const [size, setSize] = useState<number>(cakeSizes[0] || 1);
   const [sheet, setSheet] = useState<string>(cakeSheet[0] || '');
   const [etc, setEtc] = useState<string>('');
   const [option, setOption] = useState<String>('');
@@ -55,7 +55,7 @@ const Order = () => {
   const HandleNext = () => {
     const sheetTypeResult = sheet === '직접 입력' ? etc : sheet;
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
-    reviewData.cakeNumber = size;
+    reviewData.cakeNumber = parseInt(size[0], 10);
     reviewData.sheetType = sheetTypeResult;
     reviewData.requestOption = option;
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));

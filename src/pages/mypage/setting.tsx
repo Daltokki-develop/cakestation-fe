@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import styled from 'styled-components';
+
 import Divider from '@/components/common/divider';
 import Section from '@/components/common/section';
 import Typography from '@/components/common/typography';
@@ -5,6 +8,15 @@ import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
 import { Main } from '@/templates/Main';
+
+const LinkItem = styled.div`
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  cursor: pointer;
+`;
 
 const Setting = () => {
   return (
@@ -15,47 +27,57 @@ const Setting = () => {
       <Section>
         <div className="w-100 column mt-16">
           <Divider size={'tiny'} />
-          <div className="h-68 flex items-center contents-space-between pl-18 pr-18">
-            <Typography category={'Bd4'}>공지사항</Typography>
-            <img
-              className="w-12 h-12 ml-18"
-              src={'/assets/images/icons/right_black.svg'}
-              alt="right"
-            />
-          </div>
+          <Link href="/">
+            <LinkItem>
+              <Typography category={'Bd4'}>공지사항</Typography>
+              <img
+                className="w-12 h-12 ml-18"
+                src={'/assets/images/icons/right_black.svg'}
+                alt="right"
+              />
+            </LinkItem>
+          </Link>
+
           <Divider size={'tiny'} />
-          <div className="h-68 flex items-center contents-space-between pl-18 pr-18">
-            <Typography category={'Bd4'}>Q&A</Typography>
-            <img
-              className="w-12 h-12 ml-18"
-              src={'/assets/images/icons/right_black.svg'}
-              alt="right"
-            />
-          </div>
+          <Link href="/">
+            <LinkItem>
+              <Typography category={'Bd4'}>Q&A</Typography>
+              <img
+                className="w-12 h-12 ml-18"
+                src={'/assets/images/icons/right_black.svg'}
+                alt="right"
+              />
+            </LinkItem>
+          </Link>
+
           <Divider size={'tiny'} />
-          <div className="h-68 flex items-center contents-space-between pl-18 pr-18">
-            <Typography category={'Bd4'}>약관 및 정책</Typography>
-            <img
-              className="w-12 h-12 ml-18"
-              src={'/assets/images/icons/right_black.svg'}
-              alt="right"
-            />
-          </div>
+          <Link href="/">
+            <LinkItem>
+              <Typography category={'Bd4'}>약관 및 정책</Typography>
+              <img
+                className="w-12 h-12 ml-18"
+                src={'/assets/images/icons/right_black.svg'}
+                alt="right"
+              />
+            </LinkItem>
+          </Link>
+
           <Divider size={'tiny'} />
-          <div className="h-68 flex items-center contents-space-between pl-18 pr-18">
+          <LinkItem>
             <Typography category={'Bd4'}>로그아웃</Typography>
             <img
               className="w-12 h-12 ml-18"
               src={'/assets/images/icons/right_black.svg'}
               alt="right"
             />
-          </div>
+          </LinkItem>
+
           <Divider size={'tiny'} />
-          <div className="h-68 flex items-center contents-space-between pl-18 pr-18">
+          <LinkItem>
             <Typography category={'Bd4'} color={'grey_400'}>
               탈퇴
             </Typography>
-          </div>
+          </LinkItem>
           <Divider size={'tiny'} />
         </div>
       </Section>

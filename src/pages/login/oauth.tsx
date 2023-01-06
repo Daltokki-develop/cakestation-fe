@@ -41,7 +41,9 @@ const Oauth = () => {
             <Typography category={'H2'}>케이크 가게 찾기의 종착역</Typography>
           </div>
           <div className="mt-3 mb-33">
-            <Typography category={'H1'}>CAKESTATION</Typography>
+            <Typography category={'H1'}>
+              <strong>CAKE STATION</strong>
+            </Typography>
           </div>
           <Typography category={'Bd1'}>
             로그인이 완료되면 메인 페이지로 이동합니다...

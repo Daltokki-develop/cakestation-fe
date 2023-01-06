@@ -43,15 +43,15 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Likes = () => {
-  const [likeList, setlikeList] = useState<Array<any>>();
+const MyReviews = () => {
+  const [myReviewsList, setMyReviewsList] = useState<Array<any>>();
 
-  const FetchLikeList = () => {
-    setlikeList([]);
+  const FetchMyReviewsList = () => {
+    setMyReviewsList([]);
   };
 
   useEffect(() => {
-    FetchLikeList();
+    FetchMyReviewsList();
   }, []);
 
   return (
@@ -61,17 +61,17 @@ const Likes = () => {
       }
     >
       <Section padding={'8rem'}>
-        <Header style={'text'}>좋아요</Header>
+        <Header style={'text'}>내가 등록한 리뷰</Header>
         <Container>
-          {likeList && likeList[0] ? (
-            likeList.map((like, index) => (
+          {myReviewsList && myReviewsList[0] ? (
+            myReviewsList.map((myReview, index) => (
               <MT16 key={index}>
                 <ItemCard
-                  title={like.title}
-                  rate={like.rate}
-                  count={like.count}
-                  distance={like.distance}
-                  pictures={like.pictures}
+                  title={myReview.title}
+                  rate={myReview.rate}
+                  count={myReview.count}
+                  distance={myReview.distance}
+                  pictures={myReview.pictures}
                   heart
                 />
               </MT16>
@@ -79,13 +79,13 @@ const Likes = () => {
           ) : (
             <StyledEmptyContainer>
               <Typography category={'Bd3'} color={'grey_300'}>
-                좋아요한 가게가 없어요!
+                작성한 리뷰가 없어요!
               </Typography>
               <StyledEmptyImg src={'/assets/images/empty-like-list.svg'} />
               <StyledFindBtnContainer>
-                <Link href="/">
+                <Link href="/reviews/search">
                   <Button size={'medium'} category={'primary'} disabled={false}>
-                    내 근처 케이크 가게 둘러보기
+                    리뷰 작성하러 가기
                   </Button>
                 </Link>
               </StyledFindBtnContainer>
@@ -99,4 +99,4 @@ const Likes = () => {
   );
 };
 
-export default Likes;
+export default MyReviews;

@@ -17,7 +17,7 @@ const StyledNav = styled.div`
   bottom: 0;
   max-width: 28rem;
   width: 100%;
-  height: 5.1875rem;
+  height: max-content;
   background-color: ${palette.white};
   z-index: 100;
   -moz-box-shadow: 0 0 0.0625rem rgba(0, 0, 0, 0.3);
@@ -33,14 +33,33 @@ const NavigatorContent = styled.div<TypeProps>`
   height: fit-content;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   padding-top: ${(props) => (props.type === 'default' ? '0' : '1.3125rem')};
 `;
 
-const StyledIcon = styled.img`
+const StyledTab = styled.div`
+  width: 25%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-top: 5px solid ${palette.white};
+
+  &:hover {
+    border-top: 5px solid ${palette.cakeLemon_500};
+  }
+`;
+
+const StyledIcon = styled.div`
   width: 2.5rem;
   height: 2.5rem;
+  border-radius: 50%;
   cursor: pointer;
+
+  &::hover {
+    background-color: ${palette.grey_200};
+  }
 `;
 
 const ButtonDiv = styled.div`
@@ -60,16 +79,32 @@ function Navigation({ type }: { type: string }) {
         {type === 'default' && (
           <>
             <Link href="/">
-              <StyledIcon src="/assets/images/icons/home_default.svg" />
+              <StyledTab>
+                <StyledIcon>
+                  <img src="/assets/images/icons/home_default.svg" alt="home" />
+                </StyledIcon>
+              </StyledTab>
             </Link>
             <Link href="/reviews/search">
-              <StyledIcon src="/assets/images/icons/write.svg" />
+              <StyledTab>
+                <StyledIcon>
+                  <img src="/assets/images/icons/write.svg" alt="review" />
+                </StyledIcon>
+              </StyledTab>
             </Link>
             <Link href="/likes">
-              <StyledIcon src="/assets/images/icons/heart_empty.svg" />
+              <StyledTab>
+                <StyledIcon>
+                  <img src="/assets/images/icons/heart_empty.svg" alt="like" />
+                </StyledIcon>
+              </StyledTab>
             </Link>
             <Link href="/mypage">
-              <StyledIcon src="/assets/images/icons/user_default.svg" />
+              <StyledTab>
+                <StyledIcon>
+                  <img src="/assets/images/icons/user_default.svg" alt="my" />
+                </StyledIcon>
+              </StyledTab>
             </Link>
           </>
         )}
@@ -83,10 +118,14 @@ function Navigation({ type }: { type: string }) {
               </div>
             </Link>
             <Link href="/">
-              <StyledIcon src="/assets/images/icons/share.svg" />
+              <StyledIcon>
+                <img src="/assets/images/icons/share.svg" />
+              </StyledIcon>
             </Link>
             <Link href="/">
-              <StyledIcon src="/assets/images/icons/call_default.svg" />
+              <StyledIcon>
+                <img src="/assets/images/icons/call_default.svg" />
+              </StyledIcon>
             </Link>
             <Link href="/">
               <ButtonDiv>

@@ -11,7 +11,7 @@ import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
-import { AXIOS_POST_FORM, getSessionReview } from '@/lib/commonFunction';
+import { AXIOS_POST_OBJECT, getSessionReview } from '@/lib/commonFunction';
 import { BASE_URL } from '@/lib/ConstantURL';
 import tagsData from '@/lib/총평태그.json';
 import { Main } from '@/templates/Main';
@@ -75,31 +75,19 @@ const General = () => {
       }
     });
     const reviewData = JSON.parse(sessionStorage.getItem('ReviewData') || '');
-    const userData = JSON.parse(sessionStorage.getItem('UserData') || '');
     reviewData.score = star;
     reviewData.content = comment;
-    // reviewData.tags = _checkedList;
     reviewData.tags = ['KIND'];
     sessionStorage.setItem('ReviewData', JSON.stringify(reviewData));
 
-    const sendData = new FormData();
-    const testData: string[] = [];
-    Object.keys(reviewData).forEach((key) => {
-      sendData.append(key, reviewData[key]);
-      testData.push(`${key}: ${reviewData[key]}`);
-    });
-
-    sendData.append('Authorization', userData.accessToken);
-    testData.push(`Authorization: ${userData.accessToken}`);
-
     // eslint-disable-next-line unused-imports/no-unused-vars
-    const response = await AXIOS_POST_FORM(
+    const response = await AXIOS_POST_OBJECT(
       `${BASE_URL}/api/stores/${storeId}/reviews`,
-      sendData
+      reviewData
     );
 
-    console.log(response, 'response');
-    console.log(testData, 'testData');
+    console.log(reviewData, 'reviewData');
+    console.log(response);
   };
 
   useEffect(() => {

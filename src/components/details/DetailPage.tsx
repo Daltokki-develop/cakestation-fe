@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { AXIOS_GET } from '@/lib/commonFunction';
+import { BASE_URL } from '@/lib/ConstantURL';
 import palette from '@/styles/palette';
 
 import Button from '../common/button';
@@ -174,10 +177,27 @@ const ReviewBoardChips = styled.div`
 `;
 
 function DetailPage({ address, more }: { address: string; more: string }) {
+  const [loading, setLoading] = useState<boolean>(true);
   const [activeId, setActiveId] = useState(0);
   const [showDetailPicture, setShowDetailPicture] = useState(false);
   const [showPictureModal, setShowPictureModal] = useState(false);
+  const [reviewList, setReviewList] = useState<Array<any>>([]);
+  const router = useRouter();
   const TAB_HEIGHT = 49.2;
+
+  const FetchAllReviewList = async () => {
+    try {
+      setLoading(true);
+      const response = await AXIOS_GET(
+        `${BASE_URL}/api/stores/${router.query.id}/reviews`,
+        router
+      );
+      setLoading(false);
+      setReviewList(response?.data.result);
+    } catch (error) {
+      setReviewList([]);
+    }
+  };
 
   function setContentsHeight() {
     if (typeof window !== 'object') return;
@@ -266,6 +286,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
       document.getElementsByClassName('main-section')[0];
 
     mainSectionElement?.addEventListener('scroll', handleScroll);
+    FetchAllReviewList();
     return () => {
       mainSectionElement?.removeEventListener('scroll', handleScroll);
     };
@@ -571,9 +592,38 @@ function DetailPage({ address, more }: { address: string; more: string }) {
             </ReviewBoard>
             <div>최신순</div>
             <Divider size={'small'} />
-            <ReviewCard />
-            <ReviewCard />
-            <ReviewCard />
+            {!loading && reviewList?.length > 0 && (
+              <>
+                {reviewList.map((result: any, index: React.Key) => {
+                  const {
+                    username,
+                    cakeNumber,
+                    score,
+                    sheetType,
+                    requestOption,
+                    reviewImages,
+                    tags,
+                    content,
+                    createdDateTime,
+                  } = result;
+
+                  return (
+                    <ReviewCard
+                      key={index}
+                      username={username}
+                      cakeNumber={cakeNumber}
+                      score={score}
+                      sheetType={sheetType}
+                      requestOption={requestOption}
+                      reviewImages={reviewImages}
+                      tags={tags}
+                      content={content}
+                      createdDateTime={createdDateTime}
+                    />
+                  );
+                })}
+              </>
+            )}
           </ContentList>
         </ul>
         {showPictureModal ? (

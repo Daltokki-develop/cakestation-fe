@@ -9,7 +9,6 @@ import Typography from '@/components/common/typography';
 import DetailPage from '@/components/details/DetailPage';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
-// import results from '@/lib/가게상세페이지.json';
 import { AXIOS_GET } from '@/lib/commonFunction';
 import { BASE_URL } from '@/lib/ConstantURL';
 import { Main } from '@/templates/Main';
@@ -78,30 +77,20 @@ const LeftIcon = styled.img`
   padding-right: 0.25rem;
 `;
 
-// const defaultResult = {
-//   id: -1,
-//   name: '',
-//   score: '0.0',
-//   address: '',
-//   tel: '',
-//   photo: '',
-//   url: '',
-//   url_name: '',
-//   more: '',
-// };
-
 const Detail = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [result, setResult] = useState<any>();
   const [like, setLike] = useState(false);
   const [showBottomNav, setShowBottomNav] = useState(false);
   const router = useRouter();
-  // const staticResult = results[Number(router.query.id)] || defaultResult;
 
   const FetchStoreInfo = async () => {
     try {
       setLoading(true);
-      const response = await AXIOS_GET(`${BASE_URL}/api/stores/${1}`, router);
+      const response = await AXIOS_GET(
+        `${BASE_URL}/api/stores/${1}`, // router.query.id
+        router
+      );
       setLoading(false);
       setResult(response?.data.result);
       console.log(response?.data.result);
@@ -127,14 +116,11 @@ const Detail = () => {
   }, []);
 
   useEffect(() => {
-    FetchStoreInfo();
-  }, []);
-
-  useEffect(() => {
     const mainSectionElement =
       document.getElementsByClassName('main-section')[0];
 
     mainSectionElement?.addEventListener('scroll', handleScroll);
+    FetchStoreInfo();
     return () => {
       mainSectionElement?.removeEventListener('scroll', handleScroll);
     };

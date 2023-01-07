@@ -266,10 +266,14 @@ export const AXIOS_PATCH = (
   console.log(`========================`);
 
   return axios
-    .patch(url, {
-      headers: header,
-      timeout: timeOut,
-    })
+    .patch(
+      url,
+      {},
+      {
+        headers: header,
+        timeout: timeOut,
+      }
+    )
     .catch(function (error) {
       console.log(`========= ERROR ========`);
       if (error.response) {

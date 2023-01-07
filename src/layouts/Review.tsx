@@ -14,7 +14,7 @@ interface IReviewProps {
   subtitle: string;
   nextText: string;
   nextFunc: any;
-  nextLink: string;
+  nextLink?: string;
   children: any;
 }
 
@@ -41,18 +41,29 @@ const Review = (props: IReviewProps) => {
         </div>
         <ReviewContainer>{props.children}</ReviewContainer>
         <div className="fixed b-0 w-100 max-w-28">
-          <Link href={props.nextLink}>
-            <a>
-              <Button
-                size={'large'}
-                category={'primary'}
-                disabled={false}
-                onClick={props.nextFunc}
-              >
-                {props.nextText}
-              </Button>
-            </a>
-          </Link>
+          {props.nextLink ? (
+            <Link href={props.nextLink}>
+              <a>
+                <Button
+                  size={'large'}
+                  category={'primary'}
+                  disabled={false}
+                  onClick={props.nextFunc}
+                >
+                  {props.nextText}
+                </Button>
+              </a>
+            </Link>
+          ) : (
+            <Button
+              size={'large'}
+              category={'primary'}
+              disabled={false}
+              onClick={props.nextFunc}
+            >
+              {props.nextText}
+            </Button>
+          )}
         </div>
       </Section>
     </>

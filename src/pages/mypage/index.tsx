@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Divider from '@/components/common/divider';
@@ -59,7 +59,7 @@ const MyPage = () => {
     likeCount: 0,
   });
 
-  const FetchMyData = async () => {
+  const FetchMyData = useCallback(async () => {
     try {
       const response = await AXIOS_GET(`${BASE_URL}/api/mypage`, router);
       if (response?.status === 200) {
@@ -70,14 +70,13 @@ const MyPage = () => {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [router]);
 
   const ResetNickname = async () => {
     try {
       const response = await AXIOS_PATCH(`${BASE_URL}/api/nickname`, router);
       if (response?.status === 200) {
-        const fetchData = response?.data.result;
-        setMyData(fetchData);
+        FetchMyData();
       }
     } catch (e) {
       console.error(e);
@@ -87,7 +86,7 @@ const MyPage = () => {
   useEffect(() => {
     setLoading(true);
     FetchMyData();
-  }, []);
+  }, [FetchMyData]);
 
   const { randomNumber, nickName, reviewCount, likeCount } = myData;
 

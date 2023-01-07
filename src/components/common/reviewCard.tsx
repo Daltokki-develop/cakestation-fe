@@ -1,8 +1,25 @@
+import 'swiper/css';
+
+import dayjs from 'dayjs';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import palette from '@/styles/palette';
 
 import Typography from './typography';
+
+interface IReviewCardProps {
+  username?: string;
+  cakeNumber?: number;
+  score?: number;
+  sheetType?: string;
+  requestOption?: string;
+  reviewImages?: string[];
+  tags?: string[];
+  content?: string;
+  createdDateTime?: string;
+}
 
 const Card = styled.div`
   width: 90%;
@@ -14,7 +31,7 @@ const CardWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  padding-bottom: 46px;
+  padding-bottom: 72px;
 `;
 
 const PostInfo = styled.div`
@@ -49,11 +66,11 @@ const SummaryTitle = styled.div`
   width: 20%;
 `;
 
-const ReviewImage = styled.div`
+const ReviewImage = styled.img`
   position: relative;
-  width: 100%;
-  padding-bottom: 95%;
-  background-color: ${palette.grey_200};
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
   margin-bottom: 16px;
 `;
 
@@ -63,7 +80,7 @@ const ImageNumberChip = styled.div`
   right: 16px;
 
   display: flex;
-  width: 42px;
+  width: 52px;
   height: 30px;
 
   justify-content: center;
@@ -71,6 +88,7 @@ const ImageNumberChip = styled.div`
 
   background-color: ${palette.black};
   border-radius: 16px;
+  z-index: 30;
 `;
 
 const Content = styled.div`
@@ -86,44 +104,100 @@ const EditBox = styled.div`
   gap: 7px;
 `;
 
-function ReviewCard() {
+const ReviewCard = (props: IReviewCardProps) => {
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const setRateImage = (score: any) => {
+    const arr = [];
+    const integer = score / 1;
+    const decimal = score - integer;
+
+    for (let i = 0; i < integer; i += 1) {
+      arr.push(
+        <Rate
+          key={`${i} integer`}
+          src={'/assets/images/icons/rate_filled.svg'}
+          alt={'별점'}
+        />
+      );
+    }
+
+    if (decimal !== 0) {
+      arr.push(
+        <Rate
+          key={'half'}
+          src={'/assets/images/icons/rate_half-filled.svg'}
+          alt={'별점'}
+        />
+      );
+    }
+
+    if (arr.length < 5) {
+      for (let i = arr.length; i < 5; i += 1) {
+        arr.push(
+          <Rate
+            key={`${i} empty`}
+            src={'/assets/images/icons/rate_empty.svg'}
+            alt={'별점'}
+          />
+        );
+      }
+    }
+
+    return arr;
+  };
+
+  const tagConverter = (tag: string) => {
+    switch (tag) {
+      case 'KIND':
+        return '“ 직원이 친절해요 “';
+      case 'CLOSE':
+        return '“ 역과 가까워요 “';
+      case 'GOOD_RESERVATION':
+        return '“ 예약이 편해요 “';
+      case 'CHEAP':
+        return '“ 가격이 저렴해요 “';
+      case 'DELICIOUS':
+        return '“ 케잌이 맛있어요 “';
+      default:
+        return '한줄평 없음';
+    }
+  };
+
+  const setTag = (tags: any[]) => {
+    const arr = [];
+
+    for (let i = 0; i < tags.length; i += 1) {
+      arr.push(tagConverter(tags[i]));
+
+      if (i !== tags.length - 1) {
+        arr.push(', ');
+      }
+    }
+
+    return arr;
+  };
+
   return (
     <Card>
       <CardWrapper>
         <PostInfo>
           <div>
             <Typography category={'Bd5'} color={'grey_800'}>
-              다리세개공룡
+              {props.username}
             </Typography>
           </div>
           <div>
             <Typography category={'Bd5'} color={'grey_500'}>
-              2022.09.15
+              {dayjs(props.createdDateTime).format('YYYY.MM.DD')}
             </Typography>
           </div>
         </PostInfo>
         <RateInfo>
-          <div>
-            <Rate
-              src={'/assets/images/icons/rate_filled.svg'}
-              alt={'메뉴사진'}
-            />
-            <Rate
-              src={'/assets/images/icons/rate_filled.svg'}
-              alt={'메뉴사진'}
-            />
-            <Rate
-              src={'/assets/images/icons/rate_filled.svg'}
-              alt={'메뉴사진'}
-            />
-            <Rate
-              src={'/assets/images/icons/rate_filled.svg'}
-              alt={'메뉴사진'}
-            />
-          </div>
+          <div>{setRateImage(props.score)}</div>
           <div>
             <Typography category={'Bd5'} color={'grey_800'}>
-              4점
+              {`${props.score}점`}
             </Typography>
           </div>
         </RateInfo>
@@ -136,7 +210,13 @@ function ReviewCard() {
             </SummaryTitle>
             <div>
               <Typography category={'Bd5'} color={'grey_500'}>
-                케잌 호수 | 시트 종류 | 추가 옵션
+                {`${props.cakeNumber ? `${props.cakeNumber}호` : '1호'} | ${
+                  props.sheetType ? `${props.sheetType} 시트` : '플레인 시트'
+                } | ${
+                  props.requestOption
+                    ? `${props.requestOption} 옵션`
+                    : '추가 옵션 없음'
+                }`}
               </Typography>
             </div>
           </Summary>
@@ -148,28 +228,41 @@ function ReviewCard() {
             </SummaryTitle>
             <div>
               <Typography category={'Bd5'} color={'grey_500'}>
-                “ 직원이 친절해요 ”, “ 예약이 편해요 ”
+                {props.tags && props.tags.length > 0 && setTag(props.tags)}
               </Typography>
             </div>
           </Summary>
         </SummaryInfo>
-        <ReviewImage>
-          <ImageNumberChip>
-            <Typography category={'Bd9'} color={'white'}>
-              1 / 2
-            </Typography>
-          </ImageNumberChip>
-        </ReviewImage>
-        <Content>
-          <div>
+        {props.reviewImages && props.reviewImages.length > 0 && (
+          <>
+            <Swiper
+              className="reviewImageSwiper"
+              spaceBetween={50}
+              slidesPerView={1}
+              onSlideChange={(swiper) => setSlideIndex(swiper.activeIndex)}
+            >
+              {props.reviewImages.map((image: any, index: React.Key) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <ReviewImage src={image} alt="picture" />
+                  </SwiperSlide>
+                );
+              })}
+              <ImageNumberChip>
+                <Typography category={'Bd9'} color={'white'}>
+                  {`${slideIndex + 1} / ${props.reviewImages.length}`}
+                </Typography>
+              </ImageNumberChip>
+            </Swiper>
+          </>
+        )}
+        {props.content && (
+          <Content>
             <Typography category={'Bd5'} color={'grey_800'}>
-              디자인 구현도
+              {props.content}
             </Typography>
-          </div>
-          <Typography category={'Bd5'} color={'grey_800'}>
-            주문내용
-          </Typography>
-        </Content>
+          </Content>
+        )}
         <EditBox>
           <div>
             <Typography category={'Bd5'} color={'red_500'}>
@@ -185,6 +278,6 @@ function ReviewCard() {
       </CardWrapper>
     </Card>
   );
-}
+};
 
 export default ReviewCard;

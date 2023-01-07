@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import Checkbox from '@/components/common/checkbox';
 import Input from '@/components/common/input/input';
 import Typography from '@/components/common/typography';
+import Completed from '@/components/completed';
 import { Meta } from '@/layouts/Meta';
 import { Review } from '@/layouts/Review';
 import { AXIOS_POST_OBJECT, getSessionReview } from '@/lib/commonFunction';
@@ -50,6 +51,7 @@ const General = () => {
   const [comment, setComment] = useState('');
   const { storeId, score, content, tags } = getSessionReview();
   const router = useRouter();
+  const [completed, setCompleted] = useState(false);
 
   const handleChange = useCallback(
     (name: string, value: string) => {
@@ -89,15 +91,22 @@ const General = () => {
       router
     );
 
-    console.log(reviewData, 'reviewData');
-    console.log(response);
+    if (response?.data.code === 201) {
+      setCompleted(true);
+
+      const timer = setTimeout(() => {
+        router.push(`/details/${storeId}`);
+      }, 2000);
+      console.log(timer);
+    }
   };
 
   useEffect(() => {
     setStar(score || 0);
     setCheckedList(tags || tagsData);
     setComment(content || '');
-  }, [content, score, tags]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Main meta={<Meta title="Cakestation Review" description="리뷰 맛보기" />}>
@@ -107,7 +116,7 @@ const General = () => {
         subtitle={'이 가게는 전반적으로 어땠나요?'}
         nextText={'등록하기'}
         nextFunc={HandleNext}
-        nextLink={`/`}
+        // nextLink={`/`}
       >
         <StyledRate
           character={
@@ -145,6 +154,7 @@ const General = () => {
           />
         </div>
       </Review>
+      {completed && <Completed text={'리뷰 등록이 완료되었습니다!'} />}
     </Main>
   );
 };

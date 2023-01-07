@@ -93,10 +93,10 @@ const StoreSearch = (props: IStoreSearchProps) => {
   const FetchAllResultList = async () => {
     try {
       setLoading(true);
-      const response = await AXIOS_GET(`${BASE_URL}/api/stores/all`);
+      const response = await AXIOS_GET(`${BASE_URL}/api/stores/all`, router);
       setLoading(false);
       setResultList(response?.data.result);
-    } catch (e) {
+    } catch (error) {
       setResultList([]);
     }
   };
@@ -106,7 +106,8 @@ const StoreSearch = (props: IStoreSearchProps) => {
       setLoading(true);
       setSearchComplete(true);
       const response = await AXIOS_GET(
-        `${BASE_URL}/api/stores/search/name?storeName=${keyword}`
+        `${BASE_URL}/api/stores/search/name?storeName=${keyword}`,
+        router
       );
       setLoading(false);
       setResultList(response?.data.result);

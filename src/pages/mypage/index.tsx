@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -48,6 +49,7 @@ const ResetButton = styled.div`
 `;
 
 const MyPage = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [myData, setMyData] = useState({
     randomNumber: 1,
@@ -59,7 +61,7 @@ const MyPage = () => {
 
   const FetchMyData = async () => {
     try {
-      const response = await AXIOS_GET(`${BASE_URL}/api/mypage`);
+      const response = await AXIOS_GET(`${BASE_URL}/api/mypage`, router);
       if (response?.status === 200) {
         const fetchData = response?.data.result;
         setMyData(fetchData);
@@ -72,7 +74,7 @@ const MyPage = () => {
 
   const ResetNickname = async () => {
     try {
-      const response = await AXIOS_PATCH(`${BASE_URL}/api/nickname`);
+      const response = await AXIOS_PATCH(`${BASE_URL}/api/nickname`, router);
       if (response?.status === 200) {
         const fetchData = response?.data.result;
         setMyData(fetchData);

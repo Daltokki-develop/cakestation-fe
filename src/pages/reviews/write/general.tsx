@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import 'rc-rate/assets/index.css';
 
+import { useRouter } from 'next/router';
 import Rate from 'rc-rate';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -48,6 +49,7 @@ const General = () => {
   const [checkedList, setCheckedList] = useState({});
   const [comment, setComment] = useState('');
   const { storeId, score, content, tags } = getSessionReview();
+  const router = useRouter();
 
   const handleChange = useCallback(
     (name: string, value: string) => {
@@ -83,7 +85,8 @@ const General = () => {
     // eslint-disable-next-line unused-imports/no-unused-vars
     const response = await AXIOS_POST_OBJECT(
       `${BASE_URL}/api/stores/${storeId}/reviews`,
-      reviewData
+      reviewData,
+      router
     );
 
     console.log(reviewData, 'reviewData');

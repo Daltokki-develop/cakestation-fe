@@ -65,11 +65,24 @@ const getAuthHeader = (method: string) => {
   return header;
 };
 
+// 유효하지 않은 토큰일 경우 로그인 페이지로 이동
+const getInvalidToken = (error: any, router: any) => {
+  if (error.response.data.errorCode === 1003) {
+    // 토큰 만료
+    alert('유효하지 않은 토큰입니다. 다시 로그인 해주세요.');
+    router.push('/login');
+  }
+};
+
 // 데이터 요청 타임 아웃 시간
 const TIME_OUT = 2500;
 
 // 헤더가 세팅된 axios GET 요청
-export const AXIOS_GET = (url: string, timeOut: number = TIME_OUT) => {
+export const AXIOS_GET = (
+  url: string,
+  router: any,
+  timeOut: number = TIME_OUT
+) => {
   console.log(`====== AXIOS_GET =======`);
   console.log('url :: ', url);
 
@@ -89,6 +102,8 @@ export const AXIOS_GET = (url: string, timeOut: number = TIME_OUT) => {
         console.log('# 데이터 :: ', error.response.data);
         console.log('# 상태 :: ', error.response.status);
         console.log('# 헤더 :: ', error.response.headers);
+
+        getInvalidToken(error, router);
       } else if (error.request) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
         // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
@@ -106,6 +121,7 @@ export const AXIOS_GET = (url: string, timeOut: number = TIME_OUT) => {
 // 헤더가 세팅된 axios POST 요청
 export const AXIOS_POST = (
   url: string,
+  router: any,
   sendString = '',
   timeOut: number = TIME_OUT
 ) => {
@@ -132,6 +148,8 @@ export const AXIOS_POST = (
         console.log('# 데이터 :: ', error.response.data);
         console.log('# 상태 :: ', error.response.status);
         console.log('# 헤더 :: ', error.response.headers);
+
+        getInvalidToken(error, router);
       } else if (error.request) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
         // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
@@ -153,6 +171,7 @@ export const AXIOS_POST = (
 export const AXIOS_POST_OBJECT = (
   url: string,
   sendObject: Object,
+  router: any,
   timeOut = TIME_OUT
 ) => {
   const header = getAuthHeader('POST');
@@ -171,6 +190,8 @@ export const AXIOS_POST_OBJECT = (
         console.log('# 데이터: ', error.response.data);
         console.log('# 상태: ', error.response.status);
         console.log('# 헤더: ', error.response.headers);
+
+        getInvalidToken(error, router);
       } else if (error.request) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
         // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
@@ -191,6 +212,7 @@ export const AXIOS_POST_OBJECT = (
 export const AXIOS_POST_FORM = (
   url: string,
   sendObject: FormData,
+  router: any,
   timeOut = TIME_OUT
 ) => {
   const header = getAuthHeader('FORM');
@@ -211,6 +233,8 @@ export const AXIOS_POST_FORM = (
         console.log('# 데이터: ', error.response.data);
         console.log('# 상태: ', error.response.status);
         console.log('# 헤더: ', error.response.headers);
+
+        getInvalidToken(error, router);
       } else if (error.request) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
         // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
@@ -229,7 +253,11 @@ export const AXIOS_POST_FORM = (
 };
 
 // 헤더가 세팅된 axios PATCH 요청
-export const AXIOS_PATCH = (url: string, timeOut: number = TIME_OUT) => {
+export const AXIOS_PATCH = (
+  url: string,
+  router: any,
+  timeOut: number = TIME_OUT
+) => {
   console.log(`====== AXIOS_PATCH =======`);
   console.log('url :: ', url);
 
@@ -249,6 +277,8 @@ export const AXIOS_PATCH = (url: string, timeOut: number = TIME_OUT) => {
         console.log('# 데이터 :: ', error.response.data);
         console.log('# 상태 :: ', error.response.status);
         console.log('# 헤더 :: ', error.response.headers);
+
+        getInvalidToken(error, router);
       } else if (error.request) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
         // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는

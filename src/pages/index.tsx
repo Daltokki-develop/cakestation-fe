@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/naming-convention */
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
@@ -264,6 +265,8 @@ const Index = () => {
 
   const [searchComplete, setSearchComplete] = useState(false);
 
+  const router = useRouter();
+
   const [searchHistoryList, setSearchHistoryList] = useState<
     Array<{ category: string; params: string; keyword: string }>
   >([]);
@@ -302,7 +305,8 @@ const Index = () => {
 
       const { value, params } = _category;
       const response = await AXIOS_GET(
-        `${BASE_URL}/api/stores/search/${value}?${params}=${_keyword}`
+        `${BASE_URL}/api/stores/search/${value}?${params}=${_keyword}`,
+        router
       );
 
       setResultList(response?.data.result);
@@ -565,7 +569,8 @@ const Index = () => {
                   setSelected(position.역명);
                   try {
                     const response = await AXIOS_GET(
-                      `${BASE_URL}/api/stores/search/station?name=${position.역명}`
+                      `${BASE_URL}/api/stores/search/station?name=${position.역명}`,
+                      router
                     );
                     setResultList(response?.data.result);
                   } catch (e) {

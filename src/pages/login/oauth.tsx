@@ -17,7 +17,8 @@ const Oauth = () => {
       if (code) {
         try {
           const response = await AXIOS_GET(
-            `${BASE_URL}/api/oauth?code=${code}`
+            `${BASE_URL}/api/oauth?code=${code}`,
+            router
           );
           if (response) {
             const UserData = { accessToken: '', userId: '' };

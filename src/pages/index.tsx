@@ -311,7 +311,7 @@ const Index = () => {
 
       setResultList(response?.data.result);
     },
-    []
+    [router]
   );
 
   const HandleSearchHistory = useCallback(() => {
@@ -477,14 +477,23 @@ const Index = () => {
                     {resultList?.length > 0 ? (
                       <>
                         {resultList.map((result: any, index: React.Key) => {
-                          const { address, name, score, reviewNum, thumbnail } =
-                            result; // storeId,
+                          const {
+                            address,
+                            name,
+                            reviewScore,
+                            reviewCount,
+                            thumbnail,
+                          } = result; // storeId,
                           return (
                             <ItemCard
                               key={index}
                               title={name}
-                              rate={score || 0}
-                              count={reviewNum || 0}
+                              rate={
+                                (
+                                  Math.round(reviewScore * 10) / 10
+                                ).toString() || '0'
+                              }
+                              count={reviewCount || 0}
                               distance={address}
                               pictures={thumbnail ? [`https:${thumbnail}`] : []}
                               // onClick={() => GoReviewWrite(storeId)}
@@ -638,13 +647,16 @@ const Index = () => {
             <SheetContent>
               {resultList?.length > 0 ? (
                 resultList.map((result: any, index: React.Key) => {
-                  const { address, name, score, reviewNum, thumbnail } = result; // storeId,
+                  const { address, name, reviewScore, reviewCount, thumbnail } =
+                    result; // storeId,
                   return (
                     <ItemCard
                       key={index}
                       title={name}
-                      rate={score || 0}
-                      count={reviewNum || 0}
+                      rate={
+                        (Math.round(reviewScore * 10) / 10).toString() || '0'
+                      }
+                      count={reviewCount || 0}
                       distance={address}
                       pictures={thumbnail ? [`https:${thumbnail}`] : []}
                       // onClick={() => GoReviewWrite(storeId)}

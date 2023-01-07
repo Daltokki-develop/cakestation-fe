@@ -137,6 +137,7 @@ const StoreSearch = (props: IStoreSearchProps) => {
   useEffect(() => {
     FetchAllResultList();
     // sessionStorage.setItem('ReviewData', JSON.stringify(''));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -158,8 +159,8 @@ const StoreSearch = (props: IStoreSearchProps) => {
                     storeId,
                     address,
                     name,
-                    score,
-                    reviewNum,
+                    reviewScore,
+                    reviewCount,
                     thumbnail,
                   } = result;
 
@@ -170,8 +171,10 @@ const StoreSearch = (props: IStoreSearchProps) => {
                       key={index}
                       line
                       title={name}
-                      rate={score || 0}
-                      count={reviewNum || 0}
+                      rate={
+                        (Math.round(reviewScore * 10) / 10).toString() || '0'
+                      }
+                      count={reviewCount || 0}
                       distance={address}
                       pictures={validThumbnail ? [`https:${thumbnail}`] : []}
                       onClick={() => GoReviewWrite(storeId)}

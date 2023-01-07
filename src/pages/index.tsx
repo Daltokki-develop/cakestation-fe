@@ -661,7 +661,7 @@ const Index = () => {
         <CustomSheet.Backdrop />
       </CustomSheet>
 
-      <Navigation type={'default'} />
+      <Navigation type={'default'} home />
       {/* <Navigation type={'item'} /> */}
     </Main>
   );

@@ -93,7 +93,7 @@ const MyReviews = () => {
           )}
         </Container>
 
-        <Navigation type={'default'}></Navigation>
+        <Navigation type={'default'} my />
       </Section>
     </Main>
   );

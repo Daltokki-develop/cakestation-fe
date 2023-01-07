@@ -82,7 +82,7 @@ const Setting = () => {
         </div>
       </Section>
 
-      <Navigation type={'default'} />
+      <Navigation type={'default'} my />
     </Main>
   );
 };

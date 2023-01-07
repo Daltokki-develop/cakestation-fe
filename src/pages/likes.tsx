@@ -93,7 +93,7 @@ const Likes = () => {
           )}
         </Container>
 
-        <Navigation type={'default'}></Navigation>
+        <Navigation type={'default'} likes />
       </Section>
     </Main>
   );

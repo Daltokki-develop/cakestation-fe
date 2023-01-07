@@ -203,7 +203,7 @@ const StoreSearch = (props: IStoreSearchProps) => {
           {keyword && SearchButton(() => FetchResultList())}
         </div>
       </Section>
-      <Navigation type={'default'} />
+      <Navigation type={'default'} reviews />
     </>
   );
 };

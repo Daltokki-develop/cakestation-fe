@@ -162,7 +162,7 @@ const MyPage = () => {
           />
         </Absolute>
       ) : null}
-      <Navigation type={'default'} />
+      <Navigation type={'default'} my />
     </Main>
   );
 };

@@ -10,6 +10,18 @@ interface TypeProps {
   type: string;
 }
 
+interface INavigationProps {
+  type: string;
+  home?: boolean;
+  reviews?: boolean;
+  likes?: boolean;
+  my?: boolean;
+}
+
+interface ITabProps {
+  active?: boolean;
+}
+
 const StyledNav = styled.div`
   position: fixed;
   display: flex;
@@ -37,14 +49,17 @@ const NavigatorContent = styled.div<TypeProps>`
   padding-top: ${(props) => (props.type === 'default' ? '0' : '1.3125rem')};
 `;
 
-const StyledTab = styled.div`
+const StyledTab = styled.div<ITabProps>`
   width: 25%;
   height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-top: 5px solid ${palette.white};
+  border-top: ${(props) =>
+    props.active
+      ? `5px solid ${palette.cakeLemon_500}`
+      : `5px solid ${palette.white}`};
 
   &:hover {
     border-top: 5px solid ${palette.cakeLemon_500};
@@ -66,12 +81,14 @@ const ButtonDiv = styled.div`
   width: 11.1875rem;
 `;
 
-function Navigation({ type }: { type: string }) {
+function Navigation(props: INavigationProps) {
   const [like, setLike] = useState(false);
 
   const toggleLike = () => {
     setLike(!like);
   };
+
+  const { type, home, reviews, likes, my } = props;
 
   return (
     <StyledNav>
@@ -79,28 +96,28 @@ function Navigation({ type }: { type: string }) {
         {type === 'default' && (
           <>
             <Link href="/">
-              <StyledTab>
+              <StyledTab active={home}>
                 <StyledIcon>
                   <img src="/assets/images/icons/home_default.svg" alt="home" />
                 </StyledIcon>
               </StyledTab>
             </Link>
             <Link href="/reviews/search">
-              <StyledTab>
+              <StyledTab active={reviews}>
                 <StyledIcon>
                   <img src="/assets/images/icons/write.svg" alt="review" />
                 </StyledIcon>
               </StyledTab>
             </Link>
             <Link href="/likes">
-              <StyledTab>
+              <StyledTab active={likes}>
                 <StyledIcon>
                   <img src="/assets/images/icons/heart_empty.svg" alt="like" />
                 </StyledIcon>
               </StyledTab>
             </Link>
             <Link href="/mypage">
-              <StyledTab>
+              <StyledTab active={my}>
                 <StyledIcon>
                   <img src="/assets/images/icons/user_default.svg" alt="my" />
                 </StyledIcon>

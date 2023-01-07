@@ -176,7 +176,15 @@ const ReviewBoardChips = styled.div`
   grid-column-gap: 6px;
 `;
 
-function DetailPage({ address, more }: { address: string; more: string }) {
+function DetailPage({
+  address,
+  more,
+  pictureCount,
+}: {
+  address: string;
+  more: string;
+  pictureCount: number;
+}) {
   const [loading, setLoading] = useState<boolean>(true);
   const [activeId, setActiveId] = useState(0);
   const [showDetailPicture, setShowDetailPicture] = useState(false);
@@ -330,7 +338,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
                 사진
               </Typography>
               <Typography category={'Bd8'} color={'grey_500'}>
-                <StyledNumber>23</StyledNumber>
+                <StyledNumber>{pictureCount}</StyledNumber>
               </Typography>
             </TitleList>
             <TitleList
@@ -344,7 +352,7 @@ function DetailPage({ address, more }: { address: string; more: string }) {
                 리뷰
               </Typography>
               <Typography category={'Bd8'} color={'grey_500'}>
-                <StyledNumber>23</StyledNumber>
+                <StyledNumber>{reviewList.length}</StyledNumber>
               </Typography>
             </TitleList>
           </TabTitles>

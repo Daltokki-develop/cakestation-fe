@@ -9,7 +9,9 @@ import Typography from '@/components/common/typography';
 import DetailPage from '@/components/details/DetailPage';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
-import results from '@/lib/가게상세페이지.json';
+// import results from '@/lib/가게상세페이지.json';
+import { AXIOS_GET } from '@/lib/commonFunction';
+import { BASE_URL } from '@/lib/ConstantURL';
 import { Main } from '@/templates/Main';
 
 const Styles = styled.div`
@@ -76,23 +78,37 @@ const LeftIcon = styled.img`
   padding-right: 0.25rem;
 `;
 
-const defaultResult = {
-  id: -1,
-  name: '',
-  score: '0.0',
-  address: '',
-  tel: '',
-  photo: '',
-  url: '',
-  url_name: '',
-  more: '',
-};
+// const defaultResult = {
+//   id: -1,
+//   name: '',
+//   score: '0.0',
+//   address: '',
+//   tel: '',
+//   photo: '',
+//   url: '',
+//   url_name: '',
+//   more: '',
+// };
 
 const Detail = () => {
-  const router = useRouter();
-  const result = results[Number(router.query.id)] || defaultResult;
+  const [loading, setLoading] = useState<boolean>(true);
+  const [result, setResult] = useState<any>();
   const [like, setLike] = useState(false);
   const [showBottomNav, setShowBottomNav] = useState(false);
+  const router = useRouter();
+  // const staticResult = results[Number(router.query.id)] || defaultResult;
+
+  const FetchStoreInfo = async () => {
+    try {
+      setLoading(true);
+      const response = await AXIOS_GET(`${BASE_URL}/api/stores/${1}`, router);
+      setLoading(false);
+      setResult(response?.data.result);
+      console.log(response?.data.result);
+    } catch (e) {
+      setResult('');
+    }
+  };
 
   const toggleLike = () => {
     setLike(!like);
@@ -108,6 +124,10 @@ const Detail = () => {
     } else {
       setShowBottomNav(false);
     }
+  }, []);
+
+  useEffect(() => {
+    FetchStoreInfo();
   }, []);
 
   useEffect(() => {
@@ -127,72 +147,82 @@ const Detail = () => {
       }
     >
       <Styles>
-        <ImageContainer photo={result.photo}>
-          <BackButton>
-            <img src={'/assets/images/icons/back.png'} alt={'뒤로가기'} />
-          </BackButton>
-        </ImageContainer>
-        <Container>
-          <div className="row">
-            <Typography category={'H2'}>{result.name}</Typography>
-            <div style={{ width: '0.6875rem' }}></div>
-            <Tag
-              size={'small'}
-              icon={true}
-              src={'/assets/images/icons/rate_filled.svg'}
-            >
-              {result.score}
-            </Tag>
-            <div className="icons">
-              <IconImage src={'/assets/images/icons/call_default.svg'} />
-              <IconImage src={'/assets/images/icons/share.svg'} />
-              <div
-                style={{
-                  width: '1.625rem',
-                  height: '1.625rem',
-                  cursor: 'pointer',
-                }}
-              >
-                <HeartButton like={like} onClick={toggleLike} />
+        {!loading && result && (
+          <>
+            <ImageContainer photo={result.thumbnail}>
+              <BackButton>
+                <img src={'/assets/images/icons/back.png'} alt={'뒤로가기'} />
+              </BackButton>
+            </ImageContainer>
+            <Container>
+              <div className="row">
+                <Typography category={'H2'}>{result.name}</Typography>
+                <div style={{ width: '0.6875rem' }}></div>
+                <Tag
+                  size={'small'}
+                  icon={true}
+                  src={'/assets/images/icons/rate_filled.svg'}
+                >
+                  {parseFloat(`${result.reviewScore}`).toFixed(1)}
+                </Tag>
+                <div className="icons">
+                  <IconImage src={'/assets/images/icons/call_default.svg'} />
+                  <IconImage src={'/assets/images/icons/share.svg'} />
+                  <div
+                    style={{
+                      width: '1.625rem',
+                      height: '1.625rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <HeartButton like={like} onClick={toggleLike} />
+                  </div>
+                </div>
               </div>
+              <div className="tags">
+                <Tag size={'small'} color={'green_500'}>
+                  영업중
+                </Tag>
+                <div style={{ width: '0.375rem' }}></div>
+                <Tag size={'small'} color={'blue_500'}>
+                  역에서 132m
+                </Tag>
+                <div style={{ width: '0.375rem' }}></div>
+                <Tag size={'small'} color={'blue_500'}>
+                  도보 10분
+                </Tag>
+              </div>
+              <div className="info">
+                <div className="row">
+                  <LeftIcon
+                    src={'/assets/images/icons/location_selected.svg'}
+                  />
+                  <Typography category={'Bd6'}>{result.address}</Typography>
+                </div>
+                <div className="row">
+                  <LeftIcon src={'/assets/images/icons/instagram.svg'} />
+                  <a
+                    href={result.webpageUrl}
+                    target={'_blank'}
+                    rel={'noreferrer'}
+                  >
+                    <Typography category={'Bd6'} color={'grey_700'}>
+                      {result.webpageUrl}
+                    </Typography>
+                  </a>
+                </div>
+                <div className="row">
+                  <LeftIcon src={'/assets/images/icons/call_filled.svg'} />
+                  <Typography category={'Bd6'}>{result.phoneNumber}</Typography>
+                </div>
+              </div>
+            </Container>
+            <Divider size={'large'} />
+            <div className="detail">
+              <DetailPage address={result.address} more={result.mapUrl} />
             </div>
-          </div>
-          <div className="tags">
-            <Tag size={'small'} color={'green_500'}>
-              영업중
-            </Tag>
-            <div style={{ width: '0.375rem' }}></div>
-            <Tag size={'small'} color={'blue_500'}>
-              역에서 132m
-            </Tag>
-            <div style={{ width: '0.375rem' }}></div>
-            <Tag size={'small'} color={'blue_500'}>
-              도보 10분
-            </Tag>
-          </div>
-          <div className="info">
-            <div className="row">
-              <LeftIcon src={'/assets/images/icons/location_selected.svg'} />
-              <Typography category={'Bd6'}>{result.address}</Typography>
-            </div>
-            <div className="row">
-              <LeftIcon src={'/assets/images/icons/instagram.svg'} />
-              <a href={result?.url} target={'_blank'} rel={'noreferrer'}>
-                <Typography category={'Bd6'} color={'grey_700'}>
-                  {result.url_name}
-                </Typography>
-              </a>
-            </div>
-            <div className="row">
-              <LeftIcon src={'/assets/images/icons/call_filled.svg'} />
-              <Typography category={'Bd6'}>{result.tel}</Typography>
-            </div>
-          </div>
-        </Container>
-        <Divider size={'large'} />
-        <div className="detail">
-          <DetailPage address={result.address} more={result.more} />
-        </div>
+          </>
+        )}
         {showBottomNav ? <Navigation type={'item'}></Navigation> : null}
       </Styles>
     </Main>

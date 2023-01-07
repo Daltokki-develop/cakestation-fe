@@ -37,6 +37,12 @@ const Styles = styled.div`
   .tab {
     margin-top: 0.4375rem;
   }
+
+  .infoRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 interface ImageProp {
@@ -79,7 +85,9 @@ const LeftIcon = styled.img`
 
 const Detail = () => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [pictureLoading, setPictureLoading] = useState<boolean>(true);
   const [result, setResult] = useState<any>();
+  const [pictureResult, setPictureResult] = useState<Array<any>>([]);
   const [like, setLike] = useState(false);
   const [showBottomNav, setShowBottomNav] = useState(false);
   const router = useRouter();
@@ -88,7 +96,7 @@ const Detail = () => {
     try {
       setLoading(true);
       const response = await AXIOS_GET(
-        `${BASE_URL}/api/stores/${1}`, // router.query.id
+        `${BASE_URL}/api/stores/${2}`, // router.query.id
         router
       );
       setLoading(false);
@@ -99,8 +107,34 @@ const Detail = () => {
     }
   };
 
+  const FetchReviewPictures = async () => {
+    try {
+      setPictureLoading(true);
+      const response = await AXIOS_GET(
+        `${BASE_URL}/api/stores/${2}/reviews/image`, // router.query.id
+        router
+      );
+      setPictureLoading(false);
+      setPictureResult(response?.data.result);
+      console.log(response?.data.result);
+    } catch (e) {
+      setPictureResult([]);
+    }
+  };
+
   const toggleLike = () => {
     setLike(!like);
+  };
+
+  const divideUrlType = (url: string) => {
+    let arr = [];
+    arr = url.split('/');
+
+    if (url.includes('instagram')) {
+      return `@${arr[arr.length - 2]}`;
+    }
+
+    return `${arr[arr.length - 2]}`;
   };
 
   const handleScroll = useCallback((e: Event) => {
@@ -121,6 +155,7 @@ const Detail = () => {
 
     mainSectionElement?.addEventListener('scroll', handleScroll);
     FetchStoreInfo();
+    FetchReviewPictures();
     return () => {
       mainSectionElement?.removeEventListener('scroll', handleScroll);
     };
@@ -135,7 +170,13 @@ const Detail = () => {
       <Styles>
         {!loading && result && (
           <>
-            <ImageContainer photo={result.thumbnail}>
+            <ImageContainer
+              photo={
+                result.thumbnail
+                  ? result.thumbnail
+                  : '/assets/images/background.png'
+              }
+            >
               <BackButton>
                 <img src={'/assets/images/icons/back.png'} alt={'뒤로가기'} />
               </BackButton>
@@ -179,13 +220,13 @@ const Detail = () => {
                 </Tag>
               </div>
               <div className="info">
-                <div className="row">
+                <div className="infoRow">
                   <LeftIcon
                     src={'/assets/images/icons/location_selected.svg'}
                   />
                   <Typography category={'Bd6'}>{result.address}</Typography>
                 </div>
-                <div className="row">
+                <div className="infoRow">
                   <LeftIcon src={'/assets/images/icons/instagram.svg'} />
                   <a
                     href={result.webpageUrl}
@@ -193,19 +234,27 @@ const Detail = () => {
                     rel={'noreferrer'}
                   >
                     <Typography category={'Bd6'} color={'grey_700'}>
-                      {result.webpageUrl}
+                      {divideUrlType(result.webpageUrl)}
                     </Typography>
                   </a>
                 </div>
-                <div className="row">
+                <div className="infoRow">
                   <LeftIcon src={'/assets/images/icons/call_filled.svg'} />
-                  <Typography category={'Bd6'}>{result.phoneNumber}</Typography>
+                  <Typography category={'Bd6'}>
+                    {result.phoneNumber ? result.phoneNumber : '전화번호 없음'}
+                  </Typography>
                 </div>
               </div>
             </Container>
             <Divider size={'large'} />
             <div className="detail">
-              <DetailPage address={result.address} more={result.mapUrl} />
+              {!pictureLoading && (
+                <DetailPage
+                  address={result.address}
+                  more={result.mapUrl}
+                  pictureCount={pictureResult.length}
+                />
+              )}
             </div>
           </>
         )}

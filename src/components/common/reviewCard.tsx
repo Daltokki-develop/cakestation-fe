@@ -43,7 +43,11 @@ const PostInfo = styled.div`
 const RateInfo = styled.div`
   display: flex;
   padding-bottom: 12px;
-  gap: 6px;
+  /* gap: 6px; */
+
+  .rate-image {
+    padding-right: 6px;
+  }
 `;
 
 const Rate = styled.img`
@@ -132,19 +136,19 @@ const ReviewCard = (props: IReviewCardProps) => {
       );
     }
 
-    if (arr.length < 5) {
-      for (let i = arr.length; i < 5; i += 1) {
-        arr.push(
-          <Rate
-            key={`${i} empty`}
-            src={'/assets/images/icons/rate_empty.svg'}
-            alt={'별점'}
-          />
-        );
-      }
-    }
+    // if (arr.length < 5) {
+    //   for (let i = arr.length; i < 5; i += 1) {
+    //     arr.push(
+    //       <Rate
+    //         key={`${i} empty`}
+    //         src={'/assets/images/icons/rate_empty.svg'}
+    //         alt={'별점'}
+    //       />
+    //     );
+    //   }
+    // }
 
-    return arr;
+    return arr.length > 0 ? arr : null;
   };
 
   const tagConverter = (tag: string) => {
@@ -194,7 +198,9 @@ const ReviewCard = (props: IReviewCardProps) => {
           </div>
         </PostInfo>
         <RateInfo>
-          <div>{setRateImage(props.score)}</div>
+          {setRateImage(props.score) && (
+            <div className="rate-image">{setRateImage(props.score)}</div>
+          )}
           <div>
             <Typography category={'Bd5'} color={'grey_800'}>
               {`${props.score}점`}

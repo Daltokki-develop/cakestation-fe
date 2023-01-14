@@ -96,7 +96,7 @@ const Detail = () => {
     try {
       setLoading(true);
       const response = await AXIOS_GET(
-        `${BASE_URL}/api/stores/${2}`, // router.query.id
+        `${BASE_URL}/api/stores/${router.query.id}`, // router.query.id
         router
       );
       setLoading(false);
@@ -111,7 +111,7 @@ const Detail = () => {
     try {
       setPictureLoading(true);
       const response = await AXIOS_GET(
-        `${BASE_URL}/api/stores/${2}/reviews/image`, // router.query.id
+        `${BASE_URL}/api/stores/${router.query.id}/reviews/image`, // router.query.id
         router
       );
       setPictureLoading(false);
@@ -150,16 +150,21 @@ const Detail = () => {
   }, []);
 
   useEffect(() => {
+    if (!router.isReady) return;
+    // console.log(router.query);
+
     const mainSectionElement =
       document.getElementsByClassName('main-section')[0];
-
     mainSectionElement?.addEventListener('scroll', handleScroll);
+
     FetchStoreInfo();
     FetchReviewPictures();
+
+    // eslint-disable-next-line consistent-return
     return () => {
       mainSectionElement?.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [router.isReady]);
 
   return (
     <Main

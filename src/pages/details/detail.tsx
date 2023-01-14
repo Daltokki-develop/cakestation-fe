@@ -131,7 +131,9 @@ const Detail = () => {
     arr = url.split('/');
 
     if (url.includes('instagram')) {
-      return `@${arr[arr.length - 2]}`;
+      return `@${
+        arr[arr[arr.length - 1] === '' ? arr.length - 2 : arr.length - 1]
+      }`;
     }
 
     return `${arr[arr.length - 2]}`;
@@ -148,6 +150,10 @@ const Detail = () => {
       setShowBottomNav(false);
     }
   }, []);
+
+  const backToPrevPage = () => {
+    router.back();
+  };
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -182,7 +188,7 @@ const Detail = () => {
                   : '/assets/images/background.png'
               }
             >
-              <BackButton>
+              <BackButton onClick={backToPrevPage}>
                 <img src={'/assets/images/icons/back.png'} alt={'뒤로가기'} />
               </BackButton>
             </ImageContainer>

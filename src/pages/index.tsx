@@ -95,7 +95,7 @@ const LoadingContainer = styled.div`
   align-items: center;
 
   background-color: ${palette.black};
-  opacity: 0.5;
+  opacity: 0.4;
 
   z-index: 105;
 

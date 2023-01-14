@@ -20,7 +20,7 @@ const Absolute = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1;
+  z-index: 105;
   overflow: hidden;
 `;
 
@@ -161,6 +161,7 @@ const MyPage = () => {
           />
         </Absolute>
       ) : null}
+
       <Navigation type={'default'} my />
     </Main>
   );

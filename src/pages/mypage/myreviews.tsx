@@ -11,7 +11,7 @@ import Typography from '@/components/common/typography';
 import { Header } from '@/layouts/Header';
 import { Meta } from '@/layouts/Meta';
 import Navigation from '@/layouts/Navigation';
-import { AXIOS_GET } from '@/lib/commonFunction';
+import { AXIOS_GET, getSessionUserData } from '@/lib/commonFunction';
 import { BASE_URL } from '@/lib/ConstantURL';
 import palette from '@/styles/palette';
 import { Main } from '@/templates/Main';
@@ -60,8 +60,9 @@ const MyReviews = () => {
   const FetchMyReviewsList = async () => {
     try {
       setLoading(true);
+      const { userId } = getSessionUserData() || '';
       const response = await AXIOS_GET(
-        `${BASE_URL}/api/users/2/reviews`,
+        `${BASE_URL}/api/users/${userId}/reviews`,
         router
       );
       setLoading(false);
@@ -113,7 +114,7 @@ const MyReviews = () => {
 
                   {myReviewsList.map((result: any, index: React.Key) => {
                     const {
-                      username,
+                      nickname,
                       cakeNumber,
                       score,
                       sheetType,
@@ -127,7 +128,7 @@ const MyReviews = () => {
                     return (
                       <ReviewCard
                         key={index}
-                        username={username}
+                        username={nickname}
                         cakeNumber={cakeNumber}
                         score={score}
                         sheetType={sheetType}

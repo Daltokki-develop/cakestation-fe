@@ -45,8 +45,9 @@ const NavigatorContent = styled.div<TypeProps>`
   height: fit-content;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-top: ${(props) => (props.type === 'default' ? '0' : '1.3125rem')};
+  justify-content: ${(props) =>
+    props.type === 'default' ? 'space-between' : 'center'};
+  padding: ${(props) => (props.type === 'default' ? '0 0' : '22px 0')};
 `;
 
 const StyledTab = styled.div<ITabProps>`
@@ -79,6 +80,24 @@ const StyledIcon = styled.div`
 
 const ButtonDiv = styled.div`
   width: 11.1875rem;
+`;
+
+// const DefaultContainer = styled.div`
+//   width: calc(100% - 40px);
+//   height: 100%;
+
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// `;
+
+const ItemContainer = styled.div`
+  width: calc(100% - 40px);
+  height: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 function Navigation(props: INavigationProps) {
@@ -126,7 +145,7 @@ function Navigation(props: INavigationProps) {
           </>
         )}
         {type === 'item' && (
-          <>
+          <ItemContainer>
             <Link href="/">
               <div
                 style={{ width: '2.5rem', height: '2.5rem', cursor: 'pointer' }}
@@ -136,12 +155,12 @@ function Navigation(props: INavigationProps) {
             </Link>
             <Link href="/">
               <StyledIcon>
-                <img src="/assets/images/icons/share.svg" />
+                <img src="/assets/images/icons/share.svg" alt={'Share'} />
               </StyledIcon>
             </Link>
             <Link href="/">
               <StyledIcon>
-                <img src="/assets/images/icons/call_default.svg" />
+                <img src="/assets/images/icons/call_default.svg" alt={'Call'} />
               </StyledIcon>
             </Link>
             <Link href="/">
@@ -151,7 +170,7 @@ function Navigation(props: INavigationProps) {
                 </Button>
               </ButtonDiv>
             </Link>
-          </>
+          </ItemContainer>
         )}
       </NavigatorContent>
     </StyledNav>

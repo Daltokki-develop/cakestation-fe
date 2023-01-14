@@ -378,7 +378,7 @@ const Index = () => {
     const storeData = { storeId: '' };
     storeData.storeId = storeId;
     sessionStorage.setItem('StoreData', JSON.stringify(storeData));
-    await router.push(`/details/detail?id=${storeData.storeId}`);
+    await router.push(`/details?id=${storeData.storeId}`);
   };
 
   useEffect(() => {

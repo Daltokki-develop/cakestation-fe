@@ -604,7 +604,7 @@ function DetailPage({
               <>
                 {reviewList.map((result: any, index: React.Key) => {
                   const {
-                    username,
+                    nickname,
                     cakeNumber,
                     score,
                     sheetType,
@@ -618,7 +618,7 @@ function DetailPage({
                   return (
                     <ReviewCard
                       key={index}
-                      username={username}
+                      username={nickname}
                       cakeNumber={cakeNumber}
                       score={score}
                       sheetType={sheetType}

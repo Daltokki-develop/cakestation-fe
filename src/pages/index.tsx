@@ -374,6 +374,13 @@ const Index = () => {
     setCenter(now.center);
   };
 
+  const GoDetailPage = async (storeId: string) => {
+    const storeData = { storeId: '' };
+    storeData.storeId = storeId;
+    sessionStorage.setItem('StoreData', JSON.stringify(storeData));
+    await router.push(`/details/detail?id=${storeData.storeId}`);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -478,12 +485,13 @@ const Index = () => {
                       <>
                         {resultList.map((result: any, index: React.Key) => {
                           const {
+                            storeId,
                             address,
                             name,
                             reviewScore,
                             reviewCount,
                             thumbnail,
-                          } = result; // storeId,
+                          } = result;
                           return (
                             <ItemCard
                               key={index}
@@ -496,7 +504,7 @@ const Index = () => {
                               count={reviewCount || 0}
                               distance={address}
                               pictures={thumbnail ? [`https:${thumbnail}`] : []}
-                              // onClick={() => GoReviewWrite(storeId)}
+                              onClick={() => GoDetailPage(storeId)}
                             />
                           );
                         })}
@@ -647,8 +655,14 @@ const Index = () => {
             <SheetContent>
               {resultList?.length > 0 ? (
                 resultList.map((result: any, index: React.Key) => {
-                  const { address, name, reviewScore, reviewCount, thumbnail } =
-                    result; // storeId,
+                  const {
+                    storeId,
+                    address,
+                    name,
+                    reviewScore,
+                    reviewCount,
+                    thumbnail,
+                  } = result;
                   return (
                     <ItemCard
                       key={index}
@@ -659,7 +673,7 @@ const Index = () => {
                       count={reviewCount || 0}
                       distance={address}
                       pictures={thumbnail ? [`https:${thumbnail}`] : []}
-                      // onClick={() => GoReviewWrite(storeId)}
+                      onClick={() => GoDetailPage(storeId)}
                     />
                   );
                 })

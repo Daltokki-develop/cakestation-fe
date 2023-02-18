@@ -134,13 +134,18 @@ const MoreIcon = styled.div`
 
 const Pictures = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: minmax(auto, 146.67px);
+  gap: 4px;
   padding-bottom: 4px;
 `;
 
 const Picture = styled.img`
-  width: 32.5%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const ReviewBoard = styled.div`
@@ -176,6 +181,10 @@ const ReviewBoardChips = styled.div`
   grid-column-gap: 6px;
 `;
 
+const NoReview = styled.div`
+  height: 75px;
+`;
+
 function DetailPage({
   address,
   more,
@@ -187,9 +196,11 @@ function DetailPage({
 }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [activeId, setActiveId] = useState(0);
+  const [bigPictureIndex, setBigPictureIndex] = useState(0);
   const [showDetailPicture, setShowDetailPicture] = useState(false);
   const [showPictureModal, setShowPictureModal] = useState(false);
   const [reviewList, setReviewList] = useState<Array<any>>([]);
+  const [pictureList, setPictureList] = useState<Array<any>>([]);
   const router = useRouter();
   const TAB_HEIGHT = 49.2;
 
@@ -204,6 +215,20 @@ function DetailPage({
       setReviewList(response?.data.result);
     } catch (error) {
       setReviewList([]);
+    }
+  };
+
+  const FetchAllPictureList = async () => {
+    try {
+      setLoading(true);
+      const response = await AXIOS_GET(
+        `${BASE_URL}/api/stores/${router.query.id}/reviews/image`,
+        router
+      );
+      setLoading(false);
+      setPictureList(response?.data.result);
+    } catch (error) {
+      setPictureList([]);
     }
   };
 
@@ -247,7 +272,8 @@ function DetailPage({
     setShowDetailPicture(!showDetailPicture);
   };
 
-  const clickPicture = () => {
+  const clickPicture = (index: number) => {
+    setBigPictureIndex(index);
     setShowPictureModal(true);
   };
 
@@ -295,6 +321,7 @@ function DetailPage({
 
     mainSectionElement?.addEventListener('scroll', handleScroll);
     FetchAllReviewList();
+    FetchAllPictureList();
     return () => {
       mainSectionElement?.removeEventListener('scroll', handleScroll);
     };
@@ -477,84 +504,41 @@ function DetailPage({
                 )}
               </MoreIcon>
             </StyledTitle>
-            {showDetailPicture ? (
-              <>
+            {!loading &&
+              pictureList.length > 0 &&
+              (showDetailPicture ? (
+                <Pictures>
+                  {pictureList.map((result: any, index: number) => {
+                    const { imageUrl /* reviewId */ } = result;
+                    return (
+                      <Picture
+                        key={index}
+                        src={imageUrl}
+                        alt="reviewImage"
+                        onClick={() => clickPicture(index)}
+                      />
+                    );
+                  })}
+                </Pictures>
+              ) : (
                 <Pictures>
                   <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                    onClick={clickPicture}
+                    src={pictureList[0].imageUrl}
+                    alt="reviewImage"
+                    onClick={() => clickPicture(0)}
                   />
                   <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
+                    src={pictureList[1].imageUrl}
+                    alt="reviewImage"
+                    onClick={() => clickPicture(1)}
                   />
                   <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
+                    src={pictureList[2].imageUrl}
+                    alt="reviewImage"
+                    onClick={() => clickPicture(2)}
                   />
                 </Pictures>
-                <Pictures>
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                </Pictures>
-                <Pictures>
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                </Pictures>
-                <Pictures>
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                </Pictures>
-              </>
-            ) : (
-              <>
-                <Pictures>
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                  <Picture
-                    src={`/assets/images/test-cakestore.png`}
-                    alt="picture"
-                  />
-                </Pictures>
-              </>
-            )}
+              ))}
           </ContentList>
           <Divider size={'large'} />
           <ContentList className="store-review">
@@ -632,10 +616,13 @@ function DetailPage({
                 })}
               </>
             )}
+            {reviewList.length === 0 && <NoReview />}
           </ContentList>
         </ul>
         {showPictureModal ? (
           <PictureModal
+            pictureList={pictureList}
+            tempIndex={bigPictureIndex}
             closeModal={() => setShowPictureModal(!showPictureModal)}
           />
         ) : null}

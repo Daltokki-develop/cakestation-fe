@@ -110,7 +110,7 @@ a {
 .b-108 {
   bottom: 6.75rem;
 }
-  
+
 .pt-6 {
   padding-top: 40px;
 }
@@ -154,7 +154,6 @@ a {
 .mt-75 {
   margin-top: 75px;
 }
-
 
 .mt-79 {
   margin-top: 79px;
@@ -308,6 +307,23 @@ a {
   background-color: #111111 !important;
 }
 
+.swiper-button-next {
+  background: url(/assets/images/icons/next.png) no-repeat;
+  background-size: 70% auto;
+  background-position: center;
+}
+
+.swiper-button-prev {
+  background: url(/assets/images/icons/prev.png) no-repeat;
+  background-size: 70% auto;
+  background-position: center;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+
 /* Ruquired */
 .required {
   position: relative;
@@ -317,7 +333,7 @@ a {
   position: absolute;
   left: -8px;
   top: -6px;
-  content: "*";
+  content: '*';
   color: #ff7283;
   font-size: 16px;
 }

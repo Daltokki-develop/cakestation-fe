@@ -50,6 +50,7 @@ const CloseImage = styled.img`
   width: 20px;
   height: 20px;
   padding-right: 30px;
+  cursor: pointer;
 `;
 
 function PictureModal(props: any) {
